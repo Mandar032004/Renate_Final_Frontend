@@ -41,6 +41,18 @@ const FEED_ICONS = [
   "analytics", "sync", "format_list_numbered", "record_voice_over",
 ];
 
+const INITIAL_MESSAGES = [
+  { id: 1, role: "ai", text: "Hi Admin! 👋 I'm Renate AI, your intelligent hiring assistant.", ts: "just now" },
+  { id: 2, role: "ai", text: "I can help you manage pipelines, post jobs, review analytics, and surface top candidates. What would you like to do?", ts: "just now" },
+];
+
+const QUICK_SUGGESTIONS = [
+  { label: "Check Pipeline",  icon: "work_history",  action: "pipeline"   },
+  { label: "Post a Job",      icon: "add_circle",    action: "post"       },
+  { label: "View Analytics",  icon: "insights",      action: "analytics"  },
+  { label: "Top Candidates",  icon: "person_search", action: "candidates" },
+];
+
 // Shared card animation variants (flashcard stagger)
 const staggerContainer = {
   hidden: {},
@@ -123,16 +135,12 @@ function PulseHero() {
       <h1 className="tracking-tight leading-tight" style={{
         fontFamily: "Manrope, sans-serif",
         fontSize: "clamp(1.55rem, 2.8vw, 2.15rem)",
-        fontWeight: 900,
-        color: "#1b1b1e",
-        letterSpacing: "-0.025em",
+        fontWeight: 900, color: "#1b1b1e", letterSpacing: "-0.025em",
       }}>
         Welcome back, Admin.{" "}
         <span style={{
           background: "linear-gradient(90deg, #552299 0%, #7c3aed 55%, #a855f7 100%)",
-          WebkitBackgroundClip: "text",
-          WebkitTextFillColor: "transparent",
-          backgroundClip: "text",
+          WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
         }}>
           Your AI Agents
         </span>{" "}
@@ -167,50 +175,29 @@ function BentoCard({ job, jobData: passedData, featured = false, isNew = false }
     <div
       className="group relative bg-white rounded-xl overflow-hidden cursor-pointer flex flex-col h-full"
       style={{
-        border: isNew
-          ? "1.5px solid rgba(34,197,94,0.3)"
-          : "1px solid rgba(85,34,153,0.08)",
-        boxShadow: isNew
-          ? "0px 4px 24px rgba(34,197,94,0.08)"
-          : "0px 4px 24px rgba(85,34,153,0.06)",
+        border: isNew ? "1.5px solid rgba(34,197,94,0.3)" : "1px solid rgba(85,34,153,0.08)",
+        boxShadow: isNew ? "0px 4px 24px rgba(34,197,94,0.08)" : "0px 4px 24px rgba(85,34,153,0.06)",
         minHeight: featured ? 178 : 148,
         transition: "box-shadow 0.18s ease",
       }}
       onClick={() => isNew ? navigate("/hiring") : navigate(`/jobs/${job.id}`)}
-      onMouseEnter={(e) =>
-        (e.currentTarget.style.boxShadow = isNew
-          ? "0px 8px 28px rgba(34,197,94,0.15)"
-          : "0px 8px 32px rgba(85,34,153,0.14)")
-      }
-      onMouseLeave={(e) =>
-        (e.currentTarget.style.boxShadow = isNew
-          ? "0px 4px 24px rgba(34,197,94,0.08)"
-          : "0px 4px 24px rgba(85,34,153,0.06)")
-      }
+      onMouseEnter={(e) => (e.currentTarget.style.boxShadow = isNew ? "0px 8px 28px rgba(34,197,94,0.15)" : "0px 8px 32px rgba(85,34,153,0.14)")}
+      onMouseLeave={(e) => (e.currentTarget.style.boxShadow = isNew ? "0px 4px 24px rgba(34,197,94,0.08)" : "0px 4px 24px rgba(85,34,153,0.06)")}
     >
       <div className="p-5 flex flex-col gap-3 flex-1">
-        {/* Icon + Title row */}
         <div className="flex items-start gap-3">
-          <div
-            className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
-            style={{ background: isNew ? "#dcfce7" : "#ecdcff" }}
-          >
-            <span className="material-symbols-outlined" style={{ color: isNew ? "#16a34a" : "#552299" }}>
-              {job.icon}
-            </span>
+          <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
+            style={{ background: isNew ? "#dcfce7" : "#ecdcff" }}>
+            <span className="material-symbols-outlined" style={{ color: isNew ? "#16a34a" : "#552299" }}>{job.icon}</span>
           </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
-              <p className="font-extrabold truncate" style={{
-                fontFamily: "Manrope, sans-serif", fontSize: "0.95rem", color: "#1b1b1e",
-              }}>
+              <p className="font-extrabold truncate" style={{ fontFamily: "Manrope, sans-serif", fontSize: "0.95rem", color: "#1b1b1e" }}>
                 {job.label}
               </p>
               {isNew && (
-                <span className="text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full shrink-0" style={{
-                  background: "#dcfce7", color: "#15803d",
-                  border: "1px solid rgba(34,197,94,0.3)",
-                }}>
+                <span className="text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full shrink-0"
+                  style={{ background: "#dcfce7", color: "#15803d", border: "1px solid rgba(34,197,94,0.3)" }}>
                   ★ Posted recently
                 </span>
               )}
@@ -221,14 +208,12 @@ function BentoCard({ job, jobData: passedData, featured = false, isNew = false }
               </p>
             )}
           </div>
-          <span className="text-[10px] font-bold px-2.5 py-1 rounded-full shrink-0" style={{
-            background: "#dcfce7", color: "#15803d",
-          }}>
+          <span className="text-[10px] font-bold px-2.5 py-1 rounded-full shrink-0"
+            style={{ background: "#dcfce7", color: "#15803d" }}>
             {resolved?.status ?? "Active"}
           </span>
         </div>
 
-        {/* Stats + CTA */}
         {resolved && (
           <div className="flex items-center gap-5 mt-auto flex-wrap">
             <div>
@@ -256,29 +241,18 @@ function BentoCard({ job, jobData: passedData, featured = false, isNew = false }
         )}
       </div>
 
-      {/* Quick Actions slide-up panel */}
       <div
         className="absolute bottom-0 left-0 right-0 flex items-center gap-2 px-4 py-3 border-t translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-200 ease-out"
-        style={{
-          background: "rgba(255,255,255,0.97)",
-          backdropFilter: "blur(8px)",
-          borderColor: "rgba(85,34,153,0.08)",
-        }}
+        style={{ background: "rgba(255,255,255,0.97)", backdropFilter: "blur(8px)", borderColor: "rgba(85,34,153,0.08)" }}
       >
-        <button
-          disabled
-          title="Coming soon"
-          onClick={(e) => e.stopPropagation()}
+        <button disabled title="Coming soon" onClick={(e) => e.stopPropagation()}
           className="text-xs font-bold px-3 py-1.5 rounded-lg opacity-50 cursor-not-allowed"
-          style={{ background: "#ecdcff", color: "#552299" }}
-        >
+          style={{ background: "#ecdcff", color: "#552299" }}>
           Edit Job
         </button>
-        <button
-          className="text-xs font-bold px-3 py-1.5 rounded-lg text-white transition-opacity hover:opacity-85"
+        <button className="text-xs font-bold px-3 py-1.5 rounded-lg text-white transition-opacity hover:opacity-85"
           style={{ background: "#552299" }}
-          onClick={(e) => { e.stopPropagation(); navigate("/analytics"); }}
-        >
+          onClick={(e) => { e.stopPropagation(); navigate("/analytics"); }}>
           View Analytics
         </button>
         <span className="ml-auto text-[10px] font-medium" style={{ color: "#a09ab0" }}>Quick Actions</span>
@@ -295,13 +269,11 @@ function BentoGrid() {
 
   return (
     <div className="flex flex-col gap-5">
-      {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2.5">
           <span className="material-symbols-outlined" style={{ color: "#552299" }}>work_history</span>
-          <h2 className="font-extrabold tracking-tight" style={{
-            fontFamily: "Manrope, sans-serif", fontSize: "1.05rem", color: "#552299",
-          }}>
+          <h2 className="font-extrabold tracking-tight"
+            style={{ fontFamily: "Manrope, sans-serif", fontSize: "1.05rem", color: "#552299" }}>
             Active Roles
           </h2>
         </div>
@@ -310,42 +282,24 @@ function BentoGrid() {
         </span>
       </div>
 
-      {/* ── Recently Posted section ── */}
       <AnimatePresence>
         {postedJobs.length > 0 && (
-          <motion.div
-            key="recently-posted"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.25 }}
-            className="flex flex-col gap-3"
-          >
+          <motion.div key="recently-posted"
+            initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.25 }} className="flex flex-col gap-3">
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-1.5 shrink-0">
-                <span style={{
-                  width: 6, height: 6, borderRadius: "50%",
-                  background: "#22c55e", display: "inline-block",
-                  animation: "pulse-dot 2s ease-in-out infinite",
-                }} />
-                <span className="text-[10px] font-black uppercase tracking-[0.14em]" style={{ color: "#22c55e" }}>
-                  Recently Posted
-                </span>
+                <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#22c55e", display: "inline-block", animation: "pulse-dot 2s ease-in-out infinite" }} />
+                <span className="text-[10px] font-black uppercase tracking-[0.14em]" style={{ color: "#22c55e" }}>Recently Posted</span>
               </div>
               <div className="flex-1 h-px" style={{ background: "rgba(34,197,94,0.2)" }} />
             </div>
-
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <AnimatePresence mode="popLayout">
                 {postedJobs.map((job) => (
-                  <motion.div
-                    key={job.id}
-                    layout
-                    initial={{ opacity: 0, scale: 0.92, y: -12 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.9 }}
-                    transition={{ type: "spring", stiffness: 300, damping: 26 }}
-                  >
+                  <motion.div key={job.id} layout
+                    initial={{ opacity: 0, scale: 0.92, y: -12 }} animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.9 }} transition={{ type: "spring", stiffness: 300, damping: 26 }}>
                     <BentoCard job={job} jobData={job} isNew />
                   </motion.div>
                 ))}
@@ -355,42 +309,19 @@ function BentoGrid() {
         )}
       </AnimatePresence>
 
-      {/* ── Main Bento Grid (flashcard stagger) ── */}
-      <motion.div
-        className="grid grid-cols-1 md:grid-cols-3 gap-4"
-        variants={staggerContainer}
-        initial="hidden"
-        animate="show"
-      >
-        {/* Row 1: AI Engineer (col-span-2) + DevOps */}
+      <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-4" variants={staggerContainer} initial="hidden" animate="show">
         <motion.div variants={cardAnim} className="col-span-2 min-h-[178px]">
           <BentoCard job={featuredJobs[0]} featured />
         </motion.div>
-        <motion.div variants={cardAnim}>
-          <BentoCard job={featuredJobs[1]} />
-        </motion.div>
-
-        {/* Row 2: ML Engineer + Frontend + View All */}
-        <motion.div variants={cardAnim}>
-          <BentoCard job={featuredJobs[2]} />
-        </motion.div>
-        <motion.div variants={cardAnim}>
-          <BentoCard job={featuredJobs[3]} />
-        </motion.div>
-
-        {/* View All card */}
+        <motion.div variants={cardAnim}><BentoCard job={featuredJobs[1]} /></motion.div>
+        <motion.div variants={cardAnim}><BentoCard job={featuredJobs[2]} /></motion.div>
+        <motion.div variants={cardAnim}><BentoCard job={featuredJobs[3]} /></motion.div>
         <motion.div variants={cardAnim}>
           <button
-            className="w-full h-full flex flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed transition-all group"
+            className="w-full h-full flex flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed transition-all"
             style={{ borderColor: "rgba(85,34,153,0.2)", minHeight: 148, background: "transparent" }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = "#552299";
-              e.currentTarget.style.background = "rgba(85,34,153,0.03)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = "rgba(85,34,153,0.2)";
-              e.currentTarget.style.background = "transparent";
-            }}
+            onMouseEnter={(e) => { e.currentTarget.style.borderColor = "#552299"; e.currentTarget.style.background = "rgba(85,34,153,0.03)"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.borderColor = "rgba(85,34,153,0.2)"; e.currentTarget.style.background = "transparent"; }}
             onClick={() => navigate("/hiring")}
           >
             <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: "#ecdcff" }}>
@@ -411,61 +342,39 @@ function AIBrainFeed() {
   const doubled = [...FEED_ITEMS, ...FEED_ITEMS];
 
   return (
-    <div
-      className="bg-white rounded-2xl flex flex-col overflow-hidden"
-      style={{
-        border: "1px solid rgba(85,34,153,0.08)",
-        boxShadow: "0px 4px 24px rgba(85,34,153,0.06)",
-        minHeight: 500,
-        flex: 1,
-      }}
-    >
-      <div className="px-5 py-4 flex items-center gap-3 shrink-0"
-        style={{ borderBottom: "1px solid rgba(85,34,153,0.07)" }}>
+    <div className="bg-white rounded-2xl flex flex-col overflow-hidden"
+      style={{ border: "1px solid rgba(85,34,153,0.08)", boxShadow: "0px 4px 24px rgba(85,34,153,0.06)", minHeight: 500, flex: 1 }}>
+      <div className="px-5 py-4 flex items-center gap-3 shrink-0" style={{ borderBottom: "1px solid rgba(85,34,153,0.07)" }}>
         <div className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0"
           style={{ background: "linear-gradient(135deg, #552299 0%, #7c3aed 100%)" }}>
           <span className="material-symbols-outlined text-sm text-white">smart_toy</span>
         </div>
-        <span className="font-extrabold tracking-tight text-sm"
-          style={{ fontFamily: "Manrope, sans-serif", color: "#552299" }}>
+        <span className="font-extrabold tracking-tight text-sm" style={{ fontFamily: "Manrope, sans-serif", color: "#552299" }}>
           Live Agent Activity
         </span>
         <div className="ml-auto flex items-center gap-1.5 shrink-0">
-          <div style={{
-            width: 7, height: 7, borderRadius: "50%", background: "#22c55e", flexShrink: 0,
-            animation: "pulse-dot 2s ease-in-out infinite",
-          }} />
+          <div style={{ width: 7, height: 7, borderRadius: "50%", background: "#22c55e", flexShrink: 0, animation: "pulse-dot 2s ease-in-out infinite" }} />
           <span className="text-[10px] font-bold uppercase tracking-wider" style={{ color: "#22c55e" }}>Live</span>
         </div>
       </div>
-
       <div className="flex-1 overflow-hidden relative" style={{ minHeight: 0 }}>
-        <div className="absolute top-0 left-0 right-0 h-8 z-10 pointer-events-none"
-          style={{ background: "linear-gradient(to bottom, white, transparent)" }} />
-        <div className="absolute bottom-0 left-0 right-0 h-8 z-10 pointer-events-none"
-          style={{ background: "linear-gradient(to top, white, transparent)" }} />
+        <div className="absolute top-0 left-0 right-0 h-8 z-10 pointer-events-none" style={{ background: "linear-gradient(to bottom, white, transparent)" }} />
+        <div className="absolute bottom-0 left-0 right-0 h-8 z-10 pointer-events-none" style={{ background: "linear-gradient(to top, white, transparent)" }} />
         <motion.div
           animate={shouldReduce ? {} : { y: ["0%", "-50%"] }}
           transition={{ duration: 22, ease: "linear", repeat: Infinity, repeatType: "loop" }}
           className="pt-3"
         >
           {doubled.map((text, i) => (
-            <div key={i} className="flex items-start gap-3 px-5 py-3"
-              style={{ borderBottom: "1px solid rgba(85,34,153,0.04)" }}>
-              <div className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 mt-0.5"
-                style={{ background: "#ecdcff" }}>
-                <span className="material-symbols-outlined" style={{ color: "#552299", fontSize: 14 }}>
-                  {FEED_ICONS[i % FEED_ICONS.length]}
-                </span>
+            <div key={i} className="flex items-start gap-3 px-5 py-3" style={{ borderBottom: "1px solid rgba(85,34,153,0.04)" }}>
+              <div className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 mt-0.5" style={{ background: "#ecdcff" }}>
+                <span className="material-symbols-outlined" style={{ color: "#552299", fontSize: 14 }}>{FEED_ICONS[i % FEED_ICONS.length]}</span>
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-xs font-medium" style={{ color: "#1b1b1e" }}>{text}</p>
-                <p className="text-[10px] mt-0.5" style={{ color: "#a09ab0" }}>
-                  {i % 3 === 0 ? "just now" : i % 3 === 1 ? "2s ago" : "5s ago"}
-                </p>
+                <p className="text-[10px] mt-0.5" style={{ color: "#a09ab0" }}>{i % 3 === 0 ? "just now" : i % 3 === 1 ? "2s ago" : "5s ago"}</p>
               </div>
-              <div className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
-                style={{ background: i % 4 === 0 ? "#22c55e" : "#dfc8fd" }} />
+              <div className="w-1.5 h-1.5 rounded-full mt-2 shrink-0" style={{ background: i % 4 === 0 ? "#22c55e" : "#dfc8fd" }} />
             </div>
           ))}
         </motion.div>
@@ -478,17 +387,14 @@ function AIBrainFeed() {
 
 function MobileNotificationsButton() {
   return (
+    // bottom-20 so it stacks above the chatbot FAB on mobile
     <button
       className="flex items-center gap-2 px-5 py-3 rounded-2xl text-white font-bold text-sm"
-      style={{
-        background: "linear-gradient(135deg, #552299 0%, #7c3aed 100%)",
-        boxShadow: "0 8px 24px rgba(85,34,153,0.35)",
-      }}
+      style={{ background: "linear-gradient(135deg, #552299 0%, #7c3aed 100%)", boxShadow: "0 8px 24px rgba(85,34,153,0.35)" }}
     >
       <span className="material-symbols-outlined text-lg">notifications_active</span>
       Recent Activity
-      <span className="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold text-white shrink-0"
-        style={{ background: "#22c55e" }}>
+      <span className="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold text-white shrink-0" style={{ background: "#22c55e" }}>
         8
       </span>
     </button>
@@ -507,7 +413,6 @@ const WORK_TYPES = [
 
 function PostJobModal() {
   const { isOpen, setIsOpen, addJob } = usePostJob();
-
   const [form, setForm] = useState({ title: "", description: "", experience: "Mid-Level", workType: "Remote", icon: "work" });
   const [skills, setSkills] = useState([]);
   const [skillInput, setSkillInput] = useState("");
@@ -525,244 +430,138 @@ function PostJobModal() {
   };
 
   const handleSubmit = () => {
-    if (!form.title.trim()) {
-      setErrors({ title: "Job title is required" });
-      return;
-    }
+    if (!form.title.trim()) { setErrors({ title: "Job title is required" }); return; }
     addJob({ ...form, skills });
   };
 
-  const inputBase = {
-    border: "1.5px solid rgba(85,34,153,0.15)",
-    background: "#faf9fc",
-    color: "#1b1b1e",
-    outline: "none",
-  };
+  const inputBase = { border: "1.5px solid rgba(85,34,153,0.15)", background: "#faf9fc", color: "#1b1b1e", outline: "none" };
 
   return (
     <AnimatePresence>
       {isOpen && (
         <>
-          {/* Backdrop */}
-          <motion.div
-            key="backdrop"
-            className="fixed inset-0 z-50"
+          <motion.div key="backdrop" className="fixed inset-0 z-50"
             style={{ background: "rgba(0,0,0,0.48)", backdropFilter: "blur(4px)" }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            onClick={handleClose}
-          />
-
-          {/* Modal centering container */}
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }} onClick={handleClose} />
           <div className="fixed inset-0 z-[51] flex items-center justify-center p-0 sm:p-6">
-            <motion.div
-              key="modal"
+            <motion.div key="modal"
               className="relative w-full h-full sm:h-auto sm:max-h-[92vh] sm:w-[560px] bg-white sm:rounded-2xl overflow-hidden shadow-2xl flex flex-col"
-              initial={{ opacity: 0, scale: 0.93, y: 18 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.91, y: 14 }}
-              transition={{ type: "spring", stiffness: 320, damping: 28 }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* ── Modal header ── */}
-              <div className="flex items-center justify-between px-6 py-5 shrink-0"
-                style={{ borderBottom: "1px solid rgba(85,34,153,0.08)" }}>
+              initial={{ opacity: 0, scale: 0.93, y: 18 }} animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.91, y: 14 }} transition={{ type: "spring", stiffness: 320, damping: 28 }}
+              onClick={(e) => e.stopPropagation()}>
+              <div className="flex items-center justify-between px-6 py-5 shrink-0" style={{ borderBottom: "1px solid rgba(85,34,153,0.08)" }}>
                 <div className="flex items-center gap-3">
                   <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
                     style={{ background: "linear-gradient(135deg, #552299, #7c3aed)" }}>
                     <span className="material-symbols-outlined text-white text-base">work</span>
                   </div>
                   <div>
-                    <h2 className="font-extrabold text-base" style={{ fontFamily: "Manrope, sans-serif", color: "#1b1b1e" }}>
-                      Post a New Job
-                    </h2>
+                    <h2 className="font-extrabold text-base" style={{ fontFamily: "Manrope, sans-serif", color: "#1b1b1e" }}>Post a New Job</h2>
                     <p className="text-xs" style={{ color: "#7c7483" }}>Fill in the details to create a new role</p>
                   </div>
                 </div>
-                <button
-                  onClick={handleClose}
-                  className="w-8 h-8 rounded-xl flex items-center justify-center transition-colors hover:bg-gray-100"
-                >
+                <button onClick={handleClose} className="w-8 h-8 rounded-xl flex items-center justify-center transition-colors hover:bg-gray-100">
                   <span className="material-symbols-outlined text-base" style={{ color: "#7c7483" }}>close</span>
                 </button>
               </div>
 
-              {/* ── Form body ── */}
               <div className="flex-1 overflow-y-auto px-6 py-5" style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-
-                {/* Job Title */}
                 <div className="flex flex-col gap-1.5">
                   <label className="text-[10px] font-bold uppercase tracking-[0.1em]" style={{ color: "#4a4452" }}>
                     Job Title <span style={{ color: "#ba1a1a" }}>*</span>
                   </label>
-                  <input
-                    type="text"
-                    value={form.title}
+                  <input type="text" value={form.title}
                     onChange={(e) => { setForm((f) => ({ ...f, title: e.target.value })); setErrors({}); }}
                     placeholder="e.g. Senior React Developer"
                     className="w-full px-4 py-2.5 rounded-xl text-sm transition-all"
-                    style={{
-                      ...inputBase,
-                      border: errors.title ? "1.5px solid #ba1a1a" : inputBase.border,
-                    }}
+                    style={{ ...inputBase, border: errors.title ? "1.5px solid #ba1a1a" : inputBase.border }}
                     onFocus={(e) => (e.target.style.border = "1.5px solid #552299")}
-                    onBlur={(e) => (e.target.style.border = errors.title ? "1.5px solid #ba1a1a" : "1.5px solid rgba(85,34,153,0.15)")}
-                  />
+                    onBlur={(e) => (e.target.style.border = errors.title ? "1.5px solid #ba1a1a" : "1.5px solid rgba(85,34,153,0.15)")} />
                   {errors.title && <p className="text-xs" style={{ color: "#ba1a1a" }}>{errors.title}</p>}
                 </div>
-
-                {/* Job Description */}
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-[10px] font-bold uppercase tracking-[0.1em]" style={{ color: "#4a4452" }}>
-                    Job Description
-                  </label>
-                  <textarea
-                    value={form.description}
-                    onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
-                    placeholder="Describe the role, responsibilities, and requirements..."
-                    rows={3}
-                    className="w-full px-4 py-2.5 rounded-xl text-sm resize-none transition-all"
-                    style={inputBase}
+                  <label className="text-[10px] font-bold uppercase tracking-[0.1em]" style={{ color: "#4a4452" }}>Job Description</label>
+                  <textarea value={form.description} onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
+                    placeholder="Describe the role, responsibilities, and requirements..." rows={3}
+                    className="w-full px-4 py-2.5 rounded-xl text-sm resize-none transition-all" style={inputBase}
                     onFocus={(e) => (e.target.style.border = "1.5px solid #552299")}
-                    onBlur={(e) => (e.target.style.border = "1.5px solid rgba(85,34,153,0.15)")}
-                  />
+                    onBlur={(e) => (e.target.style.border = "1.5px solid rgba(85,34,153,0.15)")} />
                 </div>
-
-                {/* Experience Level */}
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-[10px] font-bold uppercase tracking-[0.1em]" style={{ color: "#4a4452" }}>
-                    Experience Level
-                  </label>
+                  <label className="text-[10px] font-bold uppercase tracking-[0.1em]" style={{ color: "#4a4452" }}>Experience Level</label>
                   <div className="flex flex-wrap gap-2">
                     {EXPERIENCE_LEVELS.map((level) => (
-                      <button
-                        key={level}
-                        type="button"
-                        onClick={() => setForm((f) => ({ ...f, experience: level }))}
+                      <button key={level} type="button" onClick={() => setForm((f) => ({ ...f, experience: level }))}
                         className="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all"
                         style={form.experience === level
                           ? { background: "#552299", color: "#fff", boxShadow: "0 2px 8px rgba(85,34,153,0.3)" }
-                          : { background: "#f5f3f7", color: "#4a4452", border: "1px solid rgba(85,34,153,0.1)" }
-                        }
-                      >
+                          : { background: "#f5f3f7", color: "#4a4452", border: "1px solid rgba(85,34,153,0.1)" }}>
                         {level}
                       </button>
                     ))}
                   </div>
                 </div>
-
-                {/* Skills tag input */}
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-[10px] font-bold uppercase tracking-[0.1em]" style={{ color: "#4a4452" }}>
-                    Skills
-                  </label>
-                  <div
-                    className="flex flex-wrap gap-2 items-center min-h-[46px] px-3 py-2 rounded-xl"
+                  <label className="text-[10px] font-bold uppercase tracking-[0.1em]" style={{ color: "#4a4452" }}>Skills</label>
+                  <div className="flex flex-wrap gap-2 items-center min-h-[46px] px-3 py-2 rounded-xl"
                     style={{ border: "1.5px solid rgba(85,34,153,0.15)", background: "#faf9fc" }}
-                    onClick={(e) => e.currentTarget.querySelector("input")?.focus()}
-                  >
+                    onClick={(e) => e.currentTarget.querySelector("input")?.focus()}>
                     {skills.map((skill) => (
-                      <span
-                        key={skill}
-                        className="inline-flex items-center gap-1 text-xs font-bold px-2.5 py-1 rounded-full"
-                        style={{ background: "#ecdcff", color: "#552299" }}
-                      >
+                      <span key={skill} className="inline-flex items-center gap-1 text-xs font-bold px-2.5 py-1 rounded-full"
+                        style={{ background: "#ecdcff", color: "#552299" }}>
                         {skill}
-                        <button
-                          type="button"
-                          onClick={() => setSkills((s) => s.filter((x) => x !== skill))}
-                          className="leading-none hover:opacity-60 transition-opacity"
-                        >
+                        <button type="button" onClick={() => setSkills((s) => s.filter((x) => x !== skill))}
+                          className="leading-none hover:opacity-60 transition-opacity">
                           <span className="material-symbols-outlined" style={{ fontSize: 12 }}>close</span>
                         </button>
                       </span>
                     ))}
-                    <input
-                      type="text"
-                      value={skillInput}
-                      onChange={(e) => setSkillInput(e.target.value)}
+                    <input type="text" value={skillInput} onChange={(e) => setSkillInput(e.target.value)}
                       onKeyDown={handleSkillKey}
                       placeholder={skills.length === 0 ? "Type a skill and press Enter..." : "Add more..."}
-                      className="flex-1 min-w-[120px] bg-transparent text-sm focus:outline-none"
-                      style={{ color: "#1b1b1e" }}
-                    />
+                      className="flex-1 min-w-[120px] bg-transparent text-sm focus:outline-none" style={{ color: "#1b1b1e" }} />
                   </div>
                   <p className="text-[10px]" style={{ color: "#a09ab0" }}>Press Enter or comma to add a skill tag</p>
                 </div>
-
-                {/* Work Type */}
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-[10px] font-bold uppercase tracking-[0.1em]" style={{ color: "#4a4452" }}>
-                    Work Type
-                  </label>
+                  <label className="text-[10px] font-bold uppercase tracking-[0.1em]" style={{ color: "#4a4452" }}>Work Type</label>
                   <div className="grid grid-cols-3 gap-2">
                     {WORK_TYPES.map(({ id, icon }) => (
-                      <button
-                        key={id}
-                        type="button"
-                        onClick={() => setForm((f) => ({ ...f, workType: id }))}
+                      <button key={id} type="button" onClick={() => setForm((f) => ({ ...f, workType: id }))}
                         className="flex flex-col items-center gap-1.5 py-3.5 rounded-xl transition-all"
                         style={form.workType === id
                           ? { background: "#552299", color: "#fff", border: "2px solid #552299", boxShadow: "0 2px 12px rgba(85,34,153,0.3)" }
-                          : { background: "#faf9fc", color: "#4a4452", border: "2px solid rgba(85,34,153,0.1)" }
-                        }
-                      >
+                          : { background: "#faf9fc", color: "#4a4452", border: "2px solid rgba(85,34,153,0.1)" }}>
                         <span className="material-symbols-outlined text-xl">{icon}</span>
                         <span className="text-xs font-bold">{id}</span>
                       </button>
                     ))}
                   </div>
                 </div>
-
-                {/* Role Icon picker */}
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-[10px] font-bold uppercase tracking-[0.1em]" style={{ color: "#4a4452" }}>
-                    Role Icon
-                  </label>
+                  <label className="text-[10px] font-bold uppercase tracking-[0.1em]" style={{ color: "#4a4452" }}>Role Icon</label>
                   <div className="flex gap-2 flex-wrap">
                     {ICONS.map((ico) => (
-                      <button
-                        key={ico}
-                        type="button"
-                        onClick={() => setForm((f) => ({ ...f, icon: ico }))}
+                      <button key={ico} type="button" onClick={() => setForm((f) => ({ ...f, icon: ico }))}
                         className="w-10 h-10 rounded-xl flex items-center justify-center transition-all"
                         style={form.icon === ico
                           ? { background: "#552299", boxShadow: "0 2px 8px rgba(85,34,153,0.3)" }
-                          : { background: "#f5f3f7", border: "1px solid rgba(85,34,153,0.1)" }
-                        }
-                      >
-                        <span className="material-symbols-outlined text-lg"
-                          style={{ color: form.icon === ico ? "#fff" : "#552299" }}>
-                          {ico}
-                        </span>
+                          : { background: "#f5f3f7", border: "1px solid rgba(85,34,153,0.1)" }}>
+                        <span className="material-symbols-outlined text-lg" style={{ color: form.icon === ico ? "#fff" : "#552299" }}>{ico}</span>
                       </button>
                     ))}
                   </div>
                 </div>
               </div>
 
-              {/* ── Modal footer ── */}
-              <div
-                className="px-6 py-4 flex items-center justify-end gap-3 shrink-0"
-                style={{ borderTop: "1px solid rgba(85,34,153,0.08)", background: "#faf9fc" }}
-              >
-                <button
-                  onClick={handleClose}
-                  className="px-5 py-2.5 rounded-xl text-sm font-bold transition-colors hover:bg-gray-200"
-                  style={{ color: "#4a4452", background: "#efedf1" }}
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={handleSubmit}
+              <div className="px-6 py-4 flex items-center justify-end gap-3 shrink-0"
+                style={{ borderTop: "1px solid rgba(85,34,153,0.08)", background: "#faf9fc" }}>
+                <button onClick={handleClose} className="px-5 py-2.5 rounded-xl text-sm font-bold transition-colors hover:bg-gray-200"
+                  style={{ color: "#4a4452", background: "#efedf1" }}>Cancel</button>
+                <button onClick={handleSubmit}
                   className="flex items-center gap-2 px-6 py-2.5 rounded-xl text-white text-sm font-bold transition-all hover:opacity-90 active:scale-95"
-                  style={{
-                    background: "linear-gradient(135deg, #552299 0%, #7c3aed 100%)",
-                    boxShadow: "0 4px 14px rgba(85,34,153,0.3)",
-                  }}
-                >
+                  style={{ background: "linear-gradient(135deg, #552299 0%, #7c3aed 100%)", boxShadow: "0 4px 14px rgba(85,34,153,0.3)" }}>
                   <span className="material-symbols-outlined text-base">send</span>
                   Post Job
                 </button>
@@ -772,6 +571,291 @@ function PostJobModal() {
         </>
       )}
     </AnimatePresence>
+  );
+}
+
+// ─── AIChatbot ────────────────────────────────────────────────────────────────
+
+function AIChatbot() {
+  const navigate = useNavigate();
+  const { setIsOpen: openPostJob } = usePostJob();
+
+  const [open, setOpen] = useState(false);
+  const [messages, setMessages] = useState(INITIAL_MESSAGES);
+  const [input, setInput] = useState("");
+  const [typing, setTyping] = useState(false);
+  const messagesRef = useRef(null);
+
+  // Auto-scroll to bottom on new messages
+  useEffect(() => {
+    if (messagesRef.current) {
+      messagesRef.current.scrollTo({ top: messagesRef.current.scrollHeight, behavior: "smooth" });
+    }
+  }, [messages, typing]);
+
+  const addAIMessage = (text) => {
+    setMessages((prev) => [...prev, { id: Date.now(), role: "ai", text, ts: "just now" }]);
+  };
+
+  const getAIResponse = (msg) => {
+    const m = msg.toLowerCase();
+    if (/pipeline|hiring|team/.test(m))
+      return { text: "Your pipeline has 4 active roles with 3,557 shortlisted candidates. Navigate to Hiring to manage your full team.", nav: () => setTimeout(() => navigate("/hiring"), 600) };
+    if (/post|new job|create job/.test(m))
+      return { text: "Opening the Post Job form for you! Fill in the details to publish a new role.", nav: () => setTimeout(() => openPostJob(true), 500) };
+    if (/analytics|insight|stat|report/.test(m))
+      return { text: "Navigating to Analytics — you'll find funnel metrics, velocity scores, and AI impact data there.", nav: () => setTimeout(() => navigate("/analytics"), 600) };
+    if (/candidate|match|score|top/.test(m))
+      return { text: "You have 5,451 processed candidates with 94% AI accuracy this cycle. 3,557 have been shortlisted across all active roles.", nav: null };
+    if (/billing|plan|cost|price/.test(m))
+      return { text: "You're on the Pro plan. Head to Billing to review usage, upgrade, or manage your subscription.", nav: () => setTimeout(() => navigate("/billing"), 600) };
+    if (/setting|profile|config/.test(m))
+      return { text: "You can manage your profile, AI settings, team permissions, and integrations in the Settings page.", nav: () => setTimeout(() => navigate("/settings"), 600) };
+    return { text: "I'm analyzing your pipeline data. Our AI has processed 5,451 candidates across 7 active roles this week. Is there something specific I can help with?", nav: null };
+  };
+
+  const handleSend = (text = input) => {
+    if (!text.trim()) return;
+    setMessages((prev) => [...prev, { id: Date.now(), role: "user", text: text.trim(), ts: "just now" }]);
+    setInput("");
+    setTyping(true);
+    setTimeout(() => {
+      setTyping(false);
+      const { text: aiText, nav } = getAIResponse(text);
+      addAIMessage(aiText);
+      nav?.();
+    }, 1200);
+  };
+
+  const handleSuggestion = ({ label, action }) => {
+    handleSend(label);
+    if (action === "pipeline")  setTimeout(() => navigate("/hiring"),          1900);
+    if (action === "analytics") setTimeout(() => navigate("/analytics"),       1900);
+    if (action === "candidates") setTimeout(() => navigate("/jobs/ai-engineer"), 1900);
+    // "post" handled by keyword match inside getAIResponse
+  };
+
+  const userHasSent = messages.some((m) => m.role === "user");
+
+  return (
+    <>
+      {/* ── Floating Action Button ── */}
+      <motion.button
+        className="fixed bottom-6 right-6 z-[49] w-14 h-14 rounded-full flex items-center justify-center text-white"
+        style={{
+          background: "linear-gradient(135deg, #552299 0%, #7c3aed 100%)",
+          boxShadow: open
+            ? "0 8px 32px rgba(85,34,153,0.55)"
+            : "0 8px 24px rgba(85,34,153,0.4)",
+        }}
+        whileHover={{ scale: 1.08 }}
+        whileTap={{ scale: 0.93 }}
+        onClick={() => setOpen((o) => !o)}
+        title="Chat with Renate AI"
+      >
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.span
+            key={open ? "close" : "chat"}
+            className="material-symbols-outlined"
+            style={{ fontSize: 24 }}
+            initial={{ opacity: 0, rotate: -25, scale: 0.7 }}
+            animate={{ opacity: 1, rotate: 0, scale: 1 }}
+            exit={{ opacity: 0, rotate: 25, scale: 0.7 }}
+            transition={{ duration: 0.16 }}
+          >
+            {open ? "close" : "smart_toy"}
+          </motion.span>
+        </AnimatePresence>
+
+        {/* Unread / online dot */}
+        {!open && (
+          <span
+            className="absolute top-0.5 right-0.5 w-3.5 h-3.5 rounded-full border-2 border-white"
+            style={{ background: "#22c55e", animation: "pulse-dot 2s ease-in-out infinite" }}
+          />
+        )}
+      </motion.button>
+
+      {/* ── Chat Window ── */}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            className="fixed z-[48] flex flex-col right-2 left-2 sm:left-auto sm:right-6 sm:w-[360px]"
+            style={{
+              bottom: 88,
+              maxHeight: "min(520px, calc(100vh - 110px))",
+              background: "rgba(248, 247, 252, 0.92)",
+              backdropFilter: "blur(22px)",
+              WebkitBackdropFilter: "blur(22px)",
+              border: "1px solid rgba(255,255,255,0.7)",
+              boxShadow: "0 24px 60px rgba(85,34,153,0.18), 0 4px 20px rgba(0,0,0,0.07), inset 0 1px 0 rgba(255,255,255,0.9)",
+              borderRadius: 20,
+              overflow: "hidden",
+            }}
+            initial={{ opacity: 0, scale: 0.88, y: 24 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.88, y: 20 }}
+            transition={{ type: "spring", stiffness: 340, damping: 28 }}
+          >
+            {/* Header */}
+            <div className="flex items-center gap-3 px-4 py-3.5 shrink-0"
+              style={{
+                borderBottom: "1px solid rgba(85,34,153,0.08)",
+                background: "rgba(255,255,255,0.8)",
+              }}
+            >
+              <div className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0"
+                style={{ background: "linear-gradient(135deg, #552299, #7c3aed)" }}>
+                <span className="material-symbols-outlined text-white" style={{ fontSize: 16 }}>smart_toy</span>
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-extrabold leading-tight" style={{ fontFamily: "Manrope, sans-serif", color: "#1b1b1e" }}>
+                  Renate AI Assistant
+                </p>
+                <div className="flex items-center gap-1.5 mt-0.5">
+                  <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#22c55e", display: "inline-block", flexShrink: 0 }} />
+                  <span className="text-[10px] font-bold" style={{ color: "#22c55e" }}>Online · Always available</span>
+                </div>
+              </div>
+              <button
+                onClick={() => setOpen(false)}
+                className="w-7 h-7 rounded-lg flex items-center justify-center transition-colors hover:bg-black/8"
+              >
+                <span className="material-symbols-outlined" style={{ fontSize: 18, color: "#7c7483" }}>close</span>
+              </button>
+            </div>
+
+            {/* Messages */}
+            <div
+              ref={messagesRef}
+              className="flex-1 overflow-y-auto px-4 py-4"
+              style={{ display: "flex", flexDirection: "column", gap: 10, minHeight: 0 }}
+            >
+              {messages.map((msg) => (
+                <motion.div
+                  key={msg.id}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.22 }}
+                  className={`flex items-end gap-2 ${msg.role === "user" ? "justify-end" : "justify-start"}`}
+                >
+                  {msg.role === "ai" && (
+                    <div className="w-6 h-6 rounded-lg flex items-center justify-center shrink-0 mb-0.5"
+                      style={{ background: "rgba(85,34,153,0.1)" }}>
+                      <span className="material-symbols-outlined" style={{ fontSize: 13, color: "#552299" }}>smart_toy</span>
+                    </div>
+                  )}
+                  <div
+                    className="max-w-[82%] px-3.5 py-2.5 text-xs leading-relaxed"
+                    style={msg.role === "ai" ? {
+                      background: "rgba(255,255,255,0.85)",
+                      color: "#1b1b1e",
+                      borderRadius: "12px 12px 12px 3px",
+                      border: "1px solid rgba(85,34,153,0.08)",
+                      boxShadow: "0 1px 4px rgba(0,0,0,0.04)",
+                    } : {
+                      background: "linear-gradient(135deg, #552299, #7c3aed)",
+                      color: "#fff",
+                      borderRadius: "12px 12px 3px 12px",
+                      boxShadow: "0 2px 8px rgba(85,34,153,0.3)",
+                    }}
+                  >
+                    {msg.text}
+                  </div>
+                </motion.div>
+              ))}
+
+              {/* Quick suggestions (before user sends first message) */}
+              {!userHasSent && (
+                <motion.div
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                  className="flex flex-wrap gap-1.5 pt-1"
+                >
+                  {QUICK_SUGGESTIONS.map(({ label, icon, action }) => (
+                    <button
+                      key={label}
+                      onClick={() => handleSuggestion({ label, action })}
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-bold transition-all hover:scale-105 active:scale-95"
+                      style={{
+                        background: "rgba(255,255,255,0.9)",
+                        color: "#552299",
+                        border: "1px solid rgba(85,34,153,0.18)",
+                        boxShadow: "0 1px 4px rgba(85,34,153,0.08)",
+                      }}
+                    >
+                      <span className="material-symbols-outlined" style={{ fontSize: 13 }}>{icon}</span>
+                      {label}
+                    </button>
+                  ))}
+                </motion.div>
+              )}
+
+              {/* Typing indicator */}
+              {typing && (
+                <motion.div
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="flex items-end gap-2"
+                >
+                  <div className="w-6 h-6 rounded-lg flex items-center justify-center shrink-0"
+                    style={{ background: "rgba(85,34,153,0.1)" }}>
+                    <span className="material-symbols-outlined" style={{ fontSize: 13, color: "#552299" }}>smart_toy</span>
+                  </div>
+                  <div className="px-3.5 py-3 flex items-center gap-1"
+                    style={{ background: "rgba(255,255,255,0.85)", borderRadius: "12px 12px 12px 3px", border: "1px solid rgba(85,34,153,0.08)" }}>
+                    {[0, 1, 2].map((i) => (
+                      <span key={i} style={{
+                        display: "inline-block", width: 6, height: 6, borderRadius: "50%",
+                        background: "#552299", opacity: 0.5,
+                        animation: "typing-dot 1.2s ease-in-out infinite",
+                        animationDelay: `${i * 0.18}s`,
+                      }} />
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+            </div>
+
+            {/* Input bar */}
+            <div className="px-3 pb-3 pt-2 shrink-0"
+              style={{ borderTop: "1px solid rgba(85,34,153,0.07)", background: "rgba(255,255,255,0.7)" }}>
+              <div className="flex items-center gap-2 px-3 py-2 rounded-xl"
+                style={{ background: "rgba(255,255,255,0.9)", border: "1.5px solid rgba(85,34,153,0.12)", boxShadow: "0 1px 4px rgba(85,34,153,0.05)" }}>
+                <input
+                  type="text"
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && !typing && handleSend()}
+                  placeholder="Ask Renate AI anything..."
+                  className="flex-1 bg-transparent text-xs focus:outline-none"
+                  style={{ color: "#1b1b1e" }}
+                />
+                <motion.button
+                  whileTap={{ scale: 0.85 }}
+                  onClick={() => !typing && handleSend()}
+                  disabled={typing || !input.trim()}
+                  className="w-7 h-7 rounded-lg flex items-center justify-center transition-all"
+                  style={{
+                    background: input.trim() && !typing ? "#552299" : "rgba(85,34,153,0.12)",
+                    cursor: input.trim() && !typing ? "pointer" : "default",
+                  }}
+                >
+                  <span className="material-symbols-outlined"
+                    style={{ fontSize: 15, color: input.trim() && !typing ? "#fff" : "#552299" }}>
+                    send
+                  </span>
+                </motion.button>
+              </div>
+              <p className="text-center text-[9px] mt-1.5 font-medium" style={{ color: "#a09ab0" }}>
+                Powered by Renate AI · Not real responses
+              </p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }
 
@@ -785,28 +869,29 @@ export default function LandingPage() {
           0%, 100% { opacity: 1; transform: scale(1); }
           50%       { opacity: 0.4; transform: scale(0.6); }
         }
+        @keyframes typing-dot {
+          0%, 60%, 100% { opacity: 0.25; transform: translateY(0); }
+          30%            { opacity: 1;    transform: translateY(-3px); }
+        }
       `}</style>
 
       <PostJobModal />
+      <AIChatbot />
 
       <main className="max-w-screen-2xl mx-auto px-8 py-10" style={{ background: "#F8F9FB", minHeight: "100vh" }}>
         <div className="flex flex-col xl:flex-row gap-8 items-start">
-
-          {/* ── Left column ── */}
           <div className="flex-1 min-w-0 flex flex-col gap-8">
             <PulseHero />
             <TickerRow />
             <BentoGrid />
           </div>
-
-          {/* ── Right sidebar (desktop only) ── */}
           <aside className="hidden xl:flex flex-col w-[272px] shrink-0 self-stretch">
             <AIBrainFeed />
           </aside>
         </div>
 
-        {/* ── Mobile notification button ── */}
-        <div className="xl:hidden fixed bottom-6 right-6 z-50">
+        {/* Mobile notification button — stacked above chatbot FAB */}
+        <div className="xl:hidden fixed bottom-20 right-6 z-50">
           <MobileNotificationsButton />
         </div>
       </main>
