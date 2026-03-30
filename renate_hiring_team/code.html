@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Hiring Team &amp; Organization | Renate AI</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary-fixed-dim": "#ffb778",
+              "secondary": "#685684",
+              "on-secondary-container": "#63517f",
+              "primary": "#3d007d",
+              "on-secondary-fixed": "#23123c",
+              "secondary-fixed": "#ecdcff",
+              "inverse-surface": "#303033",
+              "on-secondary-fixed-variant": "#503e6a",
+              "error-container": "#ffdad6",
+              "surface-container-high": "#e9e7eb",
+              "on-primary-fixed": "#280056",
+              "on-surface": "#1b1b1e",
+              "primary-fixed": "#ecdcff",
+              "on-primary-container": "#c39bff",
+              "on-tertiary-container": "#e4a063",
+              "on-primary-fixed-variant": "#5a299e",
+              "surface-container-low": "#f5f3f7",
+              "on-tertiary-fixed-variant": "#6b3b04",
+              "surface-variant": "#e3e2e6",
+              "outline-variant": "#cdc3d4",
+              "tertiary": "#452300",
+              "tertiary-container": "#653600",
+              "surface": "#faf9fc",
+              "on-tertiary": "#ffffff",
+              "secondary-container": "#dfc8fd",
+              "inverse-on-surface": "#f2f0f4",
+              "on-error-container": "#93000a",
+              "surface-dim": "#dbd9dd",
+              "surface-container-lowest": "#ffffff",
+              "surface-tint": "#7344b8",
+              "on-secondary": "#ffffff",
+              "tertiary-fixed": "#ffdcc1",
+              "surface-container-highest": "#e3e2e6",
+              "inverse-primary": "#d6baff",
+              "secondary-fixed-dim": "#d3bdf2",
+              "primary-container": "#552299",
+              "on-surface-variant": "#4a4452",
+              "surface-bright": "#faf9fc",
+              "on-primary": "#ffffff",
+              "on-background": "#1b1b1e",
+              "error": "#ba1a1a",
+              "on-error": "#ffffff",
+              "primary-fixed-dim": "#d6baff",
+              "outline": "#7c7483",
+              "on-tertiary-fixed": "#2e1500",
+              "surface-container": "#efedf1",
+              "background": "#faf9fc"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .glass-card {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(24px);
+      }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface selection:bg-primary-fixed selection:text-primary">
+<!-- SideNavBar Shell -->
+<aside class="fixed left-0 top-0 h-full w-64 bg-[#552299] dark:bg-[#3d007d] flex flex-col py-6 shadow-[0px_20px_40px_rgba(85,34,153,0.06)] z-50">
+<!-- Brand Header -->
+<div class="px-6 mb-10 flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center overflow-hidden">
+<img alt="Renate AI Logo" class="w-full h-full object-cover" data-alt="Minimalist abstract wing logo design in white and deep purple on a clean professional background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJLEn4qwpLGjZAU7u5E_0lEPsIeucl9RpUE08_LhWSI3BBMBKx3z-_ATZjYlYm7eQbJwgE4W01R3PeC19N7K7Keq_08sPpQADWNKkKEdPAeAoKUyRmx5mN_MUWdJkuEMjjbgXO1jPypdyO8O_Setag31MBiuXX2GeTdZB9d6mBl4rqA8IXLOLbwZLW1PpmMmM7_icaImldDJ6IulwFNKrXU54LiHOb-ZqX0HzKytWODwqAHvUibr9vk8EzQG6DLbNk6DGC57LnOlHN"/>
+</div>
+<div class="flex flex-col">
+<span class="text-2xl font-['Manrope'] font-bold tracking-tight text-white">Renate AI</span>
+<span class="text-[10px] uppercase tracking-widest text-purple-100/50 font-medium">Enterprise Suite</span>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="flex-1 space-y-1">
+<a class="text-purple-100/70 hover:text-white hover:bg-white/5 transition-all duration-200 rounded-xl mx-2 px-4 py-3 flex items-center gap-3 group" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-['Manrope'] font-bold">Home</span>
+</a>
+<!-- Active State: Hiring -->
+<a class="bg-white/10 text-white rounded-xl mx-2 px-4 py-3 flex items-center gap-3 scale-95 active:scale-90 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">work</span>
+<span class="font-['Manrope'] font-bold">Hiring</span>
+</a>
+<a class="text-purple-100/70 hover:text-white hover:bg-white/5 transition-all duration-200 rounded-xl mx-2 px-4 py-3 flex items-center gap-3" href="#">
+<span class="material-symbols-outlined">insights</span>
+<span class="font-['Manrope'] font-bold">Analytics</span>
+</a>
+<a class="text-purple-100/70 hover:text-white hover:bg-white/5 transition-all duration-200 rounded-xl mx-2 px-4 py-3 flex items-center gap-3" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-['Manrope'] font-bold">Billing</span>
+</a>
+<a class="text-purple-100/70 hover:text-white hover:bg-white/5 transition-all duration-200 rounded-xl mx-2 px-4 py-3 flex items-center gap-3" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-['Manrope'] font-bold">Settings</span>
+</a>
+</nav>
+<!-- Bottom Profile -->
+<div class="px-4 mt-auto">
+<div class="p-4 rounded-xl bg-white/5 flex items-center gap-3">
+<div class="w-8 h-8 rounded-full overflow-hidden border border-white/20">
+<img alt="Admin Avatar" class="w-full h-full object-cover" data-alt="Professional headshot of a female executive with a confident smile, warm studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxTkoufQDXjNh4r9_SHi191RSPXkyd2hJiflDjjdFan8wTASvkBK9_61zXXN-a9s8wsw7NA_yvhi52S-7cjh3QZbSDCnk_riagYZ7C2toJ2N5OUX86HP_RNvmR2ZoGQKulEH0MHNA2bZVYhTLVYrz78H2AbFMl9-B7IHCG_PIEMZcrsNwbqO61FlQ6tx4uaVLGz0VlWmZkdN9IiNGm7pwWcUNOL11xpFQutI8qFXscxlE7PQyQqatX1Q2CRus4z4eY503Iwd0Net56"/>
+</div>
+<div class="flex flex-col truncate">
+<span class="text-xs font-bold text-white truncate">Admin User</span>
+<span class="text-[10px] text-purple-100/50 uppercase tracking-tight">Sovereign Tier</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-64 min-h-screen">
+<!-- TopNavBar Shell -->
+<header class="sticky top-0 right-0 w-full z-40 flex justify-between items-center px-8 h-16 bg-white/70 backdrop-blur-xl transition-opacity hover:opacity-100">
+<div class="flex items-center gap-4 flex-1">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container-highest border-none rounded-xl text-sm focus:ring-2 focus:ring-primary/20 focus:bg-surface-container-lowest transition-all" placeholder="Search talent or team members..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-4 text-on-surface-variant">
+<button class="hover:text-primary transition-colors flex items-center">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="hover:text-primary transition-colors flex items-center">
+<span class="material-symbols-outlined">help</span>
+</button>
+</div>
+<div class="h-8 w-px bg-outline-variant/20"></div>
+<div class="flex items-center gap-3">
+<span class="font-['Inter'] text-sm font-medium text-on-surface">System View</span>
+<div class="w-8 h-8 rounded-lg bg-surface-container-low flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-sm">apps</span>
+</div>
+</div>
+</div>
+</header>
+<!-- Canvas -->
+<div class="p-12 space-y-12">
+<!-- Header Section with CTA -->
+<div class="flex justify-between items-end">
+<div class="max-w-2xl">
+<span class="text-primary font-headline font-bold text-sm tracking-widest uppercase mb-2 block">Organization Hierarchy</span>
+<h1 class="text-5xl font-headline font-extrabold text-primary tracking-tight leading-tight">Hiring Team &amp; Organization</h1>
+<p class="mt-4 text-on-surface-variant body-lg leading-relaxed">Manage your executive search collective. Assign roles, monitor active pipelines, and orchestrate the talent acquisition flow from a centralized command center.</p>
+</div>
+<button class="bg-primary-container text-on-primary font-headline font-bold px-6 py-3 rounded-xl flex items-center gap-2 hover:bg-primary transition-colors shadow-lg shadow-primary/10 active:scale-95 duration-200">
+<span class="material-symbols-outlined">person_add</span>
+<span>Add Team Member</span>
+</button>
+</div>
+<!-- Bento Grid Layout for Team -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Lead Card -->
+<div class="col-span-1 md:col-span-2 bg-surface-container-lowest rounded-xl p-8 shadow-[0px_20px_40px_rgba(85,34,153,0.06)] relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-[100px] -mr-8 -mt-8 group-hover:bg-primary/10 transition-colors"></div>
+<div class="flex items-start gap-8">
+<div class="relative">
+<img alt="Lead Profile" class="w-32 h-32 rounded-xl object-cover shadow-md" data-alt="Close up portrait of a senior male HR executive with glasses, professional suit, neutral modern background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDsgVaWgtfOUBw20jxa4-Hds3Y6PQIzIDGvwTOVAyldOmijn1Hk8EEPLWVgvz7FPHbTlY8jimiceAZr3iGxnxII5tpj-U9hIOLyax7Z2WcFfxbkf7rcXE6RnDxSjJQ1QheKu35DzMmr8xqtby7APZLDm2wPgyRSIp7bHIvGpu15yCb5tPnLMI0SM0ntEBwtmaMMhY5nLnxSIbAatKLeIQLJTztqm0q4hB-hScRULBExcV_hlHmVH-1enWL1970Z7O3Mv5kJOl-6pBks"/>
+<div class="absolute -bottom-2 -right-2 bg-primary text-white p-1.5 rounded-lg border-2 border-white">
+<span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+<div class="flex-1 space-y-4">
+<div>
+<div class="flex items-center gap-2">
+<h3 class="text-2xl font-headline font-bold text-primary">Marcus Thorne</h3>
+<span class="bg-secondary-container text-on-secondary-container text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-tighter">Lead</span>
+</div>
+<p class="text-on-surface-variant font-medium">Sr. HR Manager</p>
+</div>
+<div class="flex gap-12">
+<div class="space-y-1">
+<span class="text-[10px] uppercase tracking-widest text-outline">Active Roles</span>
+<p class="text-2xl font-headline font-extrabold text-primary">12</p>
+</div>
+<div class="space-y-1">
+<span class="text-[10px] uppercase tracking-widest text-outline">Time to Hire</span>
+<p class="text-2xl font-headline font-extrabold text-primary">18d</p>
+</div>
+<div class="space-y-1">
+<span class="text-[10px] uppercase tracking-widest text-outline">Team Size</span>
+<p class="text-2xl font-headline font-extrabold text-primary">08</p>
+</div>
+</div>
+<div class="pt-4 flex gap-3">
+<button class="text-primary font-bold text-sm hover:underline flex items-center gap-1 group/btn">
+                                    View Performance <span class="material-symbols-outlined text-sm group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- AI Insight Chip/Widget -->
+<div class="col-span-1 bg-secondary-container rounded-xl p-8 flex flex-col justify-between shadow-lg shadow-primary/5 border-l-4 border-primary">
+<div class="space-y-4">
+<div class="flex items-center gap-2 text-on-secondary-container">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<span class="text-xs font-bold uppercase tracking-widest">AI Team Insight</span>
+</div>
+<p class="text-on-secondary-container text-lg font-medium leading-relaxed italic">"Marcus has successfully closed 3 high-priority VP roles this month. Suggest reassigning Sourcing Specialist to the upcoming Q3 Tech Expansion."</p>
+</div>
+<div class="pt-6">
+<div class="h-1.5 w-full bg-white/30 rounded-full overflow-hidden">
+<div class="h-full bg-primary w-3/4 rounded-full"></div>
+</div>
+<p class="mt-2 text-[10px] text-on-secondary-container/70 font-bold uppercase tracking-widest">Efficiency Benchmark: 82%</p>
+</div>
+</div>
+<!-- HR Manager Card -->
+<div class="col-span-1 bg-surface-container-lowest rounded-xl p-6 shadow-[0px_20px_40px_rgba(85,34,153,0.06)] hover:bg-surface-container-low transition-colors duration-300">
+<div class="flex items-center gap-4 mb-6">
+<img alt="Recruiter Profile" class="w-16 h-16 rounded-xl object-cover" data-alt="Portrait of a female professional with an engaging expression, soft natural lighting, creative office environment background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMCHRwzMzSdWr4pB1i8yvdlyZmbTaomnuY_gXFvGfBS7Mleiswgg3QKKfWJT0H-KXYgNdj-AGDRrnxnJ3dTrTbhn8UEn1UBG0HTqewj72ufTHPONTZjo-AKeoqxRMR345OcLGd9YG6CD-9i1wr2nTEvLZpWIxRzGBp3EQjllG3aXNlc2c6JqMBC22pKzRtEAN9EqugVUE5Amklp8zqPYfxUKb6ZjnPiM6aH8EVoYDYUTw-z6HOycnGBBrC0uoO5UkguUs8MkCFYk7M"/>
+<div>
+<h4 class="font-headline font-bold text-lg text-primary">Elena Rodriguez</h4>
+<p class="text-sm text-on-surface-variant font-medium">HR Manager</p>
+</div>
+</div>
+<div class="space-y-3">
+<div class="flex justify-between items-center px-4 py-3 bg-surface rounded-lg">
+<span class="text-xs text-on-surface-variant">Active Recruiter</span>
+<span class="text-sm font-bold text-primary">7 Roles</span>
+</div>
+<div class="flex justify-between items-center px-4 py-3 bg-surface rounded-lg">
+<span class="text-xs text-on-surface-variant">Success Rate</span>
+<span class="text-sm font-bold text-primary">94%</span>
+</div>
+</div>
+<button class="w-full mt-6 py-2 rounded-lg border border-outline-variant/20 text-primary text-xs font-bold uppercase tracking-widest hover:bg-primary-fixed transition-colors">Manage Pipeline</button>
+</div>
+<!-- HR Associate Card -->
+<div class="col-span-1 bg-surface-container-lowest rounded-xl p-6 shadow-[0px_20px_40px_rgba(85,34,153,0.06)] hover:bg-surface-container-low transition-colors duration-300">
+<div class="flex items-center gap-4 mb-6">
+<img alt="Associate Profile" class="w-16 h-16 rounded-xl object-cover" data-alt="Portrait of a young male professional, smiling, bright studio lighting, minimalist clean background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAw1yWyb5__WH_U6Zo0dMpuAcUATqHfrO2qNkqMrIo-MBOgTkvcl7Pci7gXVi-19KLRG8FhRXPhB1RkYzslduxmF2fp9WeWIor1bHEelNS35zm55D-8tlk6CMd5LowncebXUzfzyhDHpA7QfyVIxSOQOEyM94cnAcKErG0-I3eRxYeyp9M-UzJLURzBVwd1W9l9ZTDCT2GMMn5VBVf9isyOFpFj_-T55jTCVtVR8XdrH07bDVPApHrqNOVhAkrARoz5JF9ISbkqwwrE"/>
+<div>
+<h4 class="font-headline font-bold text-lg text-primary">Julian Chen</h4>
+<p class="text-sm text-on-surface-variant font-medium">HR Associate</p>
+</div>
+</div>
+<div class="space-y-3">
+<div class="flex justify-between items-center px-4 py-3 bg-surface rounded-lg">
+<span class="text-xs text-on-surface-variant">Sourcing Specialist</span>
+<span class="text-sm font-bold text-primary">45 Leads</span>
+</div>
+<div class="flex justify-between items-center px-4 py-3 bg-surface rounded-lg">
+<span class="text-xs text-on-surface-variant">Match Accuracy</span>
+<span class="text-sm font-bold text-primary">88%</span>
+</div>
+</div>
+<button class="w-full mt-6 py-2 rounded-lg border border-outline-variant/20 text-primary text-xs font-bold uppercase tracking-widest hover:bg-primary-fixed transition-colors">View Sources</button>
+</div>
+<!-- Empty State / Add Card -->
+<div class="col-span-1 border-2 border-dashed border-outline-variant/30 rounded-xl p-6 flex flex-col items-center justify-center text-center space-y-4 group cursor-pointer hover:border-primary/50 transition-all">
+<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center group-hover:bg-primary-fixed transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors">add</span>
+</div>
+<div>
+<p class="font-headline font-bold text-primary">Expand Team</p>
+<p class="text-xs text-on-surface-variant">Add a new coordinator or lead</p>
+</div>
+</div>
+</div>
+<!-- Organization Chart / Recent Activity Asymmetric Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<div class="lg:col-span-8 bg-surface-container-low rounded-xl p-8 space-y-6">
+<h3 class="font-headline font-extrabold text-2xl text-primary">Recent Team Activity</h3>
+<div class="space-y-2">
+<!-- Activity Item 1 -->
+<div class="flex items-center gap-6 p-4 bg-surface-container-lowest rounded-lg hover:shadow-sm transition-shadow">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">person_search</span>
+</div>
+<div class="flex-1">
+<p class="text-sm font-medium text-on-surface"><strong>Elena Rodriguez</strong> sourcing candidates for <span class="text-primary font-bold">Principal Product Designer</span></p>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-widest mt-1">2 hours ago</p>
+</div>
+</div>
+<!-- Activity Item 2 -->
+<div class="flex items-center gap-6 p-4 bg-surface-container-lowest rounded-lg hover:shadow-sm transition-shadow">
+<div class="w-10 h-10 rounded-full bg-tertiary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-tertiary">check_circle</span>
+</div>
+<div class="flex-1">
+<p class="text-sm font-medium text-on-surface"><strong>Julian Chen</strong> moved 5 candidates to <span class="text-primary font-bold">Interview Stage</span></p>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-widest mt-1">5 hours ago</p>
+</div>
+</div>
+<!-- Activity Item 3 -->
+<div class="flex items-center gap-6 p-4 bg-surface-container-lowest rounded-lg hover:shadow-sm transition-shadow">
+<div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">edit</span>
+</div>
+<div class="flex-1">
+<p class="text-sm font-medium text-on-surface"><strong>Marcus Thorne</strong> updated the <span class="text-primary font-bold">Hiring Policy</span> for EMEA</p>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-widest mt-1">Yesterday</p>
+</div>
+</div>
+</div>
+</div>
+<div class="lg:col-span-4 space-y-8">
+<div class="bg-primary-container rounded-xl p-8 text-on-primary relative overflow-hidden">
+<div class="relative z-10">
+<h4 class="font-headline font-bold text-xl mb-4">Hiring Capacity</h4>
+<div class="flex items-baseline gap-2 mb-2">
+<span class="text-4xl font-extrabold">84%</span>
+<span class="text-sm opacity-80">Utilization</span>
+</div>
+<p class="text-xs opacity-70 leading-relaxed">Your team is currently operating at near peak capacity. We recommend onboarding one additional Recruiter for the upcoming expansion.</p>
+</div>
+<!-- Decorative background element -->
+<div class="absolute -bottom-10 -right-10 w-40 h-40 bg-white/10 rounded-full blur-2xl"></div>
+</div>
+<div class="bg-surface-container-high rounded-xl p-8">
+<h4 class="font-headline font-bold text-primary mb-6">Quick Filters</h4>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1.5 bg-white text-primary text-[10px] font-bold rounded-full border border-primary/10 cursor-pointer hover:bg-primary hover:text-white transition-colors">By Performance</span>
+<span class="px-3 py-1.5 bg-white text-primary text-[10px] font-bold rounded-full border border-primary/10 cursor-pointer hover:bg-primary hover:text-white transition-colors">By Load</span>
+<span class="px-3 py-1.5 bg-white text-primary text-[10px] font-bold rounded-full border border-primary/10 cursor-pointer hover:bg-primary hover:text-white transition-colors">Recruiters</span>
+<span class="px-3 py-1.5 bg-white text-primary text-[10px] font-bold rounded-full border border-primary/10 cursor-pointer hover:bg-primary hover:text-white transition-colors">Associates</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<footer class="w-full py-12 border-t border-surface-container dark:border-[#2a2a2d] flex flex-col items-center gap-4 bg-surface dark:bg-[#1b1b1e]">
+<span class="font-['Inter'] text-xs uppercase tracking-widest text-on-surface-variant">© 2024 Renate AI. The Sovereign Path.</span>
+<div class="flex gap-8">
+<a class="font-['Inter'] text-xs uppercase tracking-widest text-on-surface-variant hover:underline decoration-primary transition-opacity hover:opacity-70" href="#">Privacy</a>
+<a class="font-['Inter'] text-xs uppercase tracking-widest text-on-surface-variant hover:underline decoration-primary transition-opacity hover:opacity-70" href="#">Terms</a>
+<a class="font-['Inter'] text-xs uppercase tracking-widest text-on-surface-variant hover:underline decoration-primary transition-opacity hover:opacity-70" href="#">Careers</a>
+<a class="font-['Inter'] text-xs uppercase tracking-widest text-on-surface-variant hover:underline decoration-primary transition-opacity hover:opacity-70" href="#">Contact</a>
+</div>
+</footer>
+</main>
+</body></html>

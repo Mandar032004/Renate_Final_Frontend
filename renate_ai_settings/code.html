@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Account &amp; Organization Settings | Renate AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-background": "#1b1b1e",
+              "on-secondary-container": "#63517f",
+              "on-primary-fixed-variant": "#5a299e",
+              "inverse-surface": "#303033",
+              "secondary": "#685684",
+              "outline-variant": "#cdc3d4",
+              "on-secondary": "#ffffff",
+              "primary": "#3d007d",
+              "surface-container-lowest": "#ffffff",
+              "background": "#faf9fc",
+              "surface-variant": "#e3e2e6",
+              "surface-dim": "#dbd9dd",
+              "tertiary-container": "#653600",
+              "tertiary": "#452300",
+              "tertiary-fixed": "#ffdcc1",
+              "surface-container-highest": "#e3e2e6",
+              "on-surface": "#1b1b1e",
+              "surface-container": "#efedf1",
+              "inverse-primary": "#d6baff",
+              "on-error": "#ffffff",
+              "error-container": "#ffdad6",
+              "on-tertiary-fixed": "#2e1500",
+              "primary-fixed-dim": "#d6baff",
+              "on-error-container": "#93000a",
+              "secondary-fixed-dim": "#d3bdf2",
+              "on-tertiary": "#ffffff",
+              "on-secondary-fixed-variant": "#503e6a",
+              "on-secondary-fixed": "#23123c",
+              "on-primary-fixed": "#280056",
+              "on-surface-variant": "#4a4452",
+              "surface-tint": "#7344b8",
+              "surface-bright": "#faf9fc",
+              "error": "#ba1a1a",
+              "tertiary-fixed-dim": "#ffb778",
+              "surface-container-low": "#f5f3f7",
+              "secondary-container": "#dfc8fd",
+              "secondary-fixed": "#ecdcff",
+              "on-primary-container": "#c39bff",
+              "on-tertiary-container": "#e4a063",
+              "outline": "#7c7483",
+              "on-tertiary-fixed-variant": "#6b3b04",
+              "surface-container-high": "#e9e7eb",
+              "inverse-on-surface": "#f2f0f4",
+              "primary-fixed": "#ecdcff",
+              "surface": "#faf9fc",
+              "primary-container": "#552299",
+              "on-primary": "#ffffff"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .glass-panel {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(24px);
+      }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface antialiased">
+<!-- SideNavBar -->
+<aside class="bg-[#552299] dark:bg-slate-950 font-['Manrope'] antialiased h-screen w-64 fixed left-0 top-0 overflow-y-auto shadow-[0px_20px_40px_rgba(85,34,153,0.06)] flex flex-col h-full py-6 z-50">
+<div class="px-6 mb-10 flex items-center gap-3">
+<div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">flutter_dash</span>
+</div>
+<div>
+<h1 class="text-white font-bold text-xl tracking-tight leading-tight">Renate AI</h1>
+<p class="text-purple-200/60 text-[10px] uppercase tracking-widest font-bold">Enterprise Suite</p>
+</div>
+</div>
+<nav class="flex-1 flex flex-col gap-1">
+<a class="text-purple-100/70 hover:text-white transition-colors mx-2 px-4 py-3 flex items-center gap-3 hover:bg-white/5 rounded-xl scale-95 duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-medium">Home</span>
+</a>
+<a class="text-purple-100/70 hover:text-white transition-colors mx-2 px-4 py-3 flex items-center gap-3 hover:bg-white/5 rounded-xl scale-95 duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">work</span>
+<span class="font-medium">Hiring</span>
+</a>
+<a class="text-purple-100/70 hover:text-white transition-colors mx-2 px-4 py-3 flex items-center gap-3 hover:bg-white/5 rounded-xl scale-95 duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">insights</span>
+<span class="font-medium">Analytics</span>
+</a>
+<a class="text-purple-100/70 hover:text-white transition-colors mx-2 px-4 py-3 flex items-center gap-3 hover:bg-white/5 rounded-xl scale-95 duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-medium">Billing</span>
+</a>
+<a class="bg-white/10 text-white font-semibold rounded-xl mx-2 px-4 py-3 flex items-center gap-3 scale-95 duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">settings</span>
+<span class="font-medium">Settings</span>
+</a>
+</nav>
+<div class="mt-auto px-4">
+<div class="bg-white/5 rounded-2xl p-4 flex items-center gap-3">
+<img alt="User Profile" class="w-10 h-10 rounded-full bg-white/10" data-alt="Close up portrait of a professional woman with a confident smile in a modern bright office setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB8bw0zBj1eeJR93tLELostCDMi6JiBuzeyisGH6bDd517Tr_qkrkML64lhgtUWeiSLXxLUfekVbLfxXp-lP_mCuU_NVBkVt80y4T8CH9yXj6z_9z19-V2Jx8I583qP6Bk05dt1yfJQhI-O7FIzvNr2n-2V48D8QdDbMBGrnWcvN1A8KA_XRUjzJvfbkbTLyYJtdf4K0i0XORSLslQhi9aFRZ3NWa_u7ROdnxV22IfjPlSEpwAdwS11f0DqxjheTX8dq-vW2ZkF9bFq"/>
+<div class="overflow-hidden">
+<p class="text-white text-sm font-bold truncate">Alex Sterling</p>
+<p class="text-purple-200/50 text-xs truncate">Admin Access</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- TopAppBar -->
+<header class="fixed top-0 right-0 w-[calc(100%-16rem)] z-40 bg-white/70 backdrop-blur-xl flex justify-between items-center h-16 px-8 bg-[#f5f3f7]">
+<div class="flex items-center gap-4">
+<h2 class="text-[#1b1b1e] font-bold text-lg font-headline">Account &amp; Organization Settings</h2>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative group">
+<span class="material-symbols-outlined text-[#4a4452] cursor-pointer hover:text-[#552299] transition-all">notifications</span>
+<span class="absolute top-0 right-0 w-2 h-2 bg-error rounded-full border-2 border-white"></span>
+</div>
+<span class="material-symbols-outlined text-[#4a4452] cursor-pointer hover:text-[#552299] transition-all">help</span>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-64 pt-24 pb-12 px-12 min-h-screen">
+<div class="max-w-5xl mx-auto space-y-8">
+<!-- Bento Grid Section -->
+<div class="grid grid-cols-12 gap-8">
+<!-- Organization Identity Card -->
+<section class="col-span-12 lg:col-span-7 bg-surface-container-lowest rounded-xl p-8 shadow-[0px_20px_40px_rgba(85,34,153,0.06)] relative overflow-hidden">
+<div class="flex justify-between items-start mb-8">
+<div>
+<span class="bg-secondary-container text-on-secondary-container text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded-md mb-2 inline-block">Enterprise</span>
+<h3 class="text-2xl font-bold font-headline text-primary">Organization Identity</h3>
+<p class="text-on-surface-variant text-sm mt-1">Manage your corporate branding and global identifiers.</p>
+</div>
+<div class="w-16 h-16 bg-surface-container rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-3xl">corporate_fare</span>
+</div>
+</div>
+<div class="space-y-6">
+<div class="group">
+<label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Organization Name</label>
+<div class="flex items-center justify-between bg-surface-container-low p-4 rounded-xl group-hover:bg-surface-container transition-colors">
+<span class="text-on-surface font-medium">Global Talent Corp</span>
+<button class="text-primary-container p-2 hover:bg-primary/5 rounded-lg transition-all">
+<span class="material-symbols-outlined">edit</span>
+</button>
+</div>
+</div>
+<div class="group">
+<label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Primary Email</label>
+<div class="flex items-center justify-between bg-surface-container-low p-4 rounded-xl group-hover:bg-surface-container transition-colors">
+<span class="text-on-surface font-medium">admin@globaltalent.corp</span>
+<button class="text-primary-container p-2 hover:bg-primary/5 rounded-lg transition-all">
+<span class="material-symbols-outlined">edit</span>
+</button>
+</div>
+</div>
+</div>
+<div class="mt-8 pt-8 border-t border-outline-variant/20 flex gap-4">
+<div class="flex items-center gap-2 text-xs font-medium text-on-surface-variant">
+<span class="material-symbols-outlined text-sm text-green-600" style="font-variation-settings: 'FILL' 1;">verified</span>
+                            Verified Entity
+                        </div>
+<div class="flex items-center gap-2 text-xs font-medium text-on-surface-variant">
+<span class="material-symbols-outlined text-sm text-primary" style="font-variation-settings: 'FILL' 1;">schedule</span>
+                            Last updated 2 days ago
+                        </div>
+</div>
+</section>
+<!-- Contact Details & Quick Info -->
+<div class="col-span-12 lg:col-span-5 space-y-8">
+<section class="bg-surface-container-lowest rounded-xl p-8 shadow-[0px_20px_40px_rgba(85,34,153,0.06)]">
+<h3 class="text-xl font-bold font-headline text-primary mb-6">Contact Details</h3>
+<div class="group">
+<label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Phone Number</label>
+<div class="flex items-center justify-between bg-surface-container-low p-4 rounded-xl group-hover:bg-surface-container transition-colors">
+<span class="text-on-surface font-medium">+1 (555) 902-4410</span>
+<button class="text-primary-container p-2 hover:bg-primary/5 rounded-lg transition-all">
+<span class="material-symbols-outlined">edit</span>
+</button>
+</div>
+</div>
+<p class="text-[11px] text-on-surface-variant mt-4 leading-relaxed italic">
+                            Used for high-priority support and account recovery notifications.
+                        </p>
+</section>
+<!-- AI Insights Chip/Card Style -->
+<section class="bg-primary-container text-white rounded-xl p-8 shadow-[0px_20px_40px_rgba(85,34,153,0.1)] relative overflow-hidden group">
+<div class="absolute -right-4 -top-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
+<span class="material-symbols-outlined text-9xl">auto_awesome</span>
+</div>
+<h4 class="text-lg font-bold mb-2">AI Usage Summary</h4>
+<div class="flex items-end gap-2 mb-4">
+<span class="text-4xl font-extrabold tracking-tighter">84%</span>
+<span class="text-purple-200 text-sm pb-1">Efficiency Gain</span>
+</div>
+<div class="w-full bg-white/20 h-1.5 rounded-full mb-6">
+<div class="bg-white h-full w-[84%] rounded-full shadow-[0_0_12px_rgba(255,255,255,0.5)]"></div>
+</div>
+<button class="bg-white/10 hover:bg-white/20 text-white text-xs font-bold py-2 px-4 rounded-lg transition-all flex items-center gap-2">
+                            View Full Report <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</section>
+</div>
+<!-- Privacy & Security Section -->
+<section class="col-span-12 bg-white rounded-xl p-10 shadow-[0px_20px_40px_rgba(85,34,153,0.04)]">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
+<div class="max-w-xl">
+<h3 class="text-2xl font-bold font-headline text-primary mb-2">Privacy &amp; Security</h3>
+<p class="text-on-surface-variant">Your data security is managed by sovereign-level encryption protocols and multi-factor authentication systems.</p>
+</div>
+<button class="bg-primary-container hover:bg-primary text-on-primary font-bold py-4 px-8 rounded-xl transition-all shadow-lg flex items-center gap-3 self-start">
+<span class="material-symbols-outlined">shield_lock</span>
+                            Advanced Security Settings
+                        </button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<div class="p-6 bg-surface-container-low rounded-xl border border-outline-variant/10">
+<div class="flex items-center gap-4 mb-4">
+<div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-700">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<h4 class="font-bold text-on-surface">2FA Status</h4>
+</div>
+<p class="text-sm text-on-surface-variant mb-4">Two-factor authentication is currently enabled via Authenticator App.</p>
+<a class="text-primary text-xs font-bold hover:underline" href="#">Manage 2FA Methods</a>
+</div>
+<div class="p-6 bg-surface-container-low rounded-xl border border-outline-variant/10">
+<div class="flex items-center gap-4 mb-4">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">key</span>
+</div>
+<h4 class="font-bold text-on-surface">Password</h4>
+</div>
+<p class="text-sm text-on-surface-variant mb-4">Last changed 45 days ago. We recommend updating every 90 days.</p>
+<a class="text-primary text-xs font-bold hover:underline" href="#">Change Password</a>
+</div>
+<div class="p-6 bg-surface-container-low rounded-xl border border-outline-variant/10">
+<div class="flex items-center gap-4 mb-4">
+<div class="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center text-orange-700">
+<span class="material-symbols-outlined">devices</span>
+</div>
+<h4 class="font-bold text-on-surface">Active Sessions</h4>
+</div>
+<p class="text-sm text-on-surface-variant mb-4">3 active devices are currently logged into this account.</p>
+<a class="text-primary text-xs font-bold hover:underline" href="#">Review All Sessions</a>
+</div>
+</div>
+</section>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-[calc(100%-16rem)] ml-64 py-8 bg-[#faf9fc] dark:bg-slate-950 flex justify-between items-center px-12 transition-opacity duration-200">
+<p class="font-['Inter'] text-xs uppercase tracking-widest text-[#4a4452]">© 2024 Renate AI</p>
+<div class="flex gap-8">
+<a class="font-['Inter'] text-xs uppercase tracking-widest text-[#4a4452] hover:text-[#552299] transition-colors underline underline-offset-4" href="#">Privacy</a>
+<a class="font-['Inter'] text-xs uppercase tracking-widest text-[#4a4452] hover:text-[#552299] transition-colors underline underline-offset-4" href="#">Terms</a>
+<a class="font-['Inter'] text-xs uppercase tracking-widest text-[#4a4452] hover:text-[#552299] transition-colors underline underline-offset-4" href="#">Careers</a>
+<a class="font-['Inter'] text-xs uppercase tracking-widest text-[#4a4452] hover:text-[#552299] transition-colors underline underline-offset-4" href="#">Contact</a>
+</div>
+</footer>
+</body></html>

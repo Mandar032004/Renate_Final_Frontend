@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Renate AI – Billing</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "on-background": "#1b1b1e",
+          "on-secondary-container": "#63517f",
+          "on-primary-fixed-variant": "#5a299e",
+          "inverse-surface": "#303033",
+          "secondary": "#685684",
+          "outline-variant": "#cdc3d4",
+          "on-secondary": "#ffffff",
+          "primary": "#3d007d",
+          "surface-container-lowest": "#ffffff",
+          "background": "#faf9fc",
+          "surface-variant": "#e3e2e6",
+          "surface-dim": "#dbd9dd",
+          "surface-container-highest": "#e3e2e6",
+          "on-surface": "#1b1b1e",
+          "surface-container": "#efedf1",
+          "inverse-primary": "#d6baff",
+          "on-error": "#ffffff",
+          "error-container": "#ffdad6",
+          "on-error-container": "#93000a",
+          "secondary-fixed-dim": "#d3bdf2",
+          "on-tertiary": "#ffffff",
+          "on-secondary-fixed": "#23123c",
+          "on-primary-fixed": "#280056",
+          "on-surface-variant": "#4a4452",
+          "surface-tint": "#7344b8",
+          "surface-bright": "#faf9fc",
+          "error": "#ba1a1a",
+          "surface-container-low": "#f5f3f7",
+          "secondary-container": "#dfc8fd",
+          "secondary-fixed": "#ecdcff",
+          "on-primary-container": "#c39bff",
+          "outline": "#7c7483",
+          "surface-container-high": "#e9e7eb",
+          "inverse-on-surface": "#f2f0f4",
+          "primary-fixed": "#ecdcff",
+          "surface": "#faf9fc",
+          "primary-container": "#552299",
+          "on-primary": "#ffffff"
+        },
+        fontFamily: {
+          "headline": ["Manrope"],
+          "body": ["Inter"],
+          "label": ["Inter"]
+        },
+        borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "3xl": "1.5rem", "full": "9999px" },
+      },
+    },
+  }
+</script>
+<style>
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  body { font-family: 'Inter', sans-serif; background: #F8F9FB; }
+  h1, h2, h3, .font-headline { font-family: 'Manrope', sans-serif; }
+
+  /* Slider styling */
+  .cost-slider { -webkit-appearance: none; appearance: none; width: 100%; height: 6px; border-radius: 9999px; outline: none; cursor: pointer; }
+  .cost-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 20px; height: 20px; border-radius: 50%; background: #552299; cursor: pointer; box-shadow: 0 2px 8px rgba(85,34,153,0.35); border: 3px solid white; }
+  .cost-slider::-moz-range-thumb { width: 20px; height: 20px; border-radius: 50%; background: #552299; cursor: pointer; box-shadow: 0 2px 8px rgba(85,34,153,0.35); border: 3px solid white; }
+
+  .plan-card { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+  .plan-card:hover { transform: translateY(-4px); }
+  .pilot-orb { background: radial-gradient(circle, rgba(223,200,253,0.6), transparent); }
+</style>
+</head>
+<body class="text-on-surface antialiased">
+
+<!-- ── SIDEBAR ── -->
+<aside class="h-screen w-64 fixed left-0 top-0 overflow-y-auto bg-[#552299] shadow-[0px_20px_40px_rgba(85,34,153,0.12)] flex flex-col py-6 z-50">
+  <div class="px-6 mb-10 flex items-center gap-3">
+    <div class="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center overflow-hidden">
+      <img src="../assests/Renate_AI_Logo-removebg-preview.png" alt="Renate AI" class="h-8 w-auto object-contain brightness-0 invert"/>
+    </div>
+    <div>
+      <h2 class="text-white font-bold text-xl tracking-tight leading-none">Renate AI</h2>
+      <p class="text-purple-200/60 text-[10px] uppercase tracking-widest mt-1">Enterprise Suite</p>
+    </div>
+  </div>
+  <nav class="flex-1 space-y-1">
+    <a class="text-purple-100/70 hover:text-white transition-colors mx-2 px-4 py-3 flex items-center gap-3 hover:bg-white/5 rounded-xl" href="#">
+      <span class="material-symbols-outlined">home</span><span class="text-sm font-medium">Home</span>
+    </a>
+    <a class="text-purple-100/70 hover:text-white transition-colors mx-2 px-4 py-3 flex items-center gap-3 hover:bg-white/5 rounded-xl" href="#">
+      <span class="material-symbols-outlined">work</span><span class="text-sm font-medium">Hiring</span>
+    </a>
+    <a class="text-purple-100/70 hover:text-white transition-colors mx-2 px-4 py-3 flex items-center gap-3 hover:bg-white/5 rounded-xl" href="#">
+      <span class="material-symbols-outlined">insights</span><span class="text-sm font-medium">Analytics</span>
+    </a>
+    <a class="bg-white/10 text-white font-semibold rounded-xl mx-2 px-4 py-3 flex items-center gap-3" href="#">
+      <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">payments</span><span class="text-sm font-medium">Billing</span>
+    </a>
+    <a class="text-purple-100/70 hover:text-white transition-colors mx-2 px-4 py-3 flex items-center gap-3 hover:bg-white/5 rounded-xl" href="#">
+      <span class="material-symbols-outlined">settings</span><span class="text-sm font-medium">Settings</span>
+    </a>
+  </nav>
+  <div class="px-4 mt-auto">
+    <div class="bg-white/5 rounded-2xl p-4 border border-white/10 text-purple-200/40 text-[10px] uppercase tracking-[0.2em] text-center">
+      The Sovereign Path
+    </div>
+  </div>
+</aside>
+
+<!-- ── TOPBAR ── -->
+<header class="fixed top-0 right-0 w-[calc(100%-16rem)] z-40 bg-white/80 backdrop-blur-xl flex justify-between items-center h-16 px-8 border-b border-[#552299]/10 shadow-[0px_2px_12px_rgba(85,34,153,0.06)]">
+  <div class="flex-1"></div>
+  <span class="font-semibold text-on-surface tracking-tight" style="font-family:'Manrope',sans-serif;font-size:0.95rem;">Global Talent Corp</span>
+  <div class="flex-1 flex justify-end">
+    <button class="w-10 h-10 rounded-full overflow-hidden ring-2 ring-[#552299]/20 hover:ring-[#552299]/50 transition-all shadow-[0px_4px_10px_rgba(85,34,153,0.12)]">
+      <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCi3QI8kO0oAwfM_rJ3g45QWTk6T3HYR5K8NRPNBJ0MOO59OPi0ZkzMp2ro93xK_HpopCVKK1VoVwOBzwu60boEfJ4Zlnr44O2NovmOoOGrxwW36jvt5WEkpR6nzgfRpnd7wgorNuuU46uYI-MKhwJ0dAnAB9GJ2yTwNyrht_G1vl250LIUYz-0iTInOXSgxs5jGWP3VYhJbFLWtO96w40UuZ1zqCrUDPBYRykEkFs4G6RzITs_yHsOlY47Tu9NdGM5Grs1sBwD2G" alt="Profile" class="w-full h-full object-cover"/>
+    </button>
+  </div>
+</header>
+
+<!-- ── MAIN ── -->
+<main class="ml-64 pt-24 pb-16 px-8 min-h-screen">
+  <div class="max-w-6xl mx-auto space-y-10">
+
+    <!-- Page heading -->
+    <div>
+      <h1 class="text-3xl font-extrabold text-[#552299] tracking-tight">Billing</h1>
+      <p class="text-on-surface-variant mt-1.5 text-sm">Transparent, usage-based pricing built for enterprise hiring at scale.</p>
+    </div>
+
+    <!-- ══ 1. PILOT HERO ══ -->
+    <div class="relative overflow-hidden rounded-3xl p-8 md:p-10 text-white" style="background:linear-gradient(135deg,#2a0060 0%,#552299 55%,#7c3aed 100%);box-shadow:0 8px 40px rgba(85,34,153,0.30);">
+      <!-- Orbs -->
+      <div class="pilot-orb absolute -top-16 -right-16 w-64 h-64 rounded-full opacity-20"></div>
+      <div class="pilot-orb absolute -bottom-20 -left-10 w-56 h-56 rounded-full opacity-15"></div>
+
+      <!-- Badge -->
+      <div class="inline-flex items-center gap-2 mb-5 relative">
+        <span class="flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full" style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.2);">
+          <span class="material-symbols-outlined text-yellow-300 text-sm" style="font-variation-settings:'FILL' 1;">star</span>
+          Limited Time Offer
+        </span>
+      </div>
+
+      <div class="relative flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
+        <!-- Copy -->
+        <div class="flex-1">
+          <p class="text-purple-200 text-xs font-bold uppercase tracking-widest mb-2">Enterprise Pilot Program</p>
+          <h2 class="font-extrabold leading-none mb-3" style="font-size:clamp(2rem,4vw,2.8rem);">
+            $500
+            <span class="text-purple-200 font-medium text-xl ml-3">for 10,000 minutes</span>
+          </h2>
+          <p class="text-purple-100/80 text-sm max-w-lg leading-relaxed">
+            Launch your AI-powered hiring pipeline in under 48 hours. No long-term commitment — just results.
+          </p>
+          <!-- Features -->
+          <ul class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <li class="flex items-start gap-2 text-sm text-white/90">
+              <span class="material-symbols-outlined text-purple-200 text-base mt-0.5" style="font-variation-settings:'FILL' 1;">check_circle</span>
+              AI Voice Screening — unlimited interviews
+            </li>
+            <li class="flex items-start gap-2 text-sm text-white/90">
+              <span class="material-symbols-outlined text-purple-200 text-base mt-0.5" style="font-variation-settings:'FILL' 1;">check_circle</span>
+              Custom Workflow Builder
+            </li>
+            <li class="flex items-start gap-2 text-sm text-white/90">
+              <span class="material-symbols-outlined text-purple-200 text-base mt-0.5" style="font-variation-settings:'FILL' 1;">check_circle</span>
+              1 Expert-built Agent (white-glove setup)
+            </li>
+            <li class="flex items-start gap-2 text-sm text-white/90">
+              <span class="material-symbols-outlined text-purple-200 text-base mt-0.5" style="font-variation-settings:'FILL' 1;">check_circle</span>
+              Priority onboarding &amp; dedicated Slack
+            </li>
+            <li class="flex items-start gap-2 text-sm text-white/90">
+              <span class="material-symbols-outlined text-purple-200 text-base mt-0.5" style="font-variation-settings:'FILL' 1;">check_circle</span>
+              Full analytics dashboard access
+            </li>
+          </ul>
+        </div>
+
+        <!-- CTA box -->
+        <div class="lg:w-52 shrink-0 rounded-2xl p-6 flex flex-col items-center text-center" style="background:rgba(255,255,255,0.10);border:1px solid rgba(255,255,255,0.18);backdrop-filter:blur(12px);">
+          <span class="material-symbols-outlined text-purple-200 text-3xl mb-3">schedule</span>
+          <p class="text-white font-extrabold text-4xl" style="font-family:'Manrope',sans-serif;">$500</p>
+          <p class="text-purple-200 text-xs mt-1 mb-5">one-time pilot fee</p>
+          <button class="w-full py-2.5 rounded-xl font-bold text-sm transition-all hover:scale-105 active:scale-95" style="background:white;color:#552299;">
+            Start Pilot →
+          </button>
+          <p class="text-purple-200/60 text-[10px] mt-3">No credit card required</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ 2. SUBSCRIPTION GRID ══ -->
+    <div>
+      <h2 class="font-extrabold text-xl text-on-surface mb-5 tracking-tight">Monthly Subscriptions</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+
+        <!-- EXPLORE -->
+        <div class="plan-card bg-white rounded-2xl p-7 flex flex-col" style="border:1px solid rgba(85,34,153,0.08);box-shadow:0 4px 20px rgba(85,34,153,0.06);">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:#ecdcff;">
+              <span class="material-symbols-outlined" style="color:#552299;">travel_explore</span>
+            </div>
+            <div>
+              <p class="font-extrabold text-sm tracking-tight" style="font-family:'Manrope',sans-serif;color:#1b1b1e;">EXPLORE</p>
+              <p class="text-xs" style="color:#4a4452;">Perfect for getting started.</p>
+            </div>
+          </div>
+          <div class="mb-1">
+            <span class="font-extrabold leading-none" style="font-family:'Manrope',sans-serif;font-size:2.25rem;color:#1b1b1e;">$350</span>
+            <span class="text-sm ml-1.5" style="color:#4a4452;">/month</span>
+          </div>
+          <p class="text-xs mb-6" style="color:#cdc3d4;">5,000 mins · 20 concurrent calls</p>
+          <ul class="space-y-2.5 flex-1">
+            <li class="flex items-center gap-2.5 text-sm" style="color:#1b1b1e;">
+              <div class="w-4 h-4 rounded-full flex items-center justify-center shrink-0" style="background:#f0ebf8;">
+                <span class="material-symbols-outlined text-xs" style="color:#552299;font-size:12px;font-variation-settings:'FILL' 1;">check</span>
+              </div>AI voice screening
+            </li>
+            <li class="flex items-center gap-2.5 text-sm" style="color:#1b1b1e;">
+              <div class="w-4 h-4 rounded-full flex items-center justify-center shrink-0" style="background:#f0ebf8;">
+                <span class="material-symbols-outlined text-xs" style="color:#552299;font-size:12px;font-variation-settings:'FILL' 1;">check</span>
+              </div>5,000 minutes / month
+            </li>
+            <li class="flex items-center gap-2.5 text-sm" style="color:#1b1b1e;">
+              <div class="w-4 h-4 rounded-full flex items-center justify-center shrink-0" style="background:#f0ebf8;">
+                <span class="material-symbols-outlined text-xs" style="color:#552299;font-size:12px;font-variation-settings:'FILL' 1;">check</span>
+              </div>20 concurrent calls
+            </li>
+            <li class="flex items-center gap-2.5 text-sm" style="color:#1b1b1e;">
+              <div class="w-4 h-4 rounded-full flex items-center justify-center shrink-0" style="background:#f0ebf8;">
+                <span class="material-symbols-outlined text-xs" style="color:#552299;font-size:12px;font-variation-settings:'FILL' 1;">check</span>
+              </div>Standard workflows
+            </li>
+            <li class="flex items-center gap-2.5 text-sm" style="color:#1b1b1e;">
+              <div class="w-4 h-4 rounded-full flex items-center justify-center shrink-0" style="background:#f0ebf8;">
+                <span class="material-symbols-outlined text-xs" style="color:#552299;font-size:12px;font-variation-settings:'FILL' 1;">check</span>
+              </div>Email support
+            </li>
+          </ul>
+          <button class="mt-7 w-full py-3 rounded-xl font-bold text-sm transition-all hover:opacity-90" style="background:#f5f3f7;color:#552299;">Get Started</button>
+        </div>
+
+        <!-- GROWTH (highlighted) -->
+        <div class="plan-card bg-white rounded-2xl p-7 flex flex-col relative" style="border:2px solid #552299;box-shadow:0 8px 32px rgba(85,34,153,0.18);">
+          <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest text-white" style="background:linear-gradient(90deg,#552299,#7c3aed);">Most Popular</div>
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:#552299;">
+              <span class="material-symbols-outlined text-white">trending_up</span>
+            </div>
+            <div>
+              <p class="font-extrabold text-sm tracking-tight" style="font-family:'Manrope',sans-serif;color:#552299;">GROWTH</p>
+              <p class="text-xs" style="color:#4a4452;">For growing teams.</p>
+            </div>
+          </div>
+          <div class="mb-1">
+            <span class="font-extrabold leading-none" style="font-family:'Manrope',sans-serif;font-size:2.25rem;color:#1b1b1e;">$1,200</span>
+            <span class="text-sm ml-1.5" style="color:#4a4452;">/month</span>
+          </div>
+          <p class="text-xs mb-6" style="color:#cdc3d4;">20,000 mins · 50 concurrent calls</p>
+          <ul class="space-y-2.5 flex-1">
+            <li class="flex items-center gap-2.5 text-sm" style="color:#1b1b1e;">
+              <div class="w-4 h-4 rounded-full flex items-center justify-center shrink-0" style="background:#ecdcff;">
+                <span class="material-symbols-outlined" style="color:#552299;font-size:12px;font-variation-settings:'FILL' 1;">check</span>
+              </div>Everything in Explore
+            </li>
+            <li class="flex items-center gap-2.5 text-sm" style="color:#1b1b1e;">
+              <div class="w-4 h-4 rounded-full flex items-center justify-center shrink-0" style="background:#ecdcff;">
+                <span class="material-symbols-outlined" style="color:#552299;font-size:12px;font-variation-settings:'FILL' 1;">check</span>
+              </div>20,000 minutes / month
+            </li>
+            <li class="flex items-center gap-2.5 text-sm" style="color:#1b1b1e;">
+              <div class="w-4 h-4 rounded-full flex items-center justify-center shrink-0" style="background:#ecdcff;">
+                <span class="material-symbols-outlined" style="color:#552299;font-size:12px;font-variation-settings:'FILL' 1;">check</span>
+              </div>50 concurrent calls
+            </li>
+            <li class="flex items-center gap-2.5 text-sm" style="color:#1b1b1e;">
+              <div class="w-4 h-4 rounded-full flex items-center justify-center shrink-0" style="background:#ecdcff;">
+                <span class="material-symbols-outlined" style="color:#552299;font-size:12px;font-variation-settings:'FILL' 1;">check</span>
+              </div>Custom AI workflows
+            </li>
+            <li class="flex items-center gap-2.5 text-sm" style="color:#1b1b1e;">
+              <div class="w-4 h-4 rounded-full flex items-center justify-center shrink-0" style="background:#ecdcff;">
+                <span class="material-symbols-outlined" style="color:#552299;font-size:12px;font-variation-settings:'FILL' 1;">check</span>
+              </div>Priority support
+            </li>
+            <li class="flex items-center gap-2.5 text-sm" style="color:#1b1b1e;">
+              <div class="w-4 h-4 rounded-full flex items-center justify-center shrink-0" style="background:#ecdcff;">
+                <span class="material-symbols-outlined" style="color:#552299;font-size:12px;font-variation-settings:'FILL' 1;">check</span>
+              </div>Advanced analytics
+            </li>
+          </ul>
+          <button class="mt-7 w-full py-3 rounded-xl font-bold text-sm transition-all hover:opacity-90" style="background:linear-gradient(135deg,#552299,#7c3aed);color:white;">Get Started</button>
+        </div>
+
+        <!-- SCALE -->
+        <div class="plan-card bg-white rounded-2xl p-7 flex flex-col" style="border:1px solid rgba(85,34,153,0.08);box-shadow:0 4px 20px rgba(85,34,153,0.06);">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:#ecdcff;">
+              <span class="material-symbols-outlined" style="color:#552299;">bolt</span>
+            </div>
+            <div>
+              <p class="font-extrabold text-sm tracking-tight" style="font-family:'Manrope',sans-serif;color:#1b1b1e;">SCALE</p>
+              <p class="text-xs" style="color:#4a4452;">High volume operations.</p>
+            </div>
+          </div>
+          <div class="mb-1">
+            <span class="font-extrabold leading-none" style="font-family:'Manrope',sans-serif;font-size:2.25rem;color:#1b1b1e;">$2,500</span>
+            <span class="text-sm ml-1.5" style="color:#4a4452;">/month</span>
+          </div>
+          <p class="text-xs mb-6" style="color:#cdc3d4;">50,000 mins · Dedicated Manager</p>
+          <ul class="space-y-2.5 flex-1">
+            <li class="flex items-center gap-2.5 text-sm" style="color:#1b1b1e;">
+              <div class="w-4 h-4 rounded-full flex items-center justify-center shrink-0" style="background:#f0ebf8;">
+                <span class="material-symbols-outlined" style="color:#552299;font-size:12px;font-variation-settings:'FILL' 1;">check</span>
+              </div>Everything in Growth
+            </li>
+            <li class="flex items-center gap-2.5 text-sm" style="color:#1b1b1e;">
+              <div class="w-4 h-4 rounded-full flex items-center justify-center shrink-0" style="background:#f0ebf8;">
+                <span class="material-symbols-outlined" style="color:#552299;font-size:12px;font-variation-settings:'FILL' 1;">check</span>
+              </div>50,000 minutes / month
+            </li>
+            <li class="flex items-center gap-2.5 text-sm" style="color:#1b1b1e;">
+              <div class="w-4 h-4 rounded-full flex items-center justify-center shrink-0" style="background:#f0ebf8;">
+                <span class="material-symbols-outlined" style="color:#552299;font-size:12px;font-variation-settings:'FILL' 1;">check</span>
+              </div>Unlimited concurrent calls
+            </li>
+            <li class="flex items-center gap-2.5 text-sm" style="color:#1b1b1e;">
+              <div class="w-4 h-4 rounded-full flex items-center justify-center shrink-0" style="background:#f0ebf8;">
+                <span class="material-symbols-outlined" style="color:#552299;font-size:12px;font-variation-settings:'FILL' 1;">check</span>
+              </div>Dedicated success manager
+            </li>
+            <li class="flex items-center gap-2.5 text-sm" style="color:#1b1b1e;">
+              <div class="w-4 h-4 rounded-full flex items-center justify-center shrink-0" style="background:#f0ebf8;">
+                <span class="material-symbols-outlined" style="color:#552299;font-size:12px;font-variation-settings:'FILL' 1;">check</span>
+              </div>SLA guarantee
+            </li>
+            <li class="flex items-center gap-2.5 text-sm" style="color:#1b1b1e;">
+              <div class="w-4 h-4 rounded-full flex items-center justify-center shrink-0" style="background:#f0ebf8;">
+                <span class="material-symbols-outlined" style="color:#552299;font-size:12px;font-variation-settings:'FILL' 1;">check</span>
+              </div>Custom integrations
+            </li>
+          </ul>
+          <button class="mt-7 w-full py-3 rounded-xl font-bold text-sm transition-all hover:opacity-90" style="background:#f5f3f7;color:#552299;">Get Started</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ 3. LIVE COST CALCULATOR ══ -->
+    <div>
+      <h2 class="font-extrabold text-xl text-on-surface mb-5 tracking-tight">Cost Calculator</h2>
+      <div class="bg-white rounded-2xl p-7 md:p-9" style="border:1px solid rgba(85,34,153,0.08);box-shadow:0 4px 20px rgba(85,34,153,0.08);">
+
+        <!-- Card header -->
+        <div class="flex items-center gap-3 mb-7">
+          <div class="w-9 h-9 rounded-xl flex items-center justify-center" style="background:#ecdcff;">
+            <span class="material-symbols-outlined" style="color:#552299;">calculate</span>
+          </div>
+          <div>
+            <h3 class="font-extrabold tracking-tight" style="font-family:'Manrope',sans-serif;font-size:1.05rem;color:#1b1b1e;">Live Cost Calculator</h3>
+            <p class="text-xs" style="color:#4a4452;">Drag the slider to estimate your monthly spend</p>
+          </div>
+        </div>
+
+        <div class="flex flex-col lg:flex-row gap-10">
+          <!-- Left: slider + breakdown -->
+          <div class="flex-1">
+            <!-- Minute label -->
+            <div class="flex items-end justify-between mb-3">
+              <span class="text-sm font-semibold" style="color:#4a4452;">Minutes / month</span>
+              <span id="minuteDisplay" class="font-extrabold" style="font-family:'Manrope',sans-serif;font-size:1.5rem;color:#552299;">5,000</span>
+            </div>
+
+            <!-- Slider -->
+            <input id="minuteSlider" type="range" min="1000" max="50000" step="500" value="5000"
+              class="cost-slider mb-1"
+              style="background:linear-gradient(90deg,#552299 8.16%,#efedf1 8.16%);"
+            />
+            <div class="flex justify-between text-[10px] mb-8" style="color:#cdc3d4;">
+              <span>1,000</span><span>50,000</span>
+            </div>
+
+            <!-- Breakdown bars -->
+            <div class="space-y-4">
+              <!-- LLM -->
+              <div>
+                <div class="flex justify-between items-center mb-1.5">
+                  <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full inline-block" style="background:#552299;"></span>
+                    <span class="text-xs font-semibold" style="color:#1b1b1e;">LLM Cost</span>
+                    <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:#ecdcff;color:#552299;">$0.009/min</span>
+                  </div>
+                  <span id="llmVal" class="text-xs font-bold" style="color:#552299;">$45.00</span>
+                </div>
+                <div class="h-1.5 w-full rounded-full" style="background:#f0ebf8;">
+                  <div id="llmBar" class="h-full rounded-full transition-all duration-300" style="width:11.5%;background:#552299;"></div>
+                </div>
+              </div>
+              <!-- Voice -->
+              <div>
+                <div class="flex justify-between items-center mb-1.5">
+                  <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full inline-block" style="background:#7c3aed;"></span>
+                    <span class="text-xs font-semibold" style="color:#1b1b1e;">Voice Cost</span>
+                    <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:#dfc8fd;color:#3d007d;">$0.050/min</span>
+                  </div>
+                  <span id="voiceVal" class="text-xs font-bold" style="color:#7c3aed;">$250.00</span>
+                </div>
+                <div class="h-1.5 w-full rounded-full" style="background:#f0ebf8;">
+                  <div id="voiceBar" class="h-full rounded-full transition-all duration-300" style="width:63.7%;background:#7c3aed;"></div>
+                </div>
+              </div>
+              <!-- Platform -->
+              <div>
+                <div class="flex justify-between items-center mb-1.5">
+                  <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full inline-block" style="background:#4a4452;"></span>
+                    <span class="text-xs font-semibold" style="color:#1b1b1e;">Platform Fee</span>
+                    <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:#f0ebf8;color:#4a4452;">$0.020/min</span>
+                  </div>
+                  <span id="platformVal" class="text-xs font-bold" style="color:#4a4452;">$100.00</span>
+                </div>
+                <div class="h-1.5 w-full rounded-full" style="background:#f0ebf8;">
+                  <div id="platformBar" class="h-full rounded-full transition-all duration-300" style="width:25.5%;background:#4a4452;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: total display -->
+          <div class="lg:w-56 shrink-0 rounded-2xl flex flex-col items-center justify-center p-7 text-center" style="background:linear-gradient(135deg,#f5f0ff 0%,#ecdcff 100%);border:1px solid rgba(85,34,153,0.12);">
+            <p class="text-[10px] font-bold uppercase tracking-widest mb-2" style="color:#4a4452;">Est. Monthly Cost</p>
+            <p id="totalCost" class="font-extrabold leading-none" style="font-family:'Manrope',sans-serif;font-size:2.5rem;color:#552299;">$395.00</p>
+            <p id="totalMins" class="text-xs mt-2 mb-1" style="color:#4a4452;">for 5,000 mins</p>
+            <p class="text-[10px]" style="color:#cdc3d4;">$0.079 per minute total</p>
+
+            <div class="mt-6 w-full space-y-1.5 text-left">
+              <div class="flex justify-between text-xs">
+                <span style="color:#4a4452;">LLM</span>
+                <span id="llmSub" class="font-bold" style="color:#552299;">$45.00</span>
+              </div>
+              <div class="flex justify-between text-xs">
+                <span style="color:#4a4452;">Voice</span>
+                <span id="voiceSub" class="font-bold" style="color:#7c3aed;">$250.00</span>
+              </div>
+              <div class="flex justify-between text-xs">
+                <span style="color:#4a4452;">Platform</span>
+                <span id="platformSub" class="font-bold" style="color:#4a4452;">$100.00</span>
+              </div>
+              <div class="flex justify-between text-xs font-bold pt-2 mt-1" style="border-top:1px solid rgba(85,34,153,0.12);color:#552299;">
+                <span>Total</span>
+                <span id="totalSub">$395.00</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /max-w -->
+</main>
+
+<!-- ── FOOTER ── -->
+<footer class="w-[calc(100%-16rem)] ml-64 py-8 bg-[#F8F9FB] flex justify-between items-center px-12 border-t border-[#552299]/06">
+  <div class="flex items-center gap-6">
+    <span class="text-xs uppercase tracking-widest" style="color:#4a4452;">© 2025 Renate AI</span>
+    <div class="flex gap-4">
+      <a class="text-xs uppercase tracking-widest hover:text-[#552299] transition-colors" style="color:#4a4452;" href="#">Privacy</a>
+      <a class="text-xs uppercase tracking-widest hover:text-[#552299] transition-colors" style="color:#4a4452;" href="#">Terms</a>
+      <a class="text-xs uppercase tracking-widest hover:text-[#552299] transition-colors" style="color:#4a4452;" href="#">Contact</a>
+    </div>
+  </div>
+  <p class="text-[10px] font-bold uppercase tracking-tighter" style="color:#4a4452;">Powered by Sovereign Core v4.2</p>
+</footer>
+
+<!-- ── CALCULATOR SCRIPT ── -->
+<script>
+  const COST_LLM      = 0.009;
+  const COST_VOICE    = 0.050;
+  const COST_PLATFORM = 0.020;
+  const COST_TOTAL    = COST_LLM + COST_VOICE + COST_PLATFORM;
+
+  const slider        = document.getElementById('minuteSlider');
+  const minuteDisplay = document.getElementById('minuteDisplay');
+  const totalMins     = document.getElementById('totalMins');
+  const totalCostEl   = document.getElementById('totalCost');
+  const totalSubEl    = document.getElementById('totalSub');
+
+  const llmVal      = document.getElementById('llmVal');
+  const voiceVal    = document.getElementById('voiceVal');
+  const platformVal = document.getElementById('platformVal');
+  const llmSub      = document.getElementById('llmSub');
+  const voiceSub    = document.getElementById('voiceSub');
+  const platformSub = document.getElementById('platformSub');
+
+  const llmBar      = document.getElementById('llmBar');
+  const voiceBar    = document.getElementById('voiceBar');
+  const platformBar = document.getElementById('platformBar');
+
+  function fmt(n) { return '$' + n.toFixed(2); }
+  function fmtMins(n) { return n.toLocaleString(); }
+
+  function update() {
+    const mins = parseInt(slider.value);
+    const llm      = mins * COST_LLM;
+    const voice    = mins * COST_VOICE;
+    const platform = mins * COST_PLATFORM;
+    const total    = mins * COST_TOTAL;
+
+    // Labels
+    minuteDisplay.textContent = fmtMins(mins);
+    totalMins.textContent = 'for ' + fmtMins(mins) + ' mins';
+    totalCostEl.textContent = fmt(total);
+    totalSubEl.textContent  = fmt(total);
+
+    llmVal.textContent      = fmt(llm);
+    voiceVal.textContent    = fmt(voice);
+    platformVal.textContent = fmt(platform);
+    llmSub.textContent      = fmt(llm);
+    voiceSub.textContent    = fmt(voice);
+    platformSub.textContent = fmt(platform);
+
+    // Breakdown bar widths (proportional share of total)
+    llmBar.style.width      = ((llm / total) * 100).toFixed(1) + '%';
+    voiceBar.style.width    = ((voice / total) * 100).toFixed(1) + '%';
+    platformBar.style.width = ((platform / total) * 100).toFixed(1) + '%';
+
+    // Slider fill
+    const pct = ((mins - 1000) / 49000) * 100;
+    slider.style.background = `linear-gradient(90deg,#552299 ${pct}%,#efedf1 ${pct}%)`;
+  }
+
+  slider.addEventListener('input', update);
+  update();
+</script>
+</body>
+</html>

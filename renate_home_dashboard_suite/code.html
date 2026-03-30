@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Renate AI - Dashboard</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary-fixed-dim": "#ffb778",
+              "secondary": "#685684",
+              "on-secondary-container": "#63517f",
+              "primary": "#3d007d",
+              "on-secondary-fixed": "#23123c",
+              "secondary-fixed": "#ecdcff",
+              "inverse-surface": "#303033",
+              "on-secondary-fixed-variant": "#503e6a",
+              "error-container": "#ffdad6",
+              "surface-container-high": "#e9e7eb",
+              "on-primary-fixed": "#280056",
+              "on-surface": "#1b1b1e",
+              "primary-fixed": "#ecdcff",
+              "on-primary-container": "#c39bff",
+              "on-tertiary-container": "#e4a063",
+              "on-primary-fixed-variant": "#5a299e",
+              "surface-container-low": "#f5f3f7",
+              "on-tertiary-fixed-variant": "#6b3b04",
+              "surface-variant": "#e3e2e6",
+              "outline-variant": "#cdc3d4",
+              "tertiary": "#452300",
+              "tertiary-container": "#653600",
+              "surface": "#faf9fc",
+              "on-tertiary": "#ffffff",
+              "secondary-container": "#dfc8fd",
+              "inverse-on-surface": "#f2f0f4",
+              "on-error-container": "#93000a",
+              "surface-dim": "#dbd9dd",
+              "surface-container-lowest": "#ffffff",
+              "surface-tint": "#7344b8",
+              "on-secondary": "#ffffff",
+              "tertiary-fixed": "#ffdcc1",
+              "surface-container-highest": "#e3e2e6",
+              "inverse-primary": "#d6baff",
+              "secondary-fixed-dim": "#d3bdf2",
+              "primary-container": "#552299",
+              "on-surface-variant": "#4a4452",
+              "surface-bright": "#faf9fc",
+              "on-primary": "#ffffff",
+              "on-background": "#1b1b1e",
+              "error": "#ba1a1a",
+              "on-error": "#ffffff",
+              "primary-fixed-dim": "#d6baff",
+              "outline": "#7c7483",
+              "on-tertiary-fixed": "#2e1500",
+              "surface-container": "#efedf1",
+              "background": "#faf9fc"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      body {
+        font-family: 'Inter', sans-serif;
+        background-color: #faf9fc;
+      }
+      .font-headline {
+        font-family: 'Manrope', sans-serif;
+      }
+      .glass-panel {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(24px);
+      }
+    </style>
+</head>
+<body class="text-on-surface antialiased overflow-x-hidden">
+<!-- Sidebar Navigation Shell -->
+<aside class="fixed left-0 top-0 h-full w-64 bg-[#552299] dark:bg-[#3d007d] flex flex-col py-6 shadow-[0px_20px_40px_rgba(85,34,153,0.06)] z-50">
+<!-- Brand Header -->
+<div class="px-6 mb-10 flex items-center gap-3">
+<img alt="Renate AI Logo" class="w-10 h-10 rounded-xl" data-alt="minimalist geometric logo for an AI technology company, abstract white shape on purple background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCn4GFxJ9XJZ7CdvYCtQsRCP4T8u0j-JHGeY19HERaFeV9Uki749oXd9pQ2OGvlTrx9DnyQraDJg43GQDT2UddhWddAGhTH_vnHQNCmAhlqdJZt976fV2y_FpRaqwy1--4rlS_0AYXhr_-42L8bQTULdp30Cf0Nwj6nuzuRT2rKpDh6nd7TZJBByuf1aGhDS6O9e2uxzoLAmKXHrrlo0vsU-I672ftaD3groJzCIoqr9Ff7NQNA2TgKs2D77J6SrDDkFuWyboJAKReV"/>
+<div class="flex flex-col">
+<span class="font-headline font-bold tracking-tight text-white text-xl">Renate AI</span>
+<span class="text-[10px] uppercase tracking-widest text-purple-200/60 font-medium">Enterprise Suite</span>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="flex-1 space-y-1">
+<!-- Active Home Tab -->
+<a class="bg-white/10 text-white rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-all duration-200 scale-95 active:scale-90 group" href="#">
+<span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-headline font-bold tracking-tight">Home</span>
+</a>
+<a class="text-purple-100/70 hover:text-white hover:bg-white/5 rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">work</span>
+<span class="font-headline font-bold tracking-tight">Hiring</span>
+</a>
+<a class="text-purple-100/70 hover:text-white hover:bg-white/5 rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">insights</span>
+<span class="font-headline font-bold tracking-tight">Analytics</span>
+</a>
+<a class="text-purple-100/70 hover:text-white hover:bg-white/5 rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-headline font-bold tracking-tight">Billing</span>
+</a>
+<a class="text-purple-100/70 hover:text-white hover:bg-white/5 rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-headline font-bold tracking-tight">Settings</span>
+</a>
+</nav>
+<!-- Footer branding within sidebar -->
+<div class="px-6 mt-auto">
+<div class="p-4 rounded-xl bg-white/5 text-purple-100/40 text-[10px] uppercase tracking-[0.2em]">
+                The Sovereign Path
+            </div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 min-h-screen flex flex-col">
+<!-- TopAppBar Shell -->
+<header class="sticky top-0 right-0 w-full z-40 flex justify-between items-center px-8 h-16 bg-white/70 backdrop-blur-xl">
+<h1 class="font-headline text-lg font-semibold text-[#1b1b1e]">Global Talent Corp</h1>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors">notifications</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors">help</span>
+</div>
+<div class="flex items-center gap-3 pl-4 border-l border-outline-variant/20">
+<div class="text-right">
+<p class="text-sm font-semibold text-on-surface">Alex Sterling</p>
+<p class="text-[11px] text-on-surface-variant font-medium">Head of Talent</p>
+</div>
+<img alt="User Avatar" class="w-10 h-10 rounded-full bg-surface-container" data-alt="professional corporate headshot of a person with friendly expression, clean minimalist background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuATNC0H2l4EdG-U5vzh2SqkxSFTaMhFmYIabzVa9atW6Y5Uvnzbpj6Fe0goiJo8cvlH1sbGq6Pw-e_RHSz3dWde9QWVFpqhyhEoahEIc8zpUy0qdI7x5i-N8LkGjxAwU241mN_Y-SfVYz0TplI-oL8R8tn9NG-0iq_h-qHAYVHKN-DosRi2JgzWCRZYrzWAFC8wVS13RcwSfoZPoov06BPT3JsbgVf1bcSw6C8PjuPlx63jGa0DEbvmn7Y916OiGuEH4XCCHdNeuSlA"/>
+</div>
+</div>
+</header>
+<!-- Page Body Content -->
+<div class="p-8 space-y-8">
+<!-- Greeting & Stats Grid -->
+<section class="space-y-6">
+<div class="flex justify-between items-end">
+<div>
+<h2 class="text-3xl font-headline font-extrabold tracking-tight text-primary">Overview Dashboard</h2>
+<p class="text-on-surface-variant mt-1">Real-time recruitment intelligence and candidate tracking.</p>
+</div>
+</div>
+<!-- Bento Stats Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Stat Card 1 -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-[0px_20px_40px_rgba(85,34,153,0.06)] border-none transition-transform hover:scale-[1.02] duration-300">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 bg-primary-fixed rounded-xl text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">groups</span>
+</div>
+<span class="text-[10px] font-bold text-primary px-2 py-1 bg-primary-fixed rounded-full">+12% vs last month</span>
+</div>
+<p class="text-on-surface-variant text-sm font-medium">Total Candidates</p>
+<h3 class="text-3xl font-headline font-extrabold text-on-surface mt-1">1,284</h3>
+</div>
+<!-- Stat Card 2 -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-[0px_20px_40px_rgba(85,34,153,0.06)] border-none transition-transform hover:scale-[1.02] duration-300">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 bg-secondary-fixed rounded-xl text-secondary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">neurology</span>
+</div>
+<span class="text-[10px] font-bold text-secondary px-2 py-1 bg-secondary-fixed rounded-full">AI Automated</span>
+</div>
+<p class="text-on-surface-variant text-sm font-medium">Processed</p>
+<h3 class="text-3xl font-headline font-extrabold text-on-surface mt-1">942</h3>
+</div>
+<!-- Stat Card 3 -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-[0px_20px_40px_rgba(85,34,153,0.06)] border-none transition-transform hover:scale-[1.02] duration-300">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 bg-tertiary-fixed rounded-xl text-tertiary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<span class="text-[10px] font-bold text-tertiary px-2 py-1 bg-tertiary-fixed rounded-full">High Quality</span>
+</div>
+<p class="text-on-surface-variant text-sm font-medium">Shortlisted</p>
+<h3 class="text-3xl font-headline font-extrabold text-on-surface mt-1">156</h3>
+</div>
+</div>
+</section>
+<!-- Main Interactive Section -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+<!-- Active Jobs Table Section -->
+<section class="lg:col-span-2 space-y-4">
+<div class="flex justify-between items-center">
+<h3 class="text-xl font-headline font-bold text-primary">Active Roles</h3>
+<button class="text-primary text-sm font-bold flex items-center gap-1 hover:opacity-70 transition-opacity group">
+                            View All <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0px_20px_40px_rgba(85,34,153,0.06)]">
+<div class="divide-y divide-outline-variant/10">
+<!-- Job Row 1 -->
+<div class="p-6 hover:bg-surface-container-low transition-colors flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-primary-fixed rounded-xl flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">smart_toy</span>
+</div>
+<div>
+<h4 class="font-headline font-bold text-on-surface">AI Engineer</h4>
+<p class="text-xs text-on-surface-variant">Posted 2 days ago • Remote</p>
+</div>
+</div>
+<div class="flex items-center gap-8">
+<div class="text-center">
+<p class="text-xs font-bold text-primary">42</p>
+<p class="text-[10px] uppercase text-on-surface-variant tracking-wider">Apps</p>
+</div>
+<span class="px-4 py-1.5 rounded-full bg-secondary-container text-on-secondary-container text-xs font-bold ring-2 ring-primary/5">Interviewing</span>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary">more_vert</button>
+</div>
+</div>
+<!-- Job Row 2 -->
+<div class="p-6 hover:bg-surface-container-low transition-colors flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-surface-container rounded-xl flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">code</span>
+</div>
+<div>
+<h4 class="font-headline font-bold text-on-surface">Software Engineer</h4>
+<p class="text-xs text-on-surface-variant">Posted 1 week ago • Hybrid</p>
+</div>
+</div>
+<div class="flex items-center gap-8">
+<div class="text-center">
+<p class="text-xs font-bold text-primary">128</p>
+<p class="text-[10px] uppercase text-on-surface-variant tracking-wider">Apps</p>
+</div>
+<span class="px-4 py-1.5 rounded-full bg-surface-container-high text-on-surface-variant text-xs font-bold">Screening</span>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary">more_vert</button>
+</div>
+</div>
+<!-- Job Row 3 -->
+<div class="p-6 hover:bg-surface-container-low transition-colors flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 bg-surface-container rounded-xl flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">settings_input_component</span>
+</div>
+<div>
+<h4 class="font-headline font-bold text-on-surface">DevOps Eng</h4>
+<p class="text-xs text-on-surface-variant">Posted 3 days ago • On-site</p>
+</div>
+</div>
+<div class="flex items-center gap-8">
+<div class="text-center">
+<p class="text-xs font-bold text-primary">18</p>
+<p class="text-[10px] uppercase text-on-surface-variant tracking-wider">Apps</p>
+</div>
+<span class="px-4 py-1.5 rounded-full bg-surface-container-high text-on-surface-variant text-xs font-bold">Published</span>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary">more_vert</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- AI Widget Section -->
+<aside class="space-y-4">
+<h3 class="text-xl font-headline font-bold text-primary">AI Insights</h3>
+<div class="relative overflow-hidden bg-primary-container p-6 rounded-xl shadow-2xl text-white">
+<!-- Gradient Glow -->
+<div class="absolute -top-12 -right-12 w-32 h-32 bg-secondary/30 blur-3xl rounded-full"></div>
+<div class="relative z-10 space-y-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center backdrop-blur-md">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+<h4 class="font-headline font-bold">Quick AI Summary</h4>
+</div>
+<div class="space-y-4">
+<div class="p-4 bg-white/10 rounded-xl backdrop-blur-sm border border-white/10">
+<p class="text-sm font-medium leading-relaxed italic opacity-90">
+                                        "Renate has identified 3 high-potential candidates for the AI Engineer role. Matching score: 94%. Recommendation: Schedule Technical Assessment today."
+                                    </p>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div class="bg-white/5 p-3 rounded-lg">
+<p class="text-[10px] uppercase tracking-tighter opacity-60">Avg. Matching</p>
+<p class="text-lg font-bold">88.4%</p>
+</div>
+<div class="bg-white/5 p-3 rounded-lg">
+<p class="text-[10px] uppercase tracking-tighter opacity-60">Time Saved</p>
+<p class="text-lg font-bold">14.2h</p>
+</div>
+</div>
+</div>
+<button class="w-full py-3 bg-white text-primary rounded-xl font-bold text-sm shadow-xl hover:scale-105 active:scale-95 transition-all">
+                                Generate Deep Report
+                            </button>
+</div>
+</div>
+<!-- AI Insight Chips -->
+<div class="bg-secondary-container/50 p-4 rounded-xl border border-primary/5 flex items-center gap-3 group cursor-help">
+<span class="material-symbols-outlined text-on-secondary-container" style="font-variation-settings: 'FILL' 1;">bolt</span>
+<span class="text-xs text-on-secondary-container font-semibold">Shortlist updated 5m ago with 2 new matches.</span>
+</div>
+</aside>
+</div>
+</div>
+<!-- Footer Shell -->
+<footer class="mt-auto w-full py-12 bg-surface-container-low border-t border-outline-variant/10 flex flex-col items-center gap-4">
+<div class="flex gap-8">
+<a class="text-on-surface-variant text-xs uppercase tracking-widest font-semibold hover:underline decoration-primary" href="#">Privacy</a>
+<a class="text-on-surface-variant text-xs uppercase tracking-widest font-semibold hover:underline decoration-primary" href="#">Terms</a>
+<a class="text-on-surface-variant text-xs uppercase tracking-widest font-semibold hover:underline decoration-primary" href="#">Careers</a>
+<a class="text-on-surface-variant text-xs uppercase tracking-widest font-semibold hover:underline decoration-primary" href="#">Contact</a>
+</div>
+<p class="text-on-surface-variant text-[10px] uppercase tracking-[0.2em] font-medium opacity-60">© 2024 Renate AI. The Sovereign Path.</p>
+</footer>
+</main>
+<!-- Floating Action Button - Supressed based on context of 'Dashboard' per rules -->
+</body></html>

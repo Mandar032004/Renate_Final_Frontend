@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Marcus Sterling - Candidate Deep-Dive | Renate AI</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary-fixed-dim": "#ffb778",
+              "secondary": "#685684",
+              "on-secondary-container": "#63517f",
+              "primary": "#3d007d",
+              "on-secondary-fixed": "#23123c",
+              "secondary-fixed": "#ecdcff",
+              "inverse-surface": "#303033",
+              "on-secondary-fixed-variant": "#503e6a",
+              "error-container": "#ffdad6",
+              "surface-container-high": "#e9e7eb",
+              "on-primary-fixed": "#280056",
+              "on-surface": "#1b1b1e",
+              "primary-fixed": "#ecdcff",
+              "on-primary-container": "#c39bff",
+              "on-tertiary-container": "#e4a063",
+              "on-primary-fixed-variant": "#5a299e",
+              "surface-container-low": "#f5f3f7",
+              "on-tertiary-fixed-variant": "#6b3b04",
+              "surface-variant": "#e3e2e6",
+              "outline-variant": "#cdc3d4",
+              "tertiary": "#452300",
+              "tertiary-container": "#653600",
+              "surface": "#faf9fc",
+              "on-tertiary": "#ffffff",
+              "secondary-container": "#dfc8fd",
+              "inverse-on-surface": "#f2f0f4",
+              "on-error-container": "#93000a",
+              "surface-dim": "#dbd9dd",
+              "surface-container-lowest": "#ffffff",
+              "surface-tint": "#7344b8",
+              "on-secondary": "#ffffff",
+              "tertiary-fixed": "#ffdcc1",
+              "surface-container-highest": "#e3e2e6",
+              "inverse-primary": "#d6baff",
+              "secondary-fixed-dim": "#d3bdf2",
+              "primary-container": "#552299",
+              "on-surface-variant": "#4a4452",
+              "surface-bright": "#faf9fc",
+              "on-primary": "#ffffff",
+              "on-background": "#1b1b1e",
+              "error": "#ba1a1a",
+              "on-error": "#ffffff",
+              "primary-fixed-dim": "#d6baff",
+              "outline": "#7c7483",
+              "on-tertiary-fixed": "#2e1500",
+              "surface-container": "#efedf1",
+              "background": "#faf9fc"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .glass-panel {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+      }
+      .asymmetric-grid {
+        display: grid;
+        grid-template-columns: 320px 1fr 380px;
+        gap: 2rem;
+      }
+      @media (max-width: 1280px) {
+        .asymmetric-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface">
+<!-- SideNavBar Shell -->
+<aside class="fixed left-0 top-0 h-full w-64 bg-[#552299] dark:bg-[#3d007d] flex flex-col py-6 no-border shadow-2xl z-50 shadow-[0px_20px_40px_rgba(85,34,153,0.06)]">
+<div class="px-6 mb-10 flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center overflow-hidden">
+<img alt="Renate AI Logo" class="w-8 h-8 object-contain" data-alt="Abstract geometric wing logo in white and purple gradient representing agility and intelligence" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDAGeSc1-kc3KWh9sqSWZOQe6xkV1VOQQGMaSVbz-n-81BZ37dH6ZZqreKpjf80CK94-EM2YWPD4prD1cNdc7HH6_7R-p74voRl0mrHFoX2LIFGBAVFWCA9w4qBX4uxh9S5jI-Wq00GBg60a6Ioge-oxweY8RUXx21SmmyCvj7G7PipQ3HPFTfnBugR9m7gRkn-QwQ0FNnCsMVS-ZUVsHUUv_h8IJVNxpUYjSWzsS-GVLHWDMHx3Zaecwz38aiiswfs-29vpA93_dnc"/>
+</div>
+<div>
+<h1 class="font-headline font-bold tracking-tight text-white text-xl">Renate AI</h1>
+<p class="text-[10px] uppercase tracking-widest text-purple-200/60 font-medium">Enterprise Suite</p>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="text-purple-100/70 hover:text-white rounded-xl mx-2 px-4 py-3 flex items-center gap-3 hover:bg-white/5 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-headline font-bold tracking-tight">Home</span>
+</a>
+<!-- ACTIVE STATE: Hiring -->
+<a class="bg-white/10 text-white rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="work" style="font-variation-settings: 'FILL' 1;">work</span>
+<span class="font-headline font-bold tracking-tight">Hiring</span>
+</a>
+<a class="text-purple-100/70 hover:text-white rounded-xl mx-2 px-4 py-3 flex items-center gap-3 hover:bg-white/5 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="insights">insights</span>
+<span class="font-headline font-bold tracking-tight">Analytics</span>
+</a>
+<a class="text-purple-100/70 hover:text-white rounded-xl mx-2 px-4 py-3 flex items-center gap-3 hover:bg-white/5 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span class="font-headline font-bold tracking-tight">Billing</span>
+</a>
+<a class="text-purple-100/70 hover:text-white rounded-xl mx-2 px-4 py-3 flex items-center gap-3 hover:bg-white/5 transition-all duration-200 mt-auto" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-headline font-bold tracking-tight">Settings</span>
+</a>
+</nav>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-64 min-h-screen">
+<!-- TopNavBar Shell -->
+<header class="sticky top-0 right-0 w-full z-40 flex justify-between items-center px-8 h-16 bg-white/70 backdrop-blur-xl bg-[#f5f3f7] flat no shadows">
+<div class="flex items-center gap-4">
+<span class="text-on-surface-variant font-medium text-sm">Hiring</span>
+<span class="material-symbols-outlined text-outline-variant text-xs" data-icon="chevron_right">chevron_right</span>
+<span class="text-primary font-bold text-sm">Candidate Profile</span>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex gap-4 items-center">
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors cursor-pointer" data-icon="notifications">notifications</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors cursor-pointer" data-icon="help">help</span>
+</div>
+<div class="h-8 w-[1px] bg-outline-variant/30"></div>
+<div class="flex items-center gap-3 cursor-pointer group">
+<div class="text-right">
+<p class="text-xs font-bold text-on-surface">Alex Chen</p>
+<p class="text-[10px] text-on-surface-variant">Talent Acquisition</p>
+</div>
+<img alt="User Avatar" class="w-8 h-8 rounded-full border-2 border-primary/10 group-hover:border-primary transition-all" data-alt="Professional headshot of a male recruiter in a minimalist studio setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuALNoW1RTOPW2JDFed28nXu_s_79JOY2NFhpAAIQd86F9iHknHDQHxhEAE5lAJpFSNhKhjzx73z9WD-qT0mhp2GGhvrT0PZ_t7AAAZgj85Ea1ck6ngdqCxqw2XmKxBHNcZhOMyPj7qoeihTQC3H32T2G4r-YWlWKlFs6SFvjkfHrg1eBTijnQR0M7Ey4DCTm_6jkpK_QgPQROXx6lab-eTKemORs0n5y5Z1sLYIJnB2HONW2gWIT92FM_5hJVXVWG6PFE5J7htijOMJ"/>
+</div>
+</div>
+</header>
+<div class="p-12 max-w-[1600px] mx-auto">
+<!-- Asymmetric Layout Container -->
+<div class="asymmetric-grid">
+<!-- Left Column: Profile Card -->
+<section class="space-y-6">
+<div class="bg-surface-container-lowest rounded-xl p-8 shadow-[0px_20px_40px_rgba(85,34,153,0.06)] border-none">
+<div class="relative w-40 h-40 mx-auto mb-6">
+<img alt="Marcus Sterling" class="w-full h-full rounded-2xl object-cover shadow-lg" data-alt="High-end editorial portrait of a professional man with a confident smile, wearing a dark blazer" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJDtvu17LUxSaLJwBjyEYouSngm1q-rbvkm1bQaREHY_ZoSB88cPni9K3splmybPfpQ4pOGIV9RPMW-OCEVrWjg5oyV4lb8ioM2r9i5e-UK4NVb9iB7iKEL3gHAaGXjCcvgFQEEs7RYKthriOv36vp5nrkAua_M0BGM1H-Sj8F7knRsaQ5njwwJPTgO1Qm6coFwXEwcfXiIGO3qzR_qMUJUnZQFQ0VCbsmBX1MFn0jiTfhP_2fGYCZAk9dxwB58G3opCkEOkde7HpF"/>
+<div class="absolute -bottom-2 -right-2 bg-primary text-white p-1.5 rounded-lg flex items-center gap-1 shadow-lg">
+<span class="material-symbols-outlined text-sm" data-icon="verified" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span class="text-[10px] font-bold uppercase tracking-wider">Verified</span>
+</div>
+</div>
+<div class="text-center mb-8">
+<h2 class="font-headline text-2xl font-extrabold text-primary mb-1">Marcus Sterling</h2>
+<p class="text-on-surface-variant text-sm font-medium">Principal Software Engineer</p>
+</div>
+<div class="space-y-4 mb-10">
+<div class="flex items-center gap-4 p-3 rounded-lg bg-surface-container-low">
+<span class="material-symbols-outlined text-primary text-xl" data-icon="location_on">location_on</span>
+<div>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-widest font-bold">Location</p>
+<p class="text-sm font-semibold">San Francisco</p>
+</div>
+</div>
+<div class="flex items-center gap-4 p-3 rounded-lg bg-surface-container-low">
+<span class="material-symbols-outlined text-primary text-xl" data-icon="history_edu">history_edu</span>
+<div>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-widest font-bold">Experience</p>
+<p class="text-sm font-semibold">12+ Years</p>
+</div>
+</div>
+<div class="flex items-center gap-4 p-3 rounded-lg bg-surface-container-low overflow-hidden">
+<span class="material-symbols-outlined text-primary text-xl" data-icon="mail">mail</span>
+<div class="truncate">
+<p class="text-[10px] text-on-surface-variant uppercase tracking-widest font-bold">Email</p>
+<p class="text-sm font-semibold truncate">m.sterling@example.com</p>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 gap-3">
+<button class="bg-primary text-white font-headline font-bold py-4 rounded-xl flex items-center justify-center gap-2 hover:bg-[#3d007d] transition-all duration-300 transform active:scale-95 shadow-xl shadow-primary/20">
+<span class="material-symbols-outlined" data-icon="bookmark">bookmark</span>
+                                Shortlist
+                            </button>
+<button class="bg-surface-container-high text-error font-headline font-bold py-4 rounded-xl flex items-center justify-center gap-2 hover:bg-error-container transition-all duration-300 transform active:scale-95">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+                                Reject
+                            </button>
+</div>
+</div>
+</section>
+<!-- Center Column: Decision Reasoning -->
+<section class="space-y-8">
+<div class="bg-surface-container-lowest rounded-xl p-10 shadow-[0px_20px_40px_rgba(85,34,153,0.06)] relative overflow-hidden">
+<!-- Subtle Background Sheen -->
+<div class="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-[100px] -mr-32 -mt-32"></div>
+<div class="flex items-start justify-between mb-8">
+<div>
+<div class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider inline-flex items-center gap-2 mb-4 shadow-[0_2px_8px_rgba(85,34,153,0.1)]">
+<span class="material-symbols-outlined text-sm" data-icon="auto_awesome" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+                                    AI Decision Reasoning
+                                </div>
+<h3 class="font-headline text-3xl font-extrabold text-primary leading-tight">Elite Technical Archetype</h3>
+</div>
+<div class="bg-primary p-4 rounded-2xl text-white text-center min-w-[100px] shadow-lg">
+<p class="text-[10px] font-bold uppercase tracking-tighter opacity-70">Match Score</p>
+<p class="text-3xl font-black font-headline tracking-tighter">98<span class="text-sm">%</span></p>
+</div>
+</div>
+<div class="space-y-6 text-on-surface-variant leading-relaxed text-lg">
+<p>Marcus demonstrates an exceptional alignment with the "Principal Architect" requirements. His historical trajectory through Fortune 500 infrastructure teams combined with recent contributions to high-growth AI startups indicates a rare duality of stability and innovation.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 py-4">
+<div class="p-6 rounded-xl bg-surface-container-low border-l-4 border-primary">
+<h4 class="font-headline font-bold text-primary mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-xl" data-icon="check_circle">check_circle</span>
+                                        Strategic Depth
+                                    </h4>
+<p class="text-sm">Proven ability to scale systems from 10k to 10M DAU with 99.99% uptime. Matches the Sovereign Path scale criteria.</p>
+</div>
+<div class="p-6 rounded-xl bg-surface-container-low border-l-4 border-primary">
+<h4 class="font-headline font-bold text-primary mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-xl" data-icon="psychology">psychology</span>
+                                        Culture Catalyst
+                                    </h4>
+<p class="text-sm">Mentorship history suggests he will elevate the internal engineering bar by 15-20% within the first two quarters.</p>
+</div>
+</div>
+<p>The recommendation is to bypass the initial technical screen and move directly to the Executive Strategy round. His consistency across multiple independent signal sources (GitHub, peer reviews, technical assessment) is statistically significant at a 94% confidence level.</p>
+</div>
+</div>
+<!-- AI Insights Chips -->
+<div class="flex flex-wrap gap-3">
+<div class="bg-secondary-container text-on-secondary-container px-4 py-2 rounded-lg font-medium text-xs flex items-center gap-2 border border-primary/10">
+<span class="material-symbols-outlined text-sm" data-icon="verified_user">verified_user</span>
+                            High Retention Probability
+                        </div>
+<div class="bg-secondary-container text-on-secondary-container px-4 py-2 rounded-lg font-medium text-xs flex items-center gap-2 border border-primary/10">
+<span class="material-symbols-outlined text-sm" data-icon="trending_up">trending_up</span>
+                            Fast-Track Candidate
+                        </div>
+<div class="bg-secondary-container text-on-secondary-container px-4 py-2 rounded-lg font-medium text-xs flex items-center gap-2 border border-primary/10">
+<span class="material-symbols-outlined text-sm" data-icon="stars">stars</span>
+                            Top 1% Market Benchmark
+                        </div>
+</div>
+</section>
+<!-- Right Column: Dimensional Breakdown -->
+<section class="space-y-6">
+<div class="bg-surface-container-lowest rounded-xl p-8 shadow-[0px_20px_40px_rgba(85,34,153,0.06)]">
+<h3 class="font-headline text-xl font-extrabold text-primary mb-8 flex items-center gap-3">
+<span class="material-symbols-outlined" data-icon="bar_chart">bar_chart</span>
+                            Dimensional Breakdown
+                        </h3>
+<div class="space-y-8">
+<!-- Metric 1 -->
+<div class="space-y-2">
+<div class="flex justify-between items-end">
+<span class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Technical Depth</span>
+<span class="font-headline font-extrabold text-primary">94%</span>
+</div>
+<div class="h-3 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-[#552299] rounded-full shadow-[0_0_12px_rgba(85,34,153,0.4)]" style="width: 94%"></div>
+</div>
+</div>
+<!-- Metric 2 -->
+<div class="space-y-2">
+<div class="flex justify-between items-end">
+<span class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Consistency</span>
+<span class="font-headline font-extrabold text-primary">91%</span>
+</div>
+<div class="h-3 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-[#552299] rounded-full shadow-[0_0_12px_rgba(85,34,153,0.4)]" style="width: 91%"></div>
+</div>
+</div>
+<!-- Metric 3 -->
+<div class="space-y-2">
+<div class="flex justify-between items-end">
+<span class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Communication Clarity</span>
+<span class="font-headline font-extrabold text-primary">82%</span>
+</div>
+<div class="h-3 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-[#552299] rounded-full shadow-[0_0_12px_rgba(85,34,153,0.4)]" style="width: 82%"></div>
+</div>
+</div>
+<!-- Metric 4 -->
+<div class="space-y-2">
+<div class="flex justify-between items-end">
+<span class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Problem Solving</span>
+<span class="font-headline font-extrabold text-primary">88%</span>
+</div>
+<div class="h-3 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-[#552299] rounded-full shadow-[0_0_12px_rgba(85,34,153,0.4)]" style="width: 88%"></div>
+</div>
+</div>
+<!-- Metric 5 -->
+<div class="space-y-2">
+<div class="flex justify-between items-end">
+<span class="text-xs font-bold uppercase tracking-widest text-on-surface-variant">Culture Alignment</span>
+<span class="font-headline font-extrabold text-primary">76%</span>
+</div>
+<div class="h-3 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-[#552299] rounded-full shadow-[0_0_12px_rgba(85,34,153,0.4)]" style="width: 76%"></div>
+</div>
+</div>
+</div>
+<div class="mt-12 p-6 rounded-xl bg-primary/5 border border-primary/10">
+<p class="text-[10px] font-bold uppercase tracking-widest text-primary mb-2">Historical Context</p>
+<p class="text-sm text-on-surface-variant italic">"Candidate shows consistent performance across 4 interview cycles with zero critical red flags."</p>
+</div>
+</div>
+</section>
+</div>
+</div>
+<!-- Footer Shell -->
+<footer class="w-full py-12 border-t border-[#efedf1] bg-[#faf9fc] flex flex-col items-center gap-4 tonal-shift-bg">
+<div class="flex gap-8">
+<a class="font-label text-xs uppercase tracking-widest text-[#4a4452] hover:underline decoration-[#552299] transition-opacity hover:opacity-70" href="#">Privacy</a>
+<a class="font-label text-xs uppercase tracking-widest text-[#4a4452] hover:underline decoration-[#552299] transition-opacity hover:opacity-70" href="#">Terms</a>
+<a class="font-label text-xs uppercase tracking-widest text-[#4a4452] hover:underline decoration-[#552299] transition-opacity hover:opacity-70" href="#">Careers</a>
+<a class="font-label text-xs uppercase tracking-widest text-[#4a4452] hover:underline decoration-[#552299] transition-opacity hover:opacity-70" href="#">Contact</a>
+</div>
+<p class="font-label text-xs uppercase tracking-widest text-[#552299] font-bold">© 2024 Renate AI. The Sovereign Path.</p>
+</footer>
+</main>
+</body></html>

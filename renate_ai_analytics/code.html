@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Decision Intelligence Dashboard | Renate AI</title>
+<!-- Google Fonts: Manrope & Inter -->
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary-fixed-dim": "#ffb778",
+              "secondary": "#685684",
+              "on-secondary-container": "#63517f",
+              "primary": "#3d007d",
+              "on-secondary-fixed": "#23123c",
+              "secondary-fixed": "#ecdcff",
+              "inverse-surface": "#303033",
+              "on-secondary-fixed-variant": "#503e6a",
+              "error-container": "#ffdad6",
+              "surface-container-high": "#e9e7eb",
+              "on-primary-fixed": "#280056",
+              "on-surface": "#1b1b1e",
+              "primary-fixed": "#ecdcff",
+              "on-primary-container": "#c39bff",
+              "on-tertiary-container": "#e4a063",
+              "on-primary-fixed-variant": "#5a299e",
+              "surface-container-low": "#f5f3f7",
+              "on-tertiary-fixed-variant": "#6b3b04",
+              "surface-variant": "#e3e2e6",
+              "outline-variant": "#cdc3d4",
+              "tertiary": "#452300",
+              "tertiary-container": "#653600",
+              "surface": "#faf9fc",
+              "on-tertiary": "#ffffff",
+              "secondary-container": "#dfc8fd",
+              "inverse-on-surface": "#f2f0f4",
+              "on-error-container": "#93000a",
+              "surface-dim": "#dbd9dd",
+              "surface-container-lowest": "#ffffff",
+              "surface-tint": "#7344b8",
+              "on-secondary": "#ffffff",
+              "tertiary-fixed": "#ffdcc1",
+              "surface-container-highest": "#e3e2e6",
+              "inverse-primary": "#d6baff",
+              "secondary-fixed-dim": "#d3bdf2",
+              "primary-container": "#552299",
+              "on-surface-variant": "#4a4452",
+              "surface-bright": "#faf9fc",
+              "on-primary": "#ffffff",
+              "on-background": "#1b1b1e",
+              "error": "#ba1a1a",
+              "on-error": "#ffffff",
+              "primary-fixed-dim": "#d6baff",
+              "outline": "#7c7483",
+              "on-tertiary-fixed": "#2e1500",
+              "surface-container": "#efedf1",
+              "background": "#faf9fc"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .glass-card {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(24px);
+      }
+      .asymmetric-wing {
+        clip-path: polygon(0 0, 100% 0, 95% 100%, 0% 100%);
+      }
+      .funnel-step {
+        clip-path: polygon(10% 0, 90% 0, 100% 100%, 0% 100%);
+      }
+      .funnel-step-last {
+        clip-path: polygon(10% 0, 90% 0, 50% 100%, 50% 100%);
+      }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface antialiased">
+<!-- SideNavBar Component -->
+<aside class="fixed left-0 top-0 h-full w-64 bg-primary-container dark:bg-[#3d007d] flex flex-col py-6 no-border shadow-2xl z-50">
+<div class="px-6 mb-10 flex items-center gap-3">
+<img alt="Renate AI Logo" class="w-8 h-8 rounded-lg brightness-200" data-alt="minimalist geometric logo for an AI company using clean lines and a deep purple color palette" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7c6XBGt6wsO7EElMyYFDB8oO77OY-YF_3A8Ks1DKHxB9xjygD8rqvLClw4XhJ7OLJ0aq8ffKUI4syT8LJP1jTIVLN7mf859pFv0-bHQlwODICsqWBWm40rJc05wxoOXc-dJYu63mx0lFzvqQK5JiNlkByjUD8KAPEf7VhAOhPhWPgNbvksbRItqgTiTIwyH2P-MTj_5u_-vaQ6b8qQK4cFqeVxp8d7QbJjIr5J1_RYVd6Cn7t6dJIEOHvcTJZ1D6Namh_eiMOp_f3"/>
+<div class="flex flex-col">
+<span class="font-headline font-bold tracking-tight text-white text-xl">Renate AI</span>
+<span class="font-headline font-bold tracking-tight text-purple-100/60 text-[10px] uppercase">Enterprise Suite</span>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="text-purple-100/70 hover:text-white rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-all duration-200 hover:bg-white/5" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-headline font-bold tracking-tight">Home</span>
+</a>
+<a class="text-purple-100/70 hover:text-white rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-all duration-200 hover:bg-white/5" href="#">
+<span class="material-symbols-outlined">work</span>
+<span class="font-headline font-bold tracking-tight">Hiring</span>
+</a>
+<!-- Active State: Analytics -->
+<a class="bg-white/10 text-white rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">insights</span>
+<span class="font-headline font-bold tracking-tight">Analytics</span>
+</a>
+<a class="text-purple-100/70 hover:text-white rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-all duration-200 hover:bg-white/5" href="#">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-headline font-bold tracking-tight">Billing</span>
+</a>
+<a class="text-purple-100/70 hover:text-white rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-all duration-200 hover:bg-white/5" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-headline font-bold tracking-tight">Settings</span>
+</a>
+</nav>
+<div class="mt-auto px-4">
+<div class="p-4 bg-white/5 rounded-xl border border-white/10">
+<p class="text-[10px] font-headline font-bold text-purple-100/40 uppercase mb-2">System Status</p>
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></div>
+<span class="text-xs text-white/80 font-medium">Sovereign AI Active</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="ml-64 min-h-screen">
+<!-- TopAppBar Component -->
+<header class="sticky top-0 right-0 w-full z-40 flex justify-between items-center px-8 h-16 bg-white/70 backdrop-blur-xl transition-colors duration-300">
+<div class="flex items-center gap-4">
+<h1 class="font-headline text-xl font-extrabold text-on-surface tracking-tight">Decision Intelligence</h1>
+<div class="bg-secondary-container px-3 py-1 rounded-full flex items-center gap-2 shadow-[0_2px_8px_rgba(85,34,153,0.1)]">
+<span class="material-symbols-outlined text-xs text-on-secondary-container" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<span class="text-[10px] font-bold text-on-secondary-container uppercase tracking-wider">AI Insight Active</span>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex gap-4">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">help</span>
+</button>
+</div>
+<div class="h-8 w-[1px] bg-outline-variant/20"></div>
+<div class="flex items-center gap-3">
+<div class="text-right">
+<p class="text-xs font-bold text-on-surface">Alex Stratton</p>
+<p class="text-[10px] text-on-surface-variant">Chief Talent Officer</p>
+</div>
+<img alt="User Avatar" class="w-9 h-9 rounded-xl object-cover ring-2 ring-primary/5" data-alt="professional portrait of an executive in a well-lit modern office setting with soft bokeh background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDPt8aVtf4I9aJeo9XklgrFh--lEwI1KPG7sewIMMamCQOX3q6DQ_Xot52nW_NShF8A6_BEBJIw_q0hU_29jRRpSfqyKEtMKuDbXZJHRKtIJ4D78Uge6z312c_b-QPklV96irMBuKSUdbXJEzUs23WMSgcu6cdNw9tIYOzrEhR0e3udH7Yt6Wx0bFzvYx8wnSLgG-UMUKu-CUW0xyuHDOTrdd117M9DKMhn8yMzyjBlcMtwFh-EAuaIqdi8Kh5jzddW_T_04qdAcQoO"/>
+</div>
+</div>
+</header>
+<!-- Dashboard Content -->
+<div class="p-8 space-y-8">
+<!-- Metric Grid -->
+<section class="grid grid-cols-1 md:grid-cols-4 gap-6">
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-[0px_20px_40px_rgba(85,34,153,0.03)] border-none">
+<p class="text-[11px] font-bold text-on-surface-variant uppercase tracking-widest mb-1">Placement Rate</p>
+<div class="flex items-end justify-between">
+<h3 class="font-headline text-3xl font-extrabold text-primary">82%</h3>
+<span class="text-xs font-bold text-emerald-600 flex items-center gap-0.5">
+<span class="material-symbols-outlined text-sm">trending_up</span> 4.2%
+                        </span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-[0px_20px_40px_rgba(85,34,153,0.03)] border-none">
+<p class="text-[11px] font-bold text-on-surface-variant uppercase tracking-widest mb-1">Interview Success</p>
+<div class="flex items-end justify-between">
+<h3 class="font-headline text-3xl font-extrabold text-primary">64%</h3>
+<span class="text-xs font-bold text-emerald-600 flex items-center gap-0.5">
+<span class="material-symbols-outlined text-sm">trending_up</span> 1.8%
+                        </span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-[0px_20px_40px_rgba(85,34,153,0.03)] border-none">
+<p class="text-[11px] font-bold text-on-surface-variant uppercase tracking-widest mb-1">Cost per Hire</p>
+<div class="flex items-end justify-between">
+<h3 class="font-headline text-3xl font-extrabold text-primary">$4.2k</h3>
+<span class="text-xs font-bold text-on-surface-variant flex items-center gap-0.5">
+<span class="material-symbols-outlined text-sm">horizontal_rule</span> 0%
+                        </span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-[0px_20px_40px_rgba(85,34,153,0.03)] border-none">
+<p class="text-[11px] font-bold text-on-surface-variant uppercase tracking-widest mb-1">Active Pipelines</p>
+<div class="flex items-end justify-between">
+<h3 class="font-headline text-3xl font-extrabold text-primary">24</h3>
+<span class="text-xs font-bold text-error flex items-center gap-0.5">
+<span class="material-symbols-outlined text-sm">trending_down</span> 2
+                        </span>
+</div>
+</div>
+</section>
+<!-- Main Analytics Bento -->
+<section class="grid grid-cols-12 gap-6">
+<!-- Hiring Velocity Chart (Large Area) -->
+<div class="col-span-8 bg-surface-container-lowest p-8 rounded-xl shadow-[0px_20px_40px_rgba(85,34,153,0.03)]">
+<div class="flex justify-between items-start mb-8">
+<div>
+<h2 class="font-headline text-xl font-extrabold text-primary">Hiring Velocity</h2>
+<p class="text-sm text-on-surface-variant">Time-to-fill trends across all departments</p>
+</div>
+<div class="flex gap-2">
+<button class="px-3 py-1.5 text-xs font-bold rounded-lg bg-surface-container-low text-on-surface hover:bg-surface-container-high transition-all">Q3 2024</button>
+<button class="px-3 py-1.5 text-xs font-bold rounded-lg bg-primary-container text-white">Annual View</button>
+</div>
+</div>
+<!-- Area Chart Visualization (Simplified SVG) -->
+<div class="relative h-64 w-full">
+<svg class="w-full h-full" viewbox="0 0 800 250">
+<defs>
+<lineargradient id="areaGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#552299" stop-opacity="0.3"></stop>
+<stop offset="100%" stop-color="#552299" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+<path d="M0,200 Q100,180 200,100 T400,120 T600,60 T800,40 L800,250 L0,250 Z" fill="url(#areaGradient)"></path>
+<path d="M0,200 Q100,180 200,100 T400,120 T600,60 T800,40" fill="none" stroke="#552299" stroke-linecap="round" stroke-width="4"></path>
+<!-- Grid Lines -->
+<line stroke="#efedf1" stroke-width="1" x1="0" x2="800" y1="50" y2="50"></line>
+<line stroke="#efedf1" stroke-width="1" x1="0" x2="800" y1="100" y2="100"></line>
+<line stroke="#efedf1" stroke-width="1" x1="0" x2="800" y1="150" y2="150"></line>
+<line stroke="#efedf1" stroke-width="1" x1="0" x2="800" y1="200" y2="200"></line>
+<!-- Data Dots -->
+<circle cx="200" cy="100" fill="#ffffff" r="6" stroke="#552299" stroke-width="3"></circle>
+<circle cx="600" cy="60" fill="#ffffff" r="6" stroke="#552299" stroke-width="3"></circle>
+</svg>
+<div class="absolute top-10 left-[200px] -translate-x-1/2 bg-on-surface text-white px-2 py-1 rounded text-[10px] font-bold">Peak Velocity</div>
+</div>
+<div class="flex justify-between mt-6 text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">
+<span>Jan</span><span>Mar</span><span>May</span><span>Jul</span><span>Sep</span><span>Nov</span>
+</div>
+</div>
+<!-- Overall Candidate Quality (Radar) -->
+<div class="col-span-4 bg-surface-container-lowest p-8 rounded-xl shadow-[0px_20px_40px_rgba(85,34,153,0.03)]">
+<h2 class="font-headline text-lg font-extrabold text-primary mb-1">Quality Index</h2>
+<p class="text-xs text-on-surface-variant mb-8">AI-Synthesized multi-factor scoring</p>
+<div class="flex justify-center py-4">
+<svg class="w-48 h-48 overflow-visible" viewbox="0 0 200 200">
+<!-- Radar Hexagon -->
+<polygon fill="none" points="100,10 186.6,60 186.6,160 100,210 13.4,160 13.4,60" stroke="#efedf1" stroke-width="1"></polygon>
+<polygon fill="none" points="100,60 143.3,85 143.3,135 100,160 56.7,135 56.7,85" stroke="#efedf1" stroke-width="1"></polygon>
+<!-- Axes -->
+<line stroke="#efedf1" stroke-width="1" x1="100" x2="100" y1="110" y2="10"></line>
+<line stroke="#efedf1" stroke-width="1" x1="100" x2="186.6" y1="110" y2="160"></line>
+<line stroke="#efedf1" stroke-width="1" x1="100" x2="13.4" y1="110" y2="160"></line>
+<!-- Data Shape -->
+<polygon fill="rgba(85,34,153,0.15)" points="100,30 160,140 40,150" stroke="#552299" stroke-width="2"></polygon>
+<!-- Labels -->
+<text class="text-[10px] font-bold fill-primary" text-anchor="middle" x="100" y="0">TECHNICAL</text>
+<text class="text-[10px] font-bold fill-primary" text-anchor="end" x="190" y="175">COMMUNICATION</text>
+<text class="text-[10px] font-bold fill-primary" text-anchor="start" x="10" y="175">CULTURE</text>
+</svg>
+</div>
+<div class="mt-8 space-y-3">
+<div class="flex justify-between items-center bg-surface-container-low p-3 rounded-lg">
+<span class="text-xs font-bold text-on-surface-variant">Avg. Score</span>
+<span class="text-sm font-extrabold text-primary">8.4/10</span>
+</div>
+<p class="text-[10px] italic text-on-surface-variant text-center px-4">"Candidate technical prowess has increased by 14% since Q2 workflow updates."</p>
+</div>
+</div>
+<!-- Vertical Funnel Chart (Asymmetric Left) -->
+<div class="col-span-5 bg-surface-container-low p-8 rounded-xl flex flex-col items-center justify-center">
+<h2 class="font-headline text-lg font-extrabold text-primary mb-10 w-full">Conversion Funnel</h2>
+<div class="w-full max-w-xs space-y-2">
+<!-- Step 1: Total Processed -->
+<div class="group relative">
+<div class="funnel-step bg-primary h-20 w-full flex items-center justify-center transition-transform hover:scale-105 cursor-pointer">
+<div class="text-center">
+<p class="text-white text-2xl font-black">5000</p>
+<p class="text-white/60 text-[10px] uppercase font-bold tracking-tighter">Total Processed</p>
+</div>
+</div>
+</div>
+<!-- Step 2: Shortlisted -->
+<div class="group relative px-4">
+<div class="funnel-step bg-primary/80 h-20 w-full flex items-center justify-center transition-transform hover:scale-105 cursor-pointer">
+<div class="text-center">
+<p class="text-white text-xl font-bold">1200</p>
+<p class="text-white/60 text-[10px] uppercase font-bold tracking-tighter">Shortlisted</p>
+</div>
+</div>
+</div>
+<!-- Step 3: Calls Made -->
+<div class="group relative px-10">
+<div class="funnel-step-last bg-primary/60 h-20 w-full flex items-center justify-center transition-transform hover:scale-105 cursor-pointer">
+<div class="text-center pb-4">
+<p class="text-white text-lg font-bold">156</p>
+<p class="text-white/60 text-[10px] uppercase font-bold tracking-tighter">Calls Made</p>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-8 grid grid-cols-2 gap-4 w-full">
+<div class="text-center border-r border-outline-variant/30">
+<p class="text-xs font-bold text-on-surface-variant uppercase">Sourcing Efficiency</p>
+<p class="text-xl font-black text-primary">24%</p>
+</div>
+<div class="text-center">
+<p class="text-xs font-bold text-on-surface-variant uppercase">Call Conversion</p>
+<p class="text-xl font-black text-primary">13%</p>
+</div>
+</div>
+</div>
+<!-- Intelligence Newsfeed / Insights -->
+<div class="col-span-7 space-y-6">
+<div class="bg-surface-container-highest p-8 rounded-xl h-full flex flex-col">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">psychology</span>
+<h2 class="font-headline text-lg font-extrabold text-primary">Decision Intelligence Hub</h2>
+</div>
+<div class="space-y-4 flex-1">
+<!-- Insight Card 1 -->
+<div class="bg-surface-container-lowest p-5 rounded-xl border-l-4 border-primary shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-2">
+<span class="text-[10px] font-black text-primary uppercase tracking-widest">Market Alert</span>
+<span class="text-[10px] text-on-surface-variant">2h ago</span>
+</div>
+<h4 class="font-bold text-sm mb-1">Software Engineer Salaries Rising</h4>
+<p class="text-xs text-on-surface-variant leading-relaxed">Competitor data shows a 12% bump in Tier-1 city offerings. AI suggests adjusting active offer ranges by +5% to maintain 80% acceptance rate.</p>
+</div>
+<!-- Insight Card 2 -->
+<div class="bg-surface-container-lowest p-5 rounded-xl border-l-4 border-secondary shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-2">
+<span class="text-[10px] font-black text-secondary uppercase tracking-widest">Pipeline Health</span>
+<span class="text-[10px] text-on-surface-variant">5h ago</span>
+</div>
+<h4 class="font-bold text-sm mb-1">Product Design Funnel Stagnation</h4>
+<p class="text-xs text-on-surface-variant leading-relaxed">Candidate drop-off at "Shortlist" stage is 20% higher than average. Recommend streamlining the technical portfolio review process.</p>
+</div>
+<!-- Insight Card 3 -->
+<div class="bg-surface-container-lowest p-5 rounded-xl border-l-4 border-tertiary-fixed-dim shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-2">
+<span class="text-[10px] font-black text-tertiary-container uppercase tracking-widest">Success Pattern</span>
+<span class="text-[10px] text-on-surface-variant">Yesterday</span>
+</div>
+<h4 class="font-bold text-sm mb-1">Remote-First Efficiency</h4>
+<p class="text-xs text-on-surface-variant leading-relaxed">Remote candidates are completing the assessment cycle 3 days faster than local ones. Cost per hire for remote talent is currently $3.1k.</p>
+</div>
+</div>
+<button class="mt-6 w-full py-4 bg-primary text-white font-headline font-extrabold rounded-xl shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all">
+                            Generate Full Strategy Report
+                        </button>
+</div>
+</div>
+</section>
+</div>
+<!-- Footer Component -->
+<footer class="w-full py-12 border-t border-[#efedf1] bg-[#faf9fc] flex flex-col items-center gap-4">
+<div class="flex gap-8">
+<a class="font-['Inter'] text-xs uppercase tracking-widest text-[#4a4452] hover:underline decoration-[#552299] transition-opacity hover:opacity-70" href="#">Privacy</a>
+<a class="font-['Inter'] text-xs uppercase tracking-widest text-[#4a4452] hover:underline decoration-[#552299] transition-opacity hover:opacity-70" href="#">Terms</a>
+<a class="font-['Inter'] text-xs uppercase tracking-widest text-[#4a4452] hover:underline decoration-[#552299] transition-opacity hover:opacity-70" href="#">Careers</a>
+<a class="font-['Inter'] text-xs uppercase tracking-widest text-[#4a4452] hover:underline decoration-[#552299] transition-opacity hover:opacity-70" href="#">Contact</a>
+</div>
+<p class="font-['Inter'] text-xs uppercase tracking-widest text-[#552299]">© 2024 Renate AI. The Sovereign Path.</p>
+</footer>
+</main>
+<!-- Floating Action Button (FAB) - Suppression Logic: Rendered here because it's Dashboard -->
+<button class="fixed bottom-8 right-8 w-14 h-14 bg-primary text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-50">
+<span class="material-symbols-outlined text-3xl">add</span>
+</button>
+</body></html>

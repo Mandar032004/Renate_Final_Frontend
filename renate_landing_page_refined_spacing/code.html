@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary-fixed-dim": "#ffb778",
+              "secondary": "#685684",
+              "on-secondary-container": "#63517f",
+              "primary": "#3d007d",
+              "on-secondary-fixed": "#23123c",
+              "secondary-fixed": "#ecdcff",
+              "inverse-surface": "#303033",
+              "on-secondary-fixed-variant": "#503e6a",
+              "error-container": "#ffdad6",
+              "surface-container-high": "#e9e7eb",
+              "on-primary-fixed": "#280056",
+              "on-surface": "#1b1b1e",
+              "primary-fixed": "#ecdcff",
+              "on-primary-container": "#c39bff",
+              "on-tertiary-container": "#e4a063",
+              "on-primary-fixed-variant": "#5a299e",
+              "surface-container-low": "#f5f3f7",
+              "on-tertiary-fixed-variant": "#6b3b04",
+              "surface-variant": "#e3e2e6",
+              "outline-variant": "#cdc3d4",
+              "tertiary": "#452300",
+              "tertiary-container": "#653600",
+              "surface": "#faf9fc",
+              "on-tertiary": "#ffffff",
+              "secondary-container": "#dfc8fd",
+              "inverse-on-surface": "#f2f0f4",
+              "on-error-container": "#93000a",
+              "surface-dim": "#dbd9dd",
+              "surface-container-lowest": "#ffffff",
+              "surface-tint": "#7344b8",
+              "on-secondary": "#ffffff",
+              "tertiary-fixed": "#ffdcc1",
+              "surface-container-highest": "#e3e2e6",
+              "inverse-primary": "#d6baff",
+              "secondary-fixed-dim": "#d3bdf2",
+              "primary-container": "#552299",
+              "on-surface-variant": "#4a4452",
+              "surface-bright": "#faf9fc",
+              "on-primary": "#ffffff",
+              "on-background": "#1b1b1e",
+              "error": "#ba1a1a",
+              "on-error": "#ffffff",
+              "primary-fixed-dim": "#d6baff",
+              "outline": "#7c7483",
+              "on-tertiary-fixed": "#2e1500",
+              "surface-container": "#efedf1",
+              "background": "#faf9fc"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+        }
+        .hero-gradient {
+            background: radial-gradient(circle at 0% 0%, #ecdcff 0%, transparent 50%),
+                        radial-gradient(circle at 100% 100%, #f5f3f7 0%, transparent 50%);
+        }
+        .wing-gradient {
+            background: linear-gradient(135deg, #3d007d 0%, #552299 100%);
+        }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface antialiased">
+<!-- TopNavBar -->
+<nav class="absolute top-0 w-full z-50 bg-transparent font-['Manrope'] font-semibold">
+<div class="max-w-7xl mx-auto flex justify-between items-center py-4 px-12">
+<div class="flex items-center gap-3">
+<img alt="Renate AI Logo" class="w-10 h-10 rounded-xl bg-primary-container p-2" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCHzUxezG9BpSIPjeGUFM2V_AVoJfwNZQazY7VB08y8Z51VSYeJiYh2fsqwUsRwylQlNtx8gsX94aLbqX8wdeIRhUCChbC3ubMP1pRhwTVRh9yPf3iKeXJ7xk-aj0rerGPRlv31c5lWwkae8vKa-WGcFpqtjeHlamayr4tx8sLJGL3NvcMK5yfvRr9QYVeorudKAhGdvV6R5Zq_HDiEjBPZQZAkqq1ER2mTlva0b4swJ58DA3_YxlZrpiXPzAvDs8Z3tZbHNajDCfP2"/>
+<span class="text-2xl font-black text-[#552299]">Renate AI</span>
+</div>
+<div class="hidden md:flex items-center gap-8 text-sm">
+<a class="text-[#552299] font-bold hover:scale-105 transition-transform" href="#">Product</a>
+<a class="text-[#4a4452] hover:scale-105 transition-transform" href="#">Solutions</a>
+<a class="text-[#4a4452] hover:scale-105 transition-transform" href="#">Pricing</a>
+</div>
+<button class="wing-gradient text-on-primary px-6 py-2.5 rounded-xl font-bold shadow-lg hover:scale-105 transition-all text-sm">
+                Get Started
+            </button>
+</div>
+</nav>
+<!-- Hero Section - More Compact -->
+<section class="relative min-h-[85vh] flex items-center pt-24 pb-12 overflow-hidden hero-gradient">
+<div class="max-w-7xl mx-auto px-12 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+<!-- Hero Content -->
+<div class="lg:col-span-6 space-y-6">
+<div class="inline-flex items-center gap-2 px-3 py-1.5 bg-secondary-container rounded-full text-on-secondary-container text-xs font-semibold shadow-sm">
+<span class="material-symbols-outlined text-xs" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+                    The Sovereign Path to Talent
+                </div>
+<h1 class="text-display-lg font-headline font-extrabold text-primary leading-tight tracking-tight text-5xl lg:text-6xl">
+                    Transform Your <span class="text-transparent bg-clip-text wing-gradient">Hiring</span> with AI
+                </h1>
+<p class="text-lg text-on-surface-variant leading-relaxed max-w-lg">
+                    Experience the precision of executive search at the speed of light. Our AI identifies, screens, and matches top-tier talent with uncompromising accuracy.
+                </p>
+<div class="flex flex-wrap gap-4 pt-2">
+<button class="wing-gradient text-white px-8 py-3.5 rounded-xl font-bold text-base shadow-xl hover:shadow-2xl transition-all">
+                        Schedule Demo
+                    </button>
+<button class="bg-surface-container-lowest text-primary px-8 py-3.5 rounded-xl font-bold text-base border border-outline-variant/20 hover:bg-surface-container-low transition-all">
+                        View Pricing
+                    </button>
+</div>
+</div>
+<!-- Hero Mockup -->
+<div class="lg:col-span-6 relative">
+<div class="glass-panel p-6 rounded-[1.5rem] shadow-[0px_15px_30px_rgba(85,34,153,0.06)] border border-white/40">
+<div class="flex items-center justify-between mb-6">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-primary-fixed overflow-hidden">
+<img alt="Candidate Avatar" data-alt="professional portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBU9_yq4hTXHXbl523ZQe19JjYih3-z_Ry-OLDZZat-mlWvYMiATHsQY2Zi3HbbqjUwaPR2N8VAl6b87lamHrPHjSuT5S4GzaSi_8sf5nF80kvsavm4BbqvXE3ORAhScw-rqzmIgi1-RZS1oOiXBvGnk6WCFVndSFpJaNBfu_owzcVW5bugu7jd4iOw8h14avXrYc_S1T1-Y0U1XJUp9uDfxklQyb0S4FXRPwURS23svKtnhgwhHo4It8eti_5PFBSdYNp_SVNN0dy0"/>
+</div>
+<div>
+<h3 class="font-bold text-base">Alex Rivera</h3>
+<p class="text-xs text-on-surface-variant">Senior Product Designer</p>
+</div>
+</div>
+<div class="bg-secondary-container text-on-secondary-container px-3 py-0.5 rounded-full text-[10px] font-bold tracking-widest uppercase">
+                            Top Match
+                        </div>
+</div>
+<div class="space-y-4">
+<div class="bg-surface-container-low p-5 rounded-xl">
+<div class="flex justify-between items-end mb-1.5">
+<span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-tighter">AI Match Score</span>
+<span class="text-3xl font-headline font-black text-primary">98%</span>
+</div>
+<div class="w-full bg-outline-variant/20 h-2 rounded-full overflow-hidden">
+<div class="wing-gradient h-full w-[98%] rounded-full"></div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div class="bg-surface-container-lowest p-3 rounded-xl shadow-sm">
+<span class="material-symbols-outlined text-primary mb-1 text-sm">verified_user</span>
+<h4 class="text-[10px] font-bold uppercase text-on-surface-variant">Skill Alignment</h4>
+<p class="text-base font-bold">Expert</p>
+</div>
+<div class="bg-surface-container-lowest p-3 rounded-xl shadow-sm">
+<span class="material-symbols-outlined text-primary mb-1 text-sm">psychology</span>
+<h4 class="text-[10px] font-bold uppercase text-on-surface-variant">Culture Fit</h4>
+<p class="text-base font-bold">Excellent</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Floating Accent -->
+<div class="absolute -bottom-4 -right-2 glass-panel p-3 rounded-xl shadow-lg border border-white/40 hidden md:block">
+<div class="flex items-center gap-2">
+<div class="bg-green-500 w-2 h-2 rounded-full"></div>
+<p class="text-xs font-bold">AI Analysis Complete</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Features Section - Tightened spacing -->
+<section class="py-16 bg-surface-container-lowest">
+<div class="max-w-7xl mx-auto px-12">
+<div class="text-center max-w-2xl mx-auto mb-12 space-y-3">
+<h2 class="text-3xl font-headline font-bold text-primary">Intelligence for Every Stage</h2>
+<p class="text-on-surface-variant text-base">
+                    Our platform integrates seamlessly into your workflow, providing deep insights that go beyond the resume.
+                </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Feature 1 -->
+<div class="group p-8 rounded-[1.5rem] bg-surface-container-low hover:bg-white hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+<div class="w-12 h-12 wing-gradient rounded-xl flex items-center justify-center mb-6 shadow-md group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-white text-2xl">filter_alt</span>
+</div>
+<h3 class="text-xl font-headline font-bold text-primary mb-3">Automated Screening</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">
+                        Say goodbye to manual resume parsing. Our AI evaluates candidates based on skills, experience, and potential in seconds.
+                    </p>
+</div>
+<!-- Feature 2 -->
+<div class="group p-8 rounded-[1.5rem] bg-surface-container-low hover:bg-white hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+<div class="w-12 h-12 wing-gradient rounded-xl flex items-center justify-center mb-6 shadow-md group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-white text-2xl">analytics</span>
+</div>
+<h3 class="text-xl font-headline font-bold text-primary mb-3">Smart Analytics</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">
+                        Predictive performance modeling helps you understand which candidates are most likely to excel in your environment.
+                    </p>
+</div>
+<!-- Feature 3 -->
+<div class="group p-8 rounded-[1.5rem] bg-surface-container-low hover:bg-white hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+<div class="w-12 h-12 wing-gradient rounded-xl flex items-center justify-center mb-6 shadow-md group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-white text-2xl">hub</span>
+</div>
+<h3 class="text-xl font-headline font-bold text-primary mb-3">Seamless Integration</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">
+                        Connect Renate AI with your existing ATS, Slack, and calendars for a unified hiring command center.
+                    </p>
+</div>
+</div>
+</div>
+</section>
+<!-- Editorial Style Content Block - Compact flow -->
+<section class="py-16 bg-surface">
+<div class="max-w-7xl mx-auto px-12 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+<div class="order-2 lg:order-1 relative">
+<div class="rounded-[2rem] overflow-hidden shadow-xl aspect-video lg:aspect-square">
+<img alt="Advanced AI Analysis" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAsj6LiZ4nEqEE3z3dBVYtFCCkzyDPF2f6-Glefzl1V1RPHVjTvzukivabvKKwjHQQ-NK_73oQlOJ5OTaX3uPW1X7Q02wI5lNAJINxCNW-6_I1XtdHg81CP3FxM8XoDYLhAkthPpGsKjQhEi7ZznuN3yngV19--GQnbx-Xd_88ds4Zm2KrLN4qpWUqwwNPpX68VXWJ8YfnMu_pgVmFO--XA3mG1B6cpndivWCa5oYY9NTbnRnHtYwIRObV2GUGQsJVRPDi05EwdvbjS"/>
+</div>
+<div class="absolute -top-6 -left-6 w-32 h-32 bg-primary/5 rounded-full blur-2xl"></div>
+</div>
+<div class="order-1 lg:order-2 space-y-4">
+<span class="text-primary font-bold tracking-widest uppercase text-xs">Deep Learning</span>
+<h2 class="text-4xl font-headline font-bold text-primary leading-tight">The "Digital Luminary" Approach</h2>
+<p class="text-base text-on-surface-variant leading-relaxed">
+                    Renate AI doesn't just match keywords; it understands the semantic context of a career. We leverage billions of data points to predict candidate trajectory, ensuring you hire for where you're going.
+                </p>
+<ul class="space-y-3 pt-2">
+<li class="flex items-center gap-3 text-on-surface text-sm font-semibold">
+<span class="material-symbols-outlined text-primary-fixed-dim text-xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                        Contextual Skill Graphing
+                    </li>
+<li class="flex items-center gap-3 text-on-surface text-sm font-semibold">
+<span class="material-symbols-outlined text-primary-fixed-dim text-xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                        Bias-Neutral Evaluation Engines
+                    </li>
+<li class="flex items-center gap-3 text-on-surface text-sm font-semibold">
+<span class="material-symbols-outlined text-primary-fixed-dim text-xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                        Global Talent Benchmarking
+                    </li>
+</ul>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="w-full py-8 border-t border-outline-variant/10 bg-surface">
+<div class="flex flex-col items-center gap-4 w-full max-w-7xl mx-auto px-12">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-lg bg-primary-container p-1.5">
+<img alt="Renate AI Logo small" class="w-full h-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAoXgr8t750QoArTUgY8FZcDT4h0uhjFGS-D3lBXNe5yCoL9Wq_Zs4DgMkZDMsTF59nXwQm0zleWC2uDD68U5GgunWjnOl7PIhVZixRVIub_2lbDKePQAL-Y3DmXJ4sx6IH4RN522iZkBSUmySbhzwTz5QpsGH2TuUd3uO9tPBSY_FqWDlffcmn8B0432Yc36KWw4AOTWFb2MpMPG0KpNcZyRgtLcn5jDYOtlmNvZH1MlyS-mBrLTWA2z6B179SQeHXwycs4h8jDkwO"/>
+</div>
+<span class="text-base font-bold text-primary">Renate AI</span>
+</div>
+<div class="flex flex-wrap justify-center gap-8 font-['Inter'] text-[10px] uppercase tracking-widest font-semibold">
+<a class="text-[#4a4452] hover:text-primary transition-colors" href="#">Privacy</a>
+<a class="text-[#4a4452] hover:text-primary transition-colors" href="#">Terms</a>
+<a class="text-[#4a4452] hover:text-primary transition-colors" href="#">Careers</a>
+<a class="text-[#4a4452] hover:text-primary transition-colors" href="#">Contact</a>
+</div>
+<p class="text-[#4a4452] text-[10px] font-['Inter'] uppercase tracking-widest mt-2 opacity-60">
+                © 2024 Renate AI. The Sovereign Path.
+            </p>
+</div>
+</footer>
+</body></html>
