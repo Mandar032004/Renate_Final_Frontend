@@ -909,19 +909,19 @@ function CommandBar({ onActivate }) {
 
   return (
     <motion.div
-      className="fixed left-1/2 -translate-x-1/2 z-[46] flex items-center gap-3 px-4 sm:px-5 py-3 sm:py-3.5 rounded-2xl cursor-text"
+      className="fixed bottom-10 left-1/2 -translate-x-1/2 z-[9999] flex items-center gap-3 px-4 sm:px-5 py-3 sm:py-3.5 rounded-2xl cursor-text"
       style={{
-        bottom: 32,
-        width: "min(600px, 90%)",
-        background: "rgba(255,255,255,0.86)",
+        width: "min(550px, 90%)",
+        background: "rgba(255,255,255,0.88)",
         backdropFilter: "blur(24px)",
         WebkitBackdropFilter: "blur(24px)",
-        border: "1.5px solid rgba(255,255,255,0.45)",
-        outline: "1px solid rgba(85,34,153,0.14)",
+        borderTop: "1.5px solid rgba(255,255,255,0.55)",
+        border: "1px solid rgba(255,255,255,0.28)",
+        outline: "1px solid rgba(85,34,153,0.13)",
         animation: hovered ? "none" : "dock-pulse 3.2s ease-in-out infinite",
         boxShadow: hovered
-          ? "0 0 0 3px rgba(85,34,153,0.16), 0 12px 40px rgba(85,34,153,0.22), 0 4px 12px rgba(0,0,0,0.07)"
-          : undefined,
+          ? "0 0 0 3px rgba(85,34,153,0.18), 0 20px 50px rgba(85,34,153,0.32), 0 4px 16px rgba(0,0,0,0.08)"
+          : "0 20px 50px rgba(85,34,153,0.3), 0 4px 16px rgba(0,0,0,0.07)",
         transition: "box-shadow 0.22s ease",
       }}
       initial={{ y: 90, opacity: 0 }}
@@ -955,19 +955,21 @@ function CommandBar({ onActivate }) {
         style={{ color: "#1b1b1e", caretColor: "#552299", minWidth: 0 }}
       />
 
-      {/* Cmd+K power-user tag */}
-      <span
-        className="hidden sm:flex items-center gap-1 text-[10px] font-black shrink-0 px-2 py-1 rounded-lg tracking-wide"
+      {/* Cmd+K button badge */}
+      <button
+        onClick={(e) => { e.stopPropagation(); activate(localVal); }}
+        className="hidden sm:flex items-center gap-1 text-[10px] font-black shrink-0 px-2.5 py-1.5 rounded-xl tracking-wide transition-all hover:scale-105 active:scale-95"
         style={{
-          background: "linear-gradient(135deg, rgba(85,34,153,0.1), rgba(124,58,237,0.1))",
+          background: "linear-gradient(135deg, rgba(85,34,153,0.12), rgba(124,58,237,0.12))",
           color: "#7c3aed",
-          border: "1px solid rgba(85,34,153,0.14)",
+          border: "1px solid rgba(85,34,153,0.18)",
+          boxShadow: "0 1px 4px rgba(85,34,153,0.1)",
           letterSpacing: "0.04em",
         }}
       >
         <span className="material-symbols-outlined" style={{ fontSize: 11 }}>keyboard_command_key</span>
         K
-      </span>
+      </button>
     </motion.div>
   );
 }
