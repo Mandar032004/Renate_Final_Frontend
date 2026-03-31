@@ -586,7 +586,7 @@ function AIChatbot() {
   const [typing, setTyping] = useState(false);
   const messagesRef = useRef(null);
 
-  // Auto-scroll to bottom on new messages
+  // Auto-scroll to bottom on new messages / typing change
   useEffect(() => {
     if (messagesRef.current) {
       messagesRef.current.scrollTo({ top: messagesRef.current.scrollHeight, behavior: "smooth" });
@@ -629,8 +629,8 @@ function AIChatbot() {
 
   const handleSuggestion = ({ label, action }) => {
     handleSend(label);
-    if (action === "pipeline")  setTimeout(() => navigate("/hiring"),          1900);
-    if (action === "analytics") setTimeout(() => navigate("/analytics"),       1900);
+    if (action === "pipeline")   setTimeout(() => navigate("/hiring"),           1900);
+    if (action === "analytics")  setTimeout(() => navigate("/analytics"),        1900);
     if (action === "candidates") setTimeout(() => navigate("/jobs/ai-engineer"), 1900);
     // "post" handled by keyword match inside getAIResponse
   };
@@ -641,11 +641,11 @@ function AIChatbot() {
     <>
       {/* ── Floating Action Button ── */}
       <motion.button
-        className="fixed bottom-6 right-6 z-[49] w-14 h-14 rounded-full flex items-center justify-center text-white"
+        className="fixed bottom-6 right-6 z-[50] w-14 h-14 rounded-full flex items-center justify-center text-white"
         style={{
           background: "linear-gradient(135deg, #552299 0%, #7c3aed 100%)",
           boxShadow: open
-            ? "0 8px 32px rgba(85,34,153,0.55)"
+            ? "0 8px 32px rgba(85,34,153,0.6)"
             : "0 8px 24px rgba(85,34,153,0.4)",
         }}
         whileHover={{ scale: 1.08 }}
@@ -676,182 +676,249 @@ function AIChatbot() {
         )}
       </motion.button>
 
-      {/* ── Chat Window ── */}
+      {/* ── Full-screen backdrop ── */}
       <AnimatePresence>
         {open && (
           <motion.div
-            className="fixed z-[48] flex flex-col right-2 left-2 sm:left-auto sm:right-6 sm:w-[360px]"
+            className="fixed inset-0 z-[48]"
             style={{
-              bottom: 88,
-              maxHeight: "min(520px, calc(100vh - 110px))",
-              background: "rgba(248, 247, 252, 0.92)",
-              backdropFilter: "blur(22px)",
-              WebkitBackdropFilter: "blur(22px)",
-              border: "1px solid rgba(255,255,255,0.7)",
-              boxShadow: "0 24px 60px rgba(85,34,153,0.18), 0 4px 20px rgba(0,0,0,0.07), inset 0 1px 0 rgba(255,255,255,0.9)",
-              borderRadius: 20,
-              overflow: "hidden",
+              background: "rgba(15, 10, 30, 0.52)",
+              backdropFilter: "blur(18px)",
+              WebkitBackdropFilter: "blur(18px)",
             }}
-            initial={{ opacity: 0, scale: 0.88, y: 24 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.88, y: 20 }}
-            transition={{ type: "spring", stiffness: 340, damping: 28 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.28, ease: "easeOut" }}
+            onClick={() => setOpen(false)}
+          />
+        )}
+      </AnimatePresence>
+
+      {/* ── Command Hub window ── */}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            className="fixed inset-0 z-[49] flex items-center justify-center p-4 sm:p-8 pointer-events-none"
+            initial={false}
           >
-            {/* Header */}
-            <div className="flex items-center gap-3 px-4 py-3.5 shrink-0"
+            <motion.div
+              className="relative w-full max-w-2xl flex flex-col pointer-events-auto"
               style={{
-                borderBottom: "1px solid rgba(85,34,153,0.08)",
-                background: "rgba(255,255,255,0.8)",
+                height: "min(82vh, 720px)",
+                background: "rgba(250, 248, 255, 0.95)",
+                backdropFilter: "blur(28px)",
+                WebkitBackdropFilter: "blur(28px)",
+                border: "1px solid rgba(255,255,255,0.75)",
+                boxShadow: "0 32px 80px rgba(85,34,153,0.22), 0 8px 32px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.95)",
+                borderRadius: 24,
+                overflow: "hidden",
               }}
+              initial={{ opacity: 0, scale: 0.88 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ type: "spring", stiffness: 320, damping: 26 }}
             >
-              <div className="w-8 h-8 rounded-xl flex items-center justify-center shrink-0"
-                style={{ background: "linear-gradient(135deg, #552299, #7c3aed)" }}>
-                <span className="material-symbols-outlined text-white" style={{ fontSize: 16 }}>smart_toy</span>
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-extrabold leading-tight" style={{ fontFamily: "Manrope, sans-serif", color: "#1b1b1e" }}>
-                  Renate AI Assistant
-                </p>
-                <div className="flex items-center gap-1.5 mt-0.5">
-                  <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#22c55e", display: "inline-block", flexShrink: 0 }} />
-                  <span className="text-[10px] font-bold" style={{ color: "#22c55e" }}>Online · Always available</span>
-                </div>
-              </div>
-              <button
-                onClick={() => setOpen(false)}
-                className="w-7 h-7 rounded-lg flex items-center justify-center transition-colors hover:bg-black/8"
+              {/* Header */}
+              <div
+                className="flex items-center gap-3 px-5 py-4 shrink-0"
+                style={{ borderBottom: "1px solid rgba(85,34,153,0.09)", background: "rgba(255,255,255,0.88)" }}
               >
-                <span className="material-symbols-outlined" style={{ fontSize: 18, color: "#7c7483" }}>close</span>
-              </button>
-            </div>
-
-            {/* Messages */}
-            <div
-              ref={messagesRef}
-              className="flex-1 overflow-y-auto px-4 py-4"
-              style={{ display: "flex", flexDirection: "column", gap: 10, minHeight: 0 }}
-            >
-              {messages.map((msg) => (
-                <motion.div
-                  key={msg.id}
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.22 }}
-                  className={`flex items-end gap-2 ${msg.role === "user" ? "justify-end" : "justify-start"}`}
-                >
-                  {msg.role === "ai" && (
-                    <div className="w-6 h-6 rounded-lg flex items-center justify-center shrink-0 mb-0.5"
-                      style={{ background: "rgba(85,34,153,0.1)" }}>
-                      <span className="material-symbols-outlined" style={{ fontSize: 13, color: "#552299" }}>smart_toy</span>
-                    </div>
-                  )}
-                  <div
-                    className="max-w-[82%] px-3.5 py-2.5 text-xs leading-relaxed"
-                    style={msg.role === "ai" ? {
-                      background: "rgba(255,255,255,0.85)",
-                      color: "#1b1b1e",
-                      borderRadius: "12px 12px 12px 3px",
-                      border: "1px solid rgba(85,34,153,0.08)",
-                      boxShadow: "0 1px 4px rgba(0,0,0,0.04)",
-                    } : {
-                      background: "linear-gradient(135deg, #552299, #7c3aed)",
-                      color: "#fff",
-                      borderRadius: "12px 12px 3px 12px",
-                      boxShadow: "0 2px 8px rgba(85,34,153,0.3)",
-                    }}
-                  >
-                    {msg.text}
-                  </div>
-                </motion.div>
-              ))}
-
-              {/* Quick suggestions (before user sends first message) */}
-              {!userHasSent && (
-                <motion.div
-                  initial={{ opacity: 0, y: 6 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 }}
-                  className="flex flex-wrap gap-1.5 pt-1"
-                >
-                  {QUICK_SUGGESTIONS.map(({ label, icon, action }) => (
-                    <button
-                      key={label}
-                      onClick={() => handleSuggestion({ label, action })}
-                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-bold transition-all hover:scale-105 active:scale-95"
-                      style={{
-                        background: "rgba(255,255,255,0.9)",
-                        color: "#552299",
-                        border: "1px solid rgba(85,34,153,0.18)",
-                        boxShadow: "0 1px 4px rgba(85,34,153,0.08)",
-                      }}
-                    >
-                      <span className="material-symbols-outlined" style={{ fontSize: 13 }}>{icon}</span>
-                      {label}
-                    </button>
-                  ))}
-                </motion.div>
-              )}
-
-              {/* Typing indicator */}
-              {typing && (
-                <motion.div
-                  initial={{ opacity: 0, y: 6 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="flex items-end gap-2"
-                >
-                  <div className="w-6 h-6 rounded-lg flex items-center justify-center shrink-0"
-                    style={{ background: "rgba(85,34,153,0.1)" }}>
-                    <span className="material-symbols-outlined" style={{ fontSize: 13, color: "#552299" }}>smart_toy</span>
-                  </div>
-                  <div className="px-3.5 py-3 flex items-center gap-1"
-                    style={{ background: "rgba(255,255,255,0.85)", borderRadius: "12px 12px 12px 3px", border: "1px solid rgba(85,34,153,0.08)" }}>
-                    {[0, 1, 2].map((i) => (
-                      <span key={i} style={{
-                        display: "inline-block", width: 6, height: 6, borderRadius: "50%",
-                        background: "#552299", opacity: 0.5,
-                        animation: "typing-dot 1.2s ease-in-out infinite",
-                        animationDelay: `${i * 0.18}s`,
-                      }} />
-                    ))}
-                  </div>
-                </motion.div>
-              )}
-            </div>
-
-            {/* Input bar */}
-            <div className="px-3 pb-3 pt-2 shrink-0"
-              style={{ borderTop: "1px solid rgba(85,34,153,0.07)", background: "rgba(255,255,255,0.7)" }}>
-              <div className="flex items-center gap-2 px-3 py-2 rounded-xl"
-                style={{ background: "rgba(255,255,255,0.9)", border: "1.5px solid rgba(85,34,153,0.12)", boxShadow: "0 1px 4px rgba(85,34,153,0.05)" }}>
-                <input
-                  type="text"
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  onKeyDown={(e) => e.key === "Enter" && !typing && handleSend()}
-                  placeholder="Ask Renate AI anything..."
-                  className="flex-1 bg-transparent text-xs focus:outline-none"
-                  style={{ color: "#1b1b1e" }}
-                />
-                <motion.button
-                  whileTap={{ scale: 0.85 }}
-                  onClick={() => !typing && handleSend()}
-                  disabled={typing || !input.trim()}
-                  className="w-7 h-7 rounded-lg flex items-center justify-center transition-all"
+                {/* Avatar */}
+                <div
+                  className="w-10 h-10 rounded-2xl flex items-center justify-center shrink-0"
                   style={{
-                    background: input.trim() && !typing ? "#552299" : "rgba(85,34,153,0.12)",
-                    cursor: input.trim() && !typing ? "pointer" : "default",
+                    background: "linear-gradient(135deg, #552299, #7c3aed)",
+                    boxShadow: "0 4px 12px rgba(85,34,153,0.3)",
                   }}
                 >
-                  <span className="material-symbols-outlined"
-                    style={{ fontSize: 15, color: input.trim() && !typing ? "#fff" : "#552299" }}>
-                    send
-                  </span>
-                </motion.button>
+                  <span className="material-symbols-outlined text-white" style={{ fontSize: 20 }}>smart_toy</span>
+                </div>
+
+                {/* Title */}
+                <div className="flex-1 min-w-0">
+                  <p className="font-extrabold text-sm leading-tight" style={{ fontFamily: "Manrope, sans-serif", color: "#1b1b1e" }}>
+                    Renate AI
+                  </p>
+                  <div className="flex items-center gap-1.5 mt-0.5">
+                    <span style={{ width: 7, height: 7, borderRadius: "50%", background: "#22c55e", display: "inline-block", flexShrink: 0 }} />
+                    <span className="text-[10px] font-bold" style={{ color: "#22c55e" }}>Online</span>
+                    <span className="text-[10px]" style={{ color: "#a09ab0" }}>· Command Hub</span>
+                  </div>
+                </div>
+
+                {/* Prominent close */}
+                <button
+                  onClick={() => setOpen(false)}
+                  className="w-10 h-10 rounded-xl flex items-center justify-center transition-all hover:bg-[#552299]/10 active:scale-95"
+                >
+                  <span className="material-symbols-outlined" style={{ fontSize: 22, color: "#552299" }}>close</span>
+                </button>
               </div>
-              <p className="text-center text-[9px] mt-1.5 font-medium" style={{ color: "#a09ab0" }}>
-                Powered by Renate AI · Not real responses
-              </p>
-            </div>
+
+              {/* Messages */}
+              <div
+                ref={messagesRef}
+                className="flex-1 overflow-y-auto px-5 py-5"
+                style={{ display: "flex", flexDirection: "column", gap: 12, minHeight: 0 }}
+              >
+                {messages.map((msg) => (
+                  <motion.div
+                    key={msg.id}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.22 }}
+                    className={`flex items-end gap-2.5 ${msg.role === "user" ? "justify-end" : "justify-start"}`}
+                  >
+                    {msg.role === "ai" && (
+                      <div
+                        className="w-7 h-7 rounded-xl flex items-center justify-center shrink-0 mb-0.5"
+                        style={{ background: "rgba(85,34,153,0.1)" }}
+                      >
+                        <span className="material-symbols-outlined" style={{ fontSize: 14, color: "#552299" }}>smart_toy</span>
+                      </div>
+                    )}
+                    <div
+                      className="max-w-[78%] px-4 py-3 text-sm leading-relaxed"
+                      style={msg.role === "ai" ? {
+                        background: "rgba(255,255,255,0.9)",
+                        color: "#1b1b1e",
+                        borderRadius: "14px 14px 14px 3px",
+                        border: "1px solid rgba(85,34,153,0.09)",
+                        boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
+                      } : {
+                        background: "linear-gradient(135deg, #552299, #7c3aed)",
+                        color: "#fff",
+                        borderRadius: "14px 14px 3px 14px",
+                        boxShadow: "0 4px 14px rgba(85,34,153,0.32)",
+                      }}
+                    >
+                      {msg.text}
+                    </div>
+                  </motion.div>
+                ))}
+
+                {/* Quick Suggestions — 2×2 grid, before first user message */}
+                {!userHasSent && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.32 }}
+                    className="grid grid-cols-2 gap-2 pt-1"
+                  >
+                    {QUICK_SUGGESTIONS.map(({ label, icon, action }) => (
+                      <button
+                        key={label}
+                        onClick={() => handleSuggestion({ label, action })}
+                        className="flex items-center gap-2 px-4 py-3 rounded-2xl text-xs font-bold transition-all hover:scale-[1.03] active:scale-[0.97] text-left"
+                        style={{
+                          background: "rgba(255,255,255,0.92)",
+                          color: "#552299",
+                          border: "1px solid rgba(85,34,153,0.15)",
+                          boxShadow: "0 2px 8px rgba(85,34,153,0.07)",
+                        }}
+                      >
+                        <span className="material-symbols-outlined" style={{ fontSize: 16, flexShrink: 0 }}>{icon}</span>
+                        {label}
+                      </button>
+                    ))}
+                  </motion.div>
+                )}
+
+                {/* Typing / Processing indicator */}
+                {typing && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="flex items-end gap-2.5"
+                  >
+                    {/* Pulsing glow avatar */}
+                    <div
+                      className="w-7 h-7 rounded-xl flex items-center justify-center shrink-0"
+                      style={{
+                        background: "rgba(85,34,153,0.1)",
+                        animation: "command-glow 1.4s ease-in-out infinite",
+                      }}
+                    >
+                      <span className="material-symbols-outlined" style={{ fontSize: 14, color: "#552299" }}>smart_toy</span>
+                    </div>
+                    <div
+                      className="px-4 py-3 flex items-center gap-1.5"
+                      style={{
+                        background: "rgba(255,255,255,0.9)",
+                        borderRadius: "14px 14px 14px 3px",
+                        border: "1px solid rgba(85,34,153,0.09)",
+                        boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
+                      }}
+                    >
+                      {[0, 1, 2].map((i) => (
+                        <span key={i} style={{
+                          display: "inline-block", width: 7, height: 7, borderRadius: "50%",
+                          background: "#552299", opacity: 0.5,
+                          animation: "typing-dot 1.2s ease-in-out infinite",
+                          animationDelay: `${i * 0.18}s`,
+                        }} />
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+              </div>
+
+              {/* Input bar */}
+              <div
+                className="px-4 pb-3 pt-2.5 shrink-0"
+                style={{ borderTop: "1px solid rgba(85,34,153,0.08)", background: "rgba(255,255,255,0.75)" }}
+              >
+                <div
+                  className="flex items-center gap-2.5 px-4 py-3 rounded-2xl"
+                  style={{
+                    background: "rgba(255,255,255,0.95)",
+                    border: "1.5px solid rgba(85,34,153,0.14)",
+                    boxShadow: "0 2px 8px rgba(85,34,153,0.06)",
+                  }}
+                >
+                  <input
+                    type="text"
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && !typing && handleSend()}
+                    placeholder="Ask Renate AI anything..."
+                    className="flex-1 bg-transparent text-sm focus:outline-none"
+                    style={{ color: "#1b1b1e" }}
+                  />
+                  <motion.button
+                    whileTap={{ scale: 0.85 }}
+                    onClick={() => !typing && handleSend()}
+                    disabled={typing || !input.trim()}
+                    className="w-8 h-8 rounded-xl flex items-center justify-center transition-all"
+                    style={{
+                      background: input.trim() && !typing ? "linear-gradient(135deg, #552299, #7c3aed)" : "rgba(85,34,153,0.1)",
+                      cursor: input.trim() && !typing ? "pointer" : "default",
+                    }}
+                  >
+                    <span className="material-symbols-outlined"
+                      style={{ fontSize: 16, color: input.trim() && !typing ? "#fff" : "#552299" }}>
+                      send
+                    </span>
+                  </motion.button>
+                </div>
+
+                {/* Footer chip */}
+                <div className="flex justify-center mt-2">
+                  <span
+                    className="flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold"
+                    style={{
+                      background: "linear-gradient(135deg, rgba(85,34,153,0.07), rgba(124,58,237,0.07))",
+                      color: "#7c3aed",
+                      border: "1px solid rgba(85,34,153,0.12)",
+                    }}
+                  >
+                    <span className="material-symbols-outlined" style={{ fontSize: 11 }}>auto_awesome</span>
+                    Powered by Renate AI v2.0
+                  </span>
+                </div>
+              </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -872,6 +939,10 @@ export default function LandingPage() {
         @keyframes typing-dot {
           0%, 60%, 100% { opacity: 0.25; transform: translateY(0); }
           30%            { opacity: 1;    transform: translateY(-3px); }
+        }
+        @keyframes command-glow {
+          0%, 100% { box-shadow: 0 0 0 0 rgba(85,34,153,0.0), 0 0 0 6px rgba(85,34,153,0.12); }
+          50%       { box-shadow: 0 0 0 8px rgba(85,34,153,0.0), 0 0 0 14px rgba(124,58,237,0.18); }
         }
       `}</style>
 
