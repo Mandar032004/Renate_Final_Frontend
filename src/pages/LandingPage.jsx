@@ -1384,11 +1384,11 @@ function CommandBar({ onActivate }) {
   return (
     <motion.div
       className="flex items-center gap-3 px-4 sm:px-5 py-3 sm:py-3.5 rounded-2xl cursor-text"
+      transformTemplate={(_, generated) => `translateX(-50%) ${generated}`}
       style={{
         position: "fixed",
         bottom: "2rem",
-        left: "50%",
-        transform: "translateX(-50%)",
+        left: "50vw",
         zIndex: 9999,
         width: "90%",
         maxWidth: 600,
