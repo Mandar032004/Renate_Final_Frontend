@@ -43,8 +43,8 @@ const FEED_ICONS = [
 ];
 
 const INITIAL_MESSAGES = [
-  { id: 1, role: "ai", text: "Hi Admin! 👋 I'm Renate AI, your intelligent hiring assistant.", ts: "just now" },
-  { id: 2, role: "ai", text: "I can help you manage pipelines, post jobs, review analytics, and surface top candidates. What would you like to do?", ts: "just now" },
+  { id: 1, role: "ai", type: "text", text: "Hi Admin! 👋 I'm Renate AI, your intelligent hiring assistant.", ts: "just now" },
+  { id: 2, role: "ai", type: "text", text: "I can help you manage pipelines, post jobs, review analytics, and surface top candidates. What would you like to do?", ts: "just now" },
 ];
 
 const QUICK_SUGGESTIONS = [
@@ -454,6 +454,253 @@ const UPI_APPS = [
   { name: "Paytm",   bg: "#00BAF2", letter: "Pa" },
 ];
 
+// ─── Inline chat-embedded helpers ────────────────────────────────────────────
+
+function InlinePaymentCard({ msgId, onPay }) {
+  const [upiVal, setUpiVal] = useState("");
+  return (
+    <motion.div
+      className="w-full rounded-2xl overflow-hidden"
+      style={{ background: "rgba(255,255,255,0.96)", border: "1.5px solid rgba(85,34,153,0.16)", boxShadow: "0 4px 20px rgba(85,34,153,0.10)" }}
+      initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
+      transition={{ type: "spring", stiffness: 280, damping: 26 }}
+    >
+      {/* Price header */}
+      <div className="px-4 pt-4 pb-3" style={{ borderBottom: "1px solid rgba(85,34,153,0.08)", background: "linear-gradient(135deg,rgba(85,34,153,0.05),rgba(124,58,237,0.05))" }}>
+        <p className="text-xl font-black" style={{ fontFamily: "Manrope,sans-serif", color: "#552299" }}>Pay ₹999/-</p>
+        <p className="text-xs mt-0.5" style={{ color: "#7c7483" }}>Renate charges per job to provide premium AI matching and candidate verification features.</p>
+      </div>
+
+      {/* QR + UPI section */}
+      <div className="flex flex-col sm:flex-row gap-4 p-4">
+        {/* Left: QR code */}
+        <div className="flex flex-col items-center gap-1.5 shrink-0">
+          <div className="p-2.5 rounded-xl" style={{ border: "1px solid rgba(85,34,153,0.12)", background: "#fff", boxShadow: "0 2px 8px rgba(85,34,153,0.06)" }}>
+            <MockQRCode />
+          </div>
+          <p className="text-[9px] font-bold text-center" style={{ color: "#a09ab0" }}>Scan with any UPI app<br />renate@razorpay</p>
+        </div>
+
+        {/* Right: UPI ID + app buttons */}
+        <div className="flex-1 flex flex-col gap-3 justify-center min-w-0">
+          <div>
+            <p className="text-[10px] font-black uppercase tracking-[0.1em] mb-2" style={{ color: "#4a4452" }}>Or enter UPI ID</p>
+            <div className="flex gap-2">
+              <input
+                value={upiVal} onChange={(e) => setUpiVal(e.target.value)}
+                placeholder="yourname@upi"
+                className="flex-1 px-3 py-2 rounded-xl text-sm focus:outline-none min-w-0"
+                style={{ border: "1.5px solid rgba(85,34,153,0.15)", background: "#faf9fc", color: "#1b1b1e" }}
+                onFocus={(e) => (e.target.style.border = "1.5px solid #552299")}
+                onBlur={(e) => (e.target.style.border = "1.5px solid rgba(85,34,153,0.15)")}
+              />
+              <button onClick={() => onPay(msgId)}
+                className="px-3 py-2 rounded-xl text-xs font-bold text-white shrink-0 transition-all hover:opacity-90 active:scale-95"
+                style={{ background: "linear-gradient(135deg,#552299,#7c3aed)" }}>
+                Verify
+              </button>
+            </div>
+          </div>
+
+          {/* UPI app icons */}
+          <div>
+            <p className="text-[10px] font-black uppercase tracking-[0.1em] mb-2" style={{ color: "#4a4452" }}>Pay via UPI app</p>
+            <div className="flex gap-2">
+              {UPI_APPS.map(({ name, bg, letter }) => (
+                <button key={name} onClick={() => onPay(msgId)}
+                  className="flex-1 flex flex-col items-center gap-1 py-2.5 rounded-xl transition-all hover:scale-105 active:scale-95"
+                  style={{ background: "#faf9fc", border: "1.5px solid rgba(85,34,153,0.1)" }}>
+                  <div className="w-8 h-8 rounded-xl flex items-center justify-center text-white text-[10px] font-black shrink-0"
+                    style={{ background: bg }}>{letter}</div>
+                  <span className="text-[9px] font-bold" style={{ color: "#4a4452" }}>{name}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Simulate Payment CTA */}
+      <div className="px-4 pb-4">
+        <button onClick={() => onPay(msgId)}
+          className="w-full py-3 rounded-xl text-sm font-bold text-white transition-all hover:opacity-90 active:scale-[0.98]"
+          style={{ background: "linear-gradient(135deg,#552299,#7c3aed)", boxShadow: "0 4px 14px rgba(85,34,153,0.3)" }}>
+          Simulate Payment →
+        </button>
+      </div>
+    </motion.div>
+  );
+}
+
+function InlinePaymentSuccess() {
+  return (
+    <motion.div className="flex flex-col items-center gap-3 py-6 w-full"
+      initial={{ opacity: 0, scale: 0.88 }} animate={{ opacity: 1, scale: 1 }}
+      transition={{ type: "spring", stiffness: 280, damping: 22 }}>
+      <motion.div className="w-14 h-14 rounded-full flex items-center justify-center"
+        style={{ background: "linear-gradient(135deg,#22c55e,#16a34a)", boxShadow: "0 6px 24px rgba(34,197,94,0.4)" }}
+        initial={{ scale: 0 }} animate={{ scale: 1 }}
+        transition={{ type: "spring", stiffness: 320, damping: 18, delay: 0.12 }}>
+        <span className="material-symbols-outlined text-white" style={{ fontSize: 30 }}>check</span>
+      </motion.div>
+      <motion.div className="text-center" initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.28 }}>
+        <p className="font-extrabold text-sm" style={{ fontFamily: "Manrope,sans-serif", color: "#1b1b1e" }}>Payment Successful!</p>
+        <p className="text-xs mt-0.5" style={{ color: "#7c7483" }}>₹999 paid · Unlocking job form…</p>
+      </motion.div>
+      <motion.div className="w-36 h-1.5 rounded-full overflow-hidden" style={{ background: "rgba(85,34,153,0.1)" }}>
+        <motion.div className="h-full rounded-full" style={{ background: "linear-gradient(90deg,#552299,#7c3aed)" }}
+          initial={{ width: "0%" }} animate={{ width: "100%" }} transition={{ duration: 1.5, ease: "easeInOut" }} />
+      </motion.div>
+    </motion.div>
+  );
+}
+
+function InlineJobForm({ onSubmit }) {
+  const [form, setForm] = useState({ title: "", description: "", experience: "Mid-Level", workType: "Remote", icon: "work" });
+  const [skills, setSkills] = useState([]);
+  const [skillInput, setSkillInput] = useState("");
+  const [errors, setErrors] = useState({});
+
+  const inputBase = { border: "1.5px solid rgba(85,34,153,0.15)", background: "#faf9fc", color: "#1b1b1e", outline: "none" };
+
+  const handleSkillKey = (e) => {
+    if ((e.key === "Enter" || e.key === ",") && skillInput.trim()) {
+      e.preventDefault();
+      const val = skillInput.trim().replace(/,$/, "");
+      if (val && !skills.includes(val)) setSkills((s) => [...s, val]);
+      setSkillInput("");
+    }
+  };
+
+  const handleSubmit = () => {
+    if (!form.title.trim()) { setErrors({ title: "Job title is required" }); return; }
+    onSubmit({ ...form, skills });
+    setForm({ title: "", description: "", experience: "Mid-Level", workType: "Remote", icon: "work" });
+    setSkills([]);
+  };
+
+  return (
+    <motion.div className="w-full rounded-2xl overflow-hidden"
+      style={{ background: "rgba(255,255,255,0.96)", border: "1.5px solid rgba(85,34,153,0.16)", boxShadow: "0 4px 20px rgba(85,34,153,0.10)" }}
+      initial={{ opacity: 0, x: 40 }} animate={{ opacity: 1, x: 0 }}
+      transition={{ type: "spring", stiffness: 280, damping: 26 }}>
+
+      <div className="px-4 pt-4 pb-3 flex items-center gap-2.5" style={{ borderBottom: "1px solid rgba(85,34,153,0.08)", background: "linear-gradient(135deg,rgba(85,34,153,0.05),rgba(124,58,237,0.05))" }}>
+        <div className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0" style={{ background: "linear-gradient(135deg,#552299,#7c3aed)" }}>
+          <span className="material-symbols-outlined text-white" style={{ fontSize: 15 }}>work</span>
+        </div>
+        <div>
+          <p className="text-sm font-extrabold" style={{ fontFamily: "Manrope,sans-serif", color: "#1b1b1e" }}>Post a New Job</p>
+          <p className="text-[10px]" style={{ color: "#7c7483" }}>Fill in the details below</p>
+        </div>
+      </div>
+
+      <div className="p-4 flex flex-col gap-4">
+        {/* Title */}
+        <div className="flex flex-col gap-1">
+          <label className="text-[10px] font-bold uppercase tracking-[0.1em]" style={{ color: "#4a4452" }}>Job Title <span style={{ color: "#ba1a1a" }}>*</span></label>
+          <input type="text" value={form.title}
+            onChange={(e) => { setForm((f) => ({ ...f, title: e.target.value })); setErrors({}); }}
+            placeholder="e.g. Senior React Developer"
+            className="w-full px-3 py-2 rounded-xl text-sm transition-all"
+            style={{ ...inputBase, border: errors.title ? "1.5px solid #ba1a1a" : inputBase.border }}
+            onFocus={(e) => (e.target.style.border = "1.5px solid #552299")}
+            onBlur={(e) => (e.target.style.border = errors.title ? "1.5px solid #ba1a1a" : "1.5px solid rgba(85,34,153,0.15)")} />
+          {errors.title && <p className="text-[10px]" style={{ color: "#ba1a1a" }}>{errors.title}</p>}
+        </div>
+
+        {/* Description */}
+        <div className="flex flex-col gap-1">
+          <label className="text-[10px] font-bold uppercase tracking-[0.1em]" style={{ color: "#4a4452" }}>Description</label>
+          <textarea value={form.description} onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
+            placeholder="Describe the role and requirements..." rows={2}
+            className="w-full px-3 py-2 rounded-xl text-sm resize-none transition-all" style={inputBase}
+            onFocus={(e) => (e.target.style.border = "1.5px solid #552299")}
+            onBlur={(e) => (e.target.style.border = "1.5px solid rgba(85,34,153,0.15)")} />
+        </div>
+
+        {/* Experience */}
+        <div className="flex flex-col gap-1">
+          <label className="text-[10px] font-bold uppercase tracking-[0.1em]" style={{ color: "#4a4452" }}>Experience Level</label>
+          <div className="flex flex-wrap gap-1.5">
+            {EXPERIENCE_LEVELS.map((level) => (
+              <button key={level} type="button" onClick={() => setForm((f) => ({ ...f, experience: level }))}
+                className="px-3 py-1 rounded-lg text-[11px] font-bold transition-all"
+                style={form.experience === level
+                  ? { background: "#552299", color: "#fff", boxShadow: "0 2px 6px rgba(85,34,153,0.28)" }
+                  : { background: "#f5f3f7", color: "#4a4452", border: "1px solid rgba(85,34,153,0.1)" }}>
+                {level}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Skills */}
+        <div className="flex flex-col gap-1">
+          <label className="text-[10px] font-bold uppercase tracking-[0.1em]" style={{ color: "#4a4452" }}>Skills</label>
+          <div className="flex flex-wrap gap-1.5 items-center min-h-[38px] px-3 py-1.5 rounded-xl"
+            style={{ border: "1.5px solid rgba(85,34,153,0.15)", background: "#faf9fc" }}
+            onClick={(e) => e.currentTarget.querySelector("input")?.focus()}>
+            {skills.map((skill) => (
+              <span key={skill} className="inline-flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-full"
+                style={{ background: "#ecdcff", color: "#552299" }}>
+                {skill}
+                <button type="button" onClick={() => setSkills((s) => s.filter((x) => x !== skill))} className="leading-none hover:opacity-60">
+                  <span className="material-symbols-outlined" style={{ fontSize: 11 }}>close</span>
+                </button>
+              </span>
+            ))}
+            <input type="text" value={skillInput} onChange={(e) => setSkillInput(e.target.value)} onKeyDown={handleSkillKey}
+              placeholder={skills.length === 0 ? "Type + Enter…" : "Add more…"}
+              className="flex-1 min-w-[80px] bg-transparent text-sm focus:outline-none" style={{ color: "#1b1b1e" }} />
+          </div>
+        </div>
+
+        {/* Work Type */}
+        <div className="flex flex-col gap-1">
+          <label className="text-[10px] font-bold uppercase tracking-[0.1em]" style={{ color: "#4a4452" }}>Work Type</label>
+          <div className="grid grid-cols-3 gap-2">
+            {WORK_TYPES.map(({ id, icon }) => (
+              <button key={id} type="button" onClick={() => setForm((f) => ({ ...f, workType: id }))}
+                className="flex flex-col items-center gap-1 py-2.5 rounded-xl transition-all"
+                style={form.workType === id
+                  ? { background: "#552299", color: "#fff", border: "2px solid #552299", boxShadow: "0 2px 10px rgba(85,34,153,0.28)" }
+                  : { background: "#faf9fc", color: "#4a4452", border: "2px solid rgba(85,34,153,0.1)" }}>
+                <span className="material-symbols-outlined" style={{ fontSize: 18 }}>{icon}</span>
+                <span className="text-[10px] font-bold">{id}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Role Icon */}
+        <div className="flex flex-col gap-1">
+          <label className="text-[10px] font-bold uppercase tracking-[0.1em]" style={{ color: "#4a4452" }}>Role Icon</label>
+          <div className="flex gap-1.5 flex-wrap">
+            {ICONS.map((ico) => (
+              <button key={ico} type="button" onClick={() => setForm((f) => ({ ...f, icon: ico }))}
+                className="w-9 h-9 rounded-xl flex items-center justify-center transition-all"
+                style={form.icon === ico
+                  ? { background: "#552299", boxShadow: "0 2px 8px rgba(85,34,153,0.3)" }
+                  : { background: "#f5f3f7", border: "1px solid rgba(85,34,153,0.1)" }}>
+                <span className="material-symbols-outlined" style={{ fontSize: 17, color: form.icon === ico ? "#fff" : "#552299" }}>{ico}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Submit */}
+        <button onClick={handleSubmit}
+          className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-white text-sm font-bold transition-all hover:opacity-90 active:scale-[0.98]"
+          style={{ background: "linear-gradient(135deg,#552299,#7c3aed)", boxShadow: "0 4px 14px rgba(85,34,153,0.3)" }}>
+          <span className="material-symbols-outlined" style={{ fontSize: 16 }}>send</span>
+          Post Job
+        </button>
+      </div>
+    </motion.div>
+  );
+}
+
 function PostJobModal() {
   const { isOpen, setIsOpen, addJob } = usePostJob();
   const [step, setStep] = useState("payment"); // "payment" | "success" | "form"
@@ -796,8 +1043,29 @@ function AIChatbot({ open, setOpen, prefill, onPrefillConsumed }) {
     }
   }, [messages, typing]);
 
-  const addAIMessage = (text) => {
-    setMessages((prev) => [...prev, { id: Date.now(), role: "ai", text, ts: "just now" }]);
+  const addAIMessage = (payload) => {
+    const msg = typeof payload === "string"
+      ? { id: Date.now(), role: "ai", type: "text", text: payload, ts: "just now" }
+      : { id: Date.now(), role: "ai", type: "text", ts: "just now", ...payload };
+    setMessages((prev) => [...prev, msg]);
+  };
+
+  const handlePaymentSuccess = (cardMsgId) => {
+    setMessages((prev) => prev.map((m) =>
+      m.id === cardMsgId ? { ...m, type: "payment-success" } : m
+    ));
+    setTimeout(() => {
+      addAIMessage({ type: "text", text: "Payment Verified! ✅ Here is your job posting form:" });
+      setTimeout(() => addAIMessage({ type: "job-form" }), 320);
+    }, 1750);
+  };
+
+  const handleJobFormSubmit = (formData) => {
+    addJob({ ...formData });
+    addAIMessage({
+      type: "text",
+      text: `🎉 Done! "${formData.title}" is now live. AI matching has started across ${totalCandidates.toLocaleString()} candidates.`,
+    });
   };
 
   const getAIResponse = (msg) => {
@@ -805,7 +1073,7 @@ function AIChatbot({ open, setOpen, prefill, onPrefillConsumed }) {
     if (/pipeline|hiring|team/.test(m))
       return { text: "Your pipeline has 4 active roles with 3,557 shortlisted candidates. Navigate to Hiring to manage your full team.", nav: () => setTimeout(() => navigate("/hiring"), 600) };
     if (/post|new job|create job/.test(m))
-      return { text: "Opening the Post Job form for you! Fill in the details to publish a new role.", nav: () => setTimeout(() => openPostJob(true), 500) };
+      return { text: "To proceed with posting a job, a one-time fee of ₹999/- is required.", nav: () => setTimeout(() => addAIMessage({ type: "payment-card" }), 350) };
     if (/analytics|insight|stat|report/.test(m))
       return { text: "Navigating to Analytics — you'll find funnel metrics, velocity scores, and AI impact data there.", nav: () => setTimeout(() => navigate("/analytics"), 600) };
     if (/candidate|match|score|top/.test(m))
@@ -928,41 +1196,51 @@ function AIChatbot({ open, setOpen, prefill, onPrefillConsumed }) {
                 className="flex-1 overflow-y-auto px-5 py-5"
                 style={{ display: "flex", flexDirection: "column", gap: 12, minHeight: 0 }}
               >
-                {messages.map((msg) => (
-                  <motion.div
-                    key={msg.id}
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.22 }}
-                    className={`flex items-end gap-2.5 ${msg.role === "user" ? "justify-end" : "justify-start"}`}
-                  >
-                    {msg.role === "ai" && (
-                      <div
-                        className="w-7 h-7 rounded-xl flex items-center justify-center shrink-0 mb-0.5"
-                        style={{ background: "rgba(85,34,153,0.1)" }}
-                      >
-                        <span className="material-symbols-outlined" style={{ fontSize: 14, color: "#552299" }}>smart_toy</span>
-                      </div>
-                    )}
-                    <div
-                      className="max-w-[78%] px-4 py-3 text-sm leading-relaxed"
-                      style={msg.role === "ai" ? {
-                        background: "rgba(255,255,255,0.9)",
-                        color: "#1b1b1e",
-                        borderRadius: "14px 14px 14px 3px",
-                        border: "1px solid rgba(85,34,153,0.09)",
-                        boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
-                      } : {
-                        background: "linear-gradient(135deg, #552299, #7c3aed)",
-                        color: "#fff",
-                        borderRadius: "14px 14px 3px 14px",
-                        boxShadow: "0 4px 14px rgba(85,34,153,0.32)",
-                      }}
+                {messages.map((msg) => {
+                  if (msg.type === "payment-card") return (
+                    <motion.div key={msg.id} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.22 }} className="w-full">
+                      <InlinePaymentCard msgId={msg.id} onPay={handlePaymentSuccess} />
+                    </motion.div>
+                  );
+                  if (msg.type === "payment-success") return (
+                    <motion.div key={msg.id} className="w-full">
+                      <InlinePaymentSuccess />
+                    </motion.div>
+                  );
+                  if (msg.type === "job-form") return (
+                    <motion.div key={msg.id} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.22 }} className="w-full">
+                      <InlineJobForm onSubmit={handleJobFormSubmit} />
+                    </motion.div>
+                  );
+                  return (
+                    <motion.div
+                      key={msg.id}
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.22 }}
+                      className={`flex items-end gap-2.5 ${msg.role === "user" ? "justify-end" : "justify-start"}`}
                     >
-                      {msg.text}
-                    </div>
-                  </motion.div>
-                ))}
+                      {msg.role === "ai" && (
+                        <div className="w-7 h-7 rounded-xl flex items-center justify-center shrink-0 mb-0.5" style={{ background: "rgba(85,34,153,0.1)" }}>
+                          <span className="material-symbols-outlined" style={{ fontSize: 14, color: "#552299" }}>smart_toy</span>
+                        </div>
+                      )}
+                      <div
+                        className="max-w-[78%] px-4 py-3 text-sm leading-relaxed"
+                        style={msg.role === "ai" ? {
+                          background: "rgba(255,255,255,0.9)", color: "#1b1b1e",
+                          borderRadius: "14px 14px 14px 3px", border: "1px solid rgba(85,34,153,0.09)",
+                          boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
+                        } : {
+                          background: "linear-gradient(135deg, #552299, #7c3aed)", color: "#fff",
+                          borderRadius: "14px 14px 3px 14px", boxShadow: "0 4px 14px rgba(85,34,153,0.32)",
+                        }}
+                      >
+                        {msg.text}
+                      </div>
+                    </motion.div>
+                  );
+                })}
 
                 {/* Quick Suggestions — 2×2 grid, before first user message */}
                 {!userHasSent && (
