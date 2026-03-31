@@ -576,15 +576,22 @@ function PostJobModal() {
 
 // ─── AIChatbot ────────────────────────────────────────────────────────────────
 
-function AIChatbot() {
+function AIChatbot({ open, setOpen, prefill, onPrefillConsumed }) {
   const navigate = useNavigate();
   const { setIsOpen: openPostJob } = usePostJob();
 
-  const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState(INITIAL_MESSAGES);
   const [input, setInput] = useState("");
   const [typing, setTyping] = useState(false);
   const messagesRef = useRef(null);
+
+  // Populate input from CommandBar prefill when hub opens
+  useEffect(() => {
+    if (open && prefill) {
+      setInput(prefill);
+      onPrefillConsumed?.();
+    }
+  }, [open, prefill]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Auto-scroll to bottom on new messages / typing change
   useEffect(() => {
@@ -639,43 +646,6 @@ function AIChatbot() {
 
   return (
     <>
-      {/* ── Floating Action Button ── */}
-      <motion.button
-        className="fixed bottom-6 right-6 z-[50] w-14 h-14 rounded-full flex items-center justify-center text-white"
-        style={{
-          background: "linear-gradient(135deg, #552299 0%, #7c3aed 100%)",
-          boxShadow: open
-            ? "0 8px 32px rgba(85,34,153,0.6)"
-            : "0 8px 24px rgba(85,34,153,0.4)",
-        }}
-        whileHover={{ scale: 1.08 }}
-        whileTap={{ scale: 0.93 }}
-        onClick={() => setOpen((o) => !o)}
-        title="Chat with Renate AI"
-      >
-        <AnimatePresence mode="wait" initial={false}>
-          <motion.span
-            key={open ? "close" : "chat"}
-            className="material-symbols-outlined"
-            style={{ fontSize: 24 }}
-            initial={{ opacity: 0, rotate: -25, scale: 0.7 }}
-            animate={{ opacity: 1, rotate: 0, scale: 1 }}
-            exit={{ opacity: 0, rotate: 25, scale: 0.7 }}
-            transition={{ duration: 0.16 }}
-          >
-            {open ? "close" : "smart_toy"}
-          </motion.span>
-        </AnimatePresence>
-
-        {/* Unread / online dot */}
-        {!open && (
-          <span
-            className="absolute top-0.5 right-0.5 w-3.5 h-3.5 rounded-full border-2 border-white"
-            style={{ background: "#22c55e", animation: "pulse-dot 2s ease-in-out infinite" }}
-          />
-        )}
-      </motion.button>
-
       {/* ── Full-screen backdrop ── */}
       <AnimatePresence>
         {open && (
@@ -926,9 +896,82 @@ function AIChatbot() {
   );
 }
 
+// ─── CommandBar ───────────────────────────────────────────────────────────────
+
+function CommandBar({ onActivate }) {
+  const [localVal, setLocalVal] = useState("");
+  const [hovered, setHovered] = useState(false);
+
+  const activate = (val = localVal) => {
+    onActivate(val);
+    setLocalVal("");
+  };
+
+  return (
+    <div className="flex justify-center w-full">
+      <motion.div
+        className="flex items-center gap-3 px-5 py-3.5 rounded-2xl cursor-text w-[90%] sm:w-[68%]"
+        style={{
+          background: "rgba(255,255,255,0.82)",
+          backdropFilter: "blur(16px)",
+          WebkitBackdropFilter: "blur(16px)",
+          border: "1.5px solid rgba(85,34,153,0.18)",
+          boxShadow: hovered
+            ? "0 0 0 3px rgba(85,34,153,0.14), 0 8px 28px rgba(85,34,153,0.14)"
+            : "0 2px 12px rgba(85,34,153,0.08)",
+          transition: "box-shadow 0.2s ease",
+        }}
+        onHoverStart={() => setHovered(true)}
+        onHoverEnd={() => setHovered(false)}
+        onClick={() => activate(localVal)}
+      >
+        {/* Sparkle icon */}
+        <span
+          className="material-symbols-outlined shrink-0"
+          style={{ fontSize: 20, color: "#7c3aed" }}
+        >
+          auto_awesome
+        </span>
+
+        {/* Input — captures keystrokes, opens hub on first character */}
+        <input
+          type="text"
+          value={localVal}
+          onChange={(e) => {
+            setLocalVal(e.target.value);
+            if (e.target.value.length === 1) activate(e.target.value);
+          }}
+          onFocus={() => activate(localVal)}
+          onKeyDown={(e) => e.key === "Enter" && activate()}
+          placeholder="Ask Renate AI to post a job, check analytics, or manage candidates..."
+          className="flex-1 bg-transparent text-sm focus:outline-none placeholder:truncate"
+          style={{ color: "#1b1b1e", caretColor: "#552299" }}
+        />
+
+        {/* Enter hint */}
+        <span
+          className="hidden sm:flex items-center gap-1 text-[10px] font-bold shrink-0 px-2 py-1 rounded-lg"
+          style={{ background: "rgba(85,34,153,0.08)", color: "#7c3aed" }}
+        >
+          <span className="material-symbols-outlined" style={{ fontSize: 12 }}>keyboard_return</span>
+          Ask
+        </span>
+      </motion.div>
+    </div>
+  );
+}
+
 // ─── LandingPage ──────────────────────────────────────────────────────────────
 
 export default function LandingPage() {
+  const [hubOpen, setHubOpen] = useState(false);
+  const [hubPrefill, setHubPrefill] = useState("");
+
+  const openHubWith = (text) => {
+    setHubPrefill(text);
+    setHubOpen(true);
+  };
+
   return (
     <>
       <style>{`
@@ -947,12 +990,18 @@ export default function LandingPage() {
       `}</style>
 
       <PostJobModal />
-      <AIChatbot />
+      <AIChatbot
+        open={hubOpen}
+        setOpen={setHubOpen}
+        prefill={hubPrefill}
+        onPrefillConsumed={() => setHubPrefill("")}
+      />
 
       <main className="max-w-screen-2xl mx-auto px-8 py-10" style={{ background: "#F8F9FB", minHeight: "100vh" }}>
         <div className="flex flex-col xl:flex-row gap-8 items-start">
           <div className="flex-1 min-w-0 flex flex-col gap-8">
             <PulseHero />
+            <CommandBar onActivate={openHubWith} />
             <TickerRow />
             <BentoGrid />
           </div>
@@ -961,8 +1010,8 @@ export default function LandingPage() {
           </aside>
         </div>
 
-        {/* Mobile notification button — stacked above chatbot FAB */}
-        <div className="xl:hidden fixed bottom-20 right-6 z-50">
+        {/* Mobile notification button */}
+        <div className="xl:hidden fixed bottom-6 right-6 z-50">
           <MobileNotificationsButton />
         </div>
       </main>
