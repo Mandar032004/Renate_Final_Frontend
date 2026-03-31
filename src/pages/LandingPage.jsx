@@ -908,19 +908,22 @@ function CommandBar({ onActivate }) {
   };
 
   return (
-    <div className="flex justify-center w-full">
       <motion.div
-        className="flex items-center gap-3 px-5 py-3.5 rounded-2xl cursor-text w-[90%] sm:w-[68%]"
+        className="fixed left-1/2 -translate-x-1/2 z-[46] flex items-center gap-3 px-5 py-3.5 rounded-2xl cursor-text w-[90%] sm:w-[68%]"
         style={{
+          bottom: 35,
           background: "rgba(255,255,255,0.82)",
           backdropFilter: "blur(16px)",
           WebkitBackdropFilter: "blur(16px)",
           border: "1.5px solid rgba(85,34,153,0.18)",
           boxShadow: hovered
-            ? "0 0 0 3px rgba(85,34,153,0.14), 0 8px 28px rgba(85,34,153,0.14)"
-            : "0 2px 12px rgba(85,34,153,0.08)",
+            ? "0 0 0 3px rgba(85,34,153,0.14), 0 20px 50px rgba(85,34,153,0.18), 0 4px 16px rgba(0,0,0,0.08)"
+            : "0 20px 50px rgba(85,34,153,0.12), 0 4px 16px rgba(0,0,0,0.07)",
           transition: "box-shadow 0.2s ease",
         }}
+        initial={{ y: 80, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ type: "spring", stiffness: 260, damping: 28, delay: 0.4 }}
         onHoverStart={() => setHovered(true)}
         onHoverEnd={() => setHovered(false)}
         onClick={() => activate(localVal)}
@@ -957,7 +960,6 @@ function CommandBar({ onActivate }) {
           Ask
         </span>
       </motion.div>
-    </div>
   );
 }
 
@@ -990,6 +992,7 @@ export default function LandingPage() {
       `}</style>
 
       <PostJobModal />
+      <CommandBar onActivate={openHubWith} />
       <AIChatbot
         open={hubOpen}
         setOpen={setHubOpen}
@@ -1001,7 +1004,6 @@ export default function LandingPage() {
         <div className="flex flex-col xl:flex-row gap-8 items-start">
           <div className="flex-1 min-w-0 flex flex-col gap-8">
             <PulseHero />
-            <CommandBar onActivate={openHubWith} />
             <TickerRow />
             <BentoGrid />
           </div>
@@ -1010,8 +1012,8 @@ export default function LandingPage() {
           </aside>
         </div>
 
-        {/* Mobile notification button */}
-        <div className="xl:hidden fixed bottom-6 right-6 z-50">
+        {/* Mobile notification button — above CommandBar */}
+        <div className="xl:hidden fixed bottom-24 right-6 z-50">
           <MobileNotificationsButton />
         </div>
       </main>
