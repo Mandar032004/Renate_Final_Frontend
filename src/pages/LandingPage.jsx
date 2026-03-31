@@ -908,58 +908,67 @@ function CommandBar({ onActivate }) {
   };
 
   return (
-      <motion.div
-        className="fixed left-1/2 -translate-x-1/2 z-[46] flex items-center gap-3 px-5 py-3.5 rounded-2xl cursor-text w-[90%] sm:w-[68%]"
-        style={{
-          bottom: 35,
-          background: "rgba(255,255,255,0.82)",
-          backdropFilter: "blur(16px)",
-          WebkitBackdropFilter: "blur(16px)",
-          border: "1.5px solid rgba(85,34,153,0.18)",
-          boxShadow: hovered
-            ? "0 0 0 3px rgba(85,34,153,0.14), 0 20px 50px rgba(85,34,153,0.18), 0 4px 16px rgba(0,0,0,0.08)"
-            : "0 20px 50px rgba(85,34,153,0.12), 0 4px 16px rgba(0,0,0,0.07)",
-          transition: "box-shadow 0.2s ease",
-        }}
-        initial={{ y: 80, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ type: "spring", stiffness: 260, damping: 28, delay: 0.4 }}
-        onHoverStart={() => setHovered(true)}
-        onHoverEnd={() => setHovered(false)}
-        onClick={() => activate(localVal)}
+    <motion.div
+      className="fixed left-1/2 -translate-x-1/2 z-[46] flex items-center gap-3 px-4 sm:px-5 py-3 sm:py-3.5 rounded-2xl cursor-text"
+      style={{
+        bottom: 32,
+        width: "min(600px, 90%)",
+        background: "rgba(255,255,255,0.86)",
+        backdropFilter: "blur(24px)",
+        WebkitBackdropFilter: "blur(24px)",
+        border: "1.5px solid rgba(255,255,255,0.45)",
+        outline: "1px solid rgba(85,34,153,0.14)",
+        animation: hovered ? "none" : "dock-pulse 3.2s ease-in-out infinite",
+        boxShadow: hovered
+          ? "0 0 0 3px rgba(85,34,153,0.16), 0 12px 40px rgba(85,34,153,0.22), 0 4px 12px rgba(0,0,0,0.07)"
+          : undefined,
+        transition: "box-shadow 0.22s ease",
+      }}
+      initial={{ y: 90, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      whileHover={{ scale: 1.02 }}
+      transition={{ type: "spring", stiffness: 260, damping: 26, delay: 0.4 }}
+      onHoverStart={() => setHovered(true)}
+      onHoverEnd={() => setHovered(false)}
+      onClick={() => activate(localVal)}
+    >
+      {/* Sparkle icon */}
+      <span
+        className="material-symbols-outlined shrink-0"
+        style={{ fontSize: 20, color: "#7c3aed" }}
       >
-        {/* Sparkle icon */}
-        <span
-          className="material-symbols-outlined shrink-0"
-          style={{ fontSize: 20, color: "#7c3aed" }}
-        >
-          auto_awesome
-        </span>
+        auto_awesome
+      </span>
 
-        {/* Input — captures keystrokes, opens hub on first character */}
-        <input
-          type="text"
-          value={localVal}
-          onChange={(e) => {
-            setLocalVal(e.target.value);
-            if (e.target.value.length === 1) activate(e.target.value);
-          }}
-          onFocus={() => activate(localVal)}
-          onKeyDown={(e) => e.key === "Enter" && activate()}
-          placeholder="Ask Renate AI to post a job, check analytics, or manage candidates..."
-          className="flex-1 bg-transparent text-sm focus:outline-none placeholder:truncate"
-          style={{ color: "#1b1b1e", caretColor: "#552299" }}
-        />
+      {/* Input */}
+      <input
+        type="text"
+        value={localVal}
+        onChange={(e) => {
+          setLocalVal(e.target.value);
+          if (e.target.value.length === 1) activate(e.target.value);
+        }}
+        onFocus={() => activate(localVal)}
+        onKeyDown={(e) => e.key === "Enter" && activate()}
+        placeholder="Ask Renate AI to post a job, check analytics, or manage candidates..."
+        className="flex-1 bg-transparent text-sm focus:outline-none placeholder:truncate"
+        style={{ color: "#1b1b1e", caretColor: "#552299", minWidth: 0 }}
+      />
 
-        {/* Enter hint */}
-        <span
-          className="hidden sm:flex items-center gap-1 text-[10px] font-bold shrink-0 px-2 py-1 rounded-lg"
-          style={{ background: "rgba(85,34,153,0.08)", color: "#7c3aed" }}
-        >
-          <span className="material-symbols-outlined" style={{ fontSize: 12 }}>keyboard_return</span>
-          Ask
-        </span>
-      </motion.div>
+      {/* Cmd+K power-user tag */}
+      <span
+        className="hidden sm:flex items-center gap-1 text-[10px] font-black shrink-0 px-2 py-1 rounded-lg tracking-wide"
+        style={{
+          background: "linear-gradient(135deg, rgba(85,34,153,0.1), rgba(124,58,237,0.1))",
+          color: "#7c3aed",
+          border: "1px solid rgba(85,34,153,0.14)",
+          letterSpacing: "0.04em",
+        }}
+      >
+        <span className="material-symbols-outlined" style={{ fontSize: 11 }}>keyboard_command_key</span>
+        K
+      </span>
+    </motion.div>
   );
 }
 
@@ -988,6 +997,10 @@ export default function LandingPage() {
         @keyframes command-glow {
           0%, 100% { box-shadow: 0 0 0 0 rgba(85,34,153,0.0), 0 0 0 6px rgba(85,34,153,0.12); }
           50%       { box-shadow: 0 0 0 8px rgba(85,34,153,0.0), 0 0 0 14px rgba(124,58,237,0.18); }
+        }
+        @keyframes dock-pulse {
+          0%, 100% { box-shadow: 0 0 0 0 rgba(85,34,153,0.0), 0 8px 32px rgba(85,34,153,0.14), 0 2px 8px rgba(0,0,0,0.06); }
+          50%       { box-shadow: 0 0 0 6px rgba(85,34,153,0.07), 0 8px 40px rgba(85,34,153,0.22), 0 2px 8px rgba(0,0,0,0.06); }
         }
       `}</style>
 
