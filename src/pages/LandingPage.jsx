@@ -412,14 +412,65 @@ const WORK_TYPES = [
   { id: "On-site", icon: "location_on"    },
 ];
 
+// Mock QR code — hardcoded 19×19 finder-pattern grid
+function MockQRCode() {
+  const rows = [
+    "1111111001011111111",
+    "1000001010001000001",
+    "1011101001001011101",
+    "1011101010001011101",
+    "1011101100001011101",
+    "1000001001001000001",
+    "1111111010101111111",
+    "0000000001100000000",
+    "1101011011001011011",
+    "0110100100110100010",
+    "1010010011010010101",
+    "0101100010001101001",
+    "0000000010110010110",
+    "0000000001001000000",
+    "1111111001001011010",
+    "1000001011010100110",
+    "1011101001101001010",
+    "1000001010110110011",
+    "1111111011001010101",
+  ];
+  const size = 19;
+  return (
+    <svg viewBox={`0 0 ${size} ${size}`} width="156" height="156" style={{ imageRendering: "pixelated", display: "block" }}>
+      <rect width={size} height={size} fill="#fff" />
+      {rows.map((row, y) =>
+        [...row].map((cell, x) =>
+          cell === "1" ? <rect key={`${x}-${y}`} x={x} y={y} width={1} height={1} fill="#1b1b1e" /> : null
+        )
+      )}
+    </svg>
+  );
+}
+
+const UPI_APPS = [
+  { name: "GPay",    bg: "#4285F4", letter: "G"  },
+  { name: "PhonePe", bg: "#5F259F", letter: "Ph" },
+  { name: "Paytm",   bg: "#00BAF2", letter: "Pa" },
+];
+
 function PostJobModal() {
   const { isOpen, setIsOpen, addJob } = usePostJob();
+  const [step, setStep] = useState("payment"); // "payment" | "success" | "form"
   const [form, setForm] = useState({ title: "", description: "", experience: "Mid-Level", workType: "Remote", icon: "work" });
   const [skills, setSkills] = useState([]);
   const [skillInput, setSkillInput] = useState("");
   const [errors, setErrors] = useState({});
 
+  // Reset to payment step each time modal opens
+  useEffect(() => { if (isOpen) setStep("payment"); }, [isOpen]);
+
   const handleClose = () => setIsOpen(false);
+
+  const handleConfirmPayment = () => {
+    setStep("success");
+    setTimeout(() => setStep("form"), 1900);
+  };
 
   const handleSkillKey = (e) => {
     if ((e.key === "Enter" || e.key === ",") && skillInput.trim()) {
@@ -433,140 +484,284 @@ function PostJobModal() {
   const handleSubmit = () => {
     if (!form.title.trim()) { setErrors({ title: "Job title is required" }); return; }
     addJob({ ...form, skills });
+    setForm({ title: "", description: "", experience: "Mid-Level", workType: "Remote", icon: "work" });
+    setSkills([]);
   };
 
   const inputBase = { border: "1.5px solid rgba(85,34,153,0.15)", background: "#faf9fc", color: "#1b1b1e", outline: "none" };
+
+  const stepTitle = step === "payment" ? { icon: "payments", title: "Complete Payment", sub: "One-time fee to post this role" }
+    : step === "success" ? { icon: "check_circle", title: "Payment Confirmed", sub: "Unlocking job posting form…" }
+    : { icon: "work", title: "Post a New Job", sub: "Fill in the details to create a new role" };
 
   return (
     <AnimatePresence>
       {isOpen && (
         <>
           <motion.div key="backdrop" className="fixed inset-0 z-50"
-            style={{ background: "rgba(0,0,0,0.48)", backdropFilter: "blur(4px)" }}
+            style={{ background: "rgba(0,0,0,0.52)", backdropFilter: "blur(6px)" }}
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }} onClick={handleClose} />
+            transition={{ duration: 0.22 }} onClick={step !== "success" ? handleClose : undefined} />
+
           <div className="fixed inset-0 z-[51] flex items-center justify-center p-0 sm:p-6">
             <motion.div key="modal"
               className="relative w-full h-full sm:h-auto sm:max-h-[92vh] sm:w-[560px] bg-white sm:rounded-2xl overflow-hidden shadow-2xl flex flex-col"
               initial={{ opacity: 0, scale: 0.93, y: 18 }} animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.91, y: 14 }} transition={{ type: "spring", stiffness: 320, damping: 28 }}
               onClick={(e) => e.stopPropagation()}>
+
+              {/* Header */}
               <div className="flex items-center justify-between px-6 py-5 shrink-0" style={{ borderBottom: "1px solid rgba(85,34,153,0.08)" }}>
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
-                    style={{ background: "linear-gradient(135deg, #552299, #7c3aed)" }}>
-                    <span className="material-symbols-outlined text-white text-base">work</span>
-                  </div>
+                  <motion.div key={step} initial={{ scale: 0.7, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ type: "spring", stiffness: 300, damping: 22 }}
+                    className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
+                    style={{ background: step === "success" ? "linear-gradient(135deg,#22c55e,#16a34a)" : "linear-gradient(135deg,#552299,#7c3aed)" }}>
+                    <span className="material-symbols-outlined text-white text-base">{stepTitle.icon}</span>
+                  </motion.div>
                   <div>
-                    <h2 className="font-extrabold text-base" style={{ fontFamily: "Manrope, sans-serif", color: "#1b1b1e" }}>Post a New Job</h2>
-                    <p className="text-xs" style={{ color: "#7c7483" }}>Fill in the details to create a new role</p>
+                    <h2 className="font-extrabold text-base" style={{ fontFamily: "Manrope, sans-serif", color: "#1b1b1e" }}>{stepTitle.title}</h2>
+                    <p className="text-xs" style={{ color: "#7c7483" }}>{stepTitle.sub}</p>
                   </div>
                 </div>
-                <button onClick={handleClose} className="w-8 h-8 rounded-xl flex items-center justify-center transition-colors hover:bg-gray-100">
-                  <span className="material-symbols-outlined text-base" style={{ color: "#7c7483" }}>close</span>
-                </button>
+                {step !== "success" && (
+                  <button onClick={handleClose} className="w-8 h-8 rounded-xl flex items-center justify-center transition-colors hover:bg-gray-100">
+                    <span className="material-symbols-outlined text-base" style={{ color: "#7c7483" }}>close</span>
+                  </button>
+                )}
               </div>
 
-              <div className="flex-1 overflow-y-auto px-6 py-5" style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-[10px] font-bold uppercase tracking-[0.1em]" style={{ color: "#4a4452" }}>
-                    Job Title <span style={{ color: "#ba1a1a" }}>*</span>
-                  </label>
-                  <input type="text" value={form.title}
-                    onChange={(e) => { setForm((f) => ({ ...f, title: e.target.value })); setErrors({}); }}
-                    placeholder="e.g. Senior React Developer"
-                    className="w-full px-4 py-2.5 rounded-xl text-sm transition-all"
-                    style={{ ...inputBase, border: errors.title ? "1.5px solid #ba1a1a" : inputBase.border }}
-                    onFocus={(e) => (e.target.style.border = "1.5px solid #552299")}
-                    onBlur={(e) => (e.target.style.border = errors.title ? "1.5px solid #ba1a1a" : "1.5px solid rgba(85,34,153,0.15)")} />
-                  {errors.title && <p className="text-xs" style={{ color: "#ba1a1a" }}>{errors.title}</p>}
-                </div>
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-[10px] font-bold uppercase tracking-[0.1em]" style={{ color: "#4a4452" }}>Job Description</label>
-                  <textarea value={form.description} onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
-                    placeholder="Describe the role, responsibilities, and requirements..." rows={3}
-                    className="w-full px-4 py-2.5 rounded-xl text-sm resize-none transition-all" style={inputBase}
-                    onFocus={(e) => (e.target.style.border = "1.5px solid #552299")}
-                    onBlur={(e) => (e.target.style.border = "1.5px solid rgba(85,34,153,0.15)")} />
-                </div>
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-[10px] font-bold uppercase tracking-[0.1em]" style={{ color: "#4a4452" }}>Experience Level</label>
-                  <div className="flex flex-wrap gap-2">
-                    {EXPERIENCE_LEVELS.map((level) => (
-                      <button key={level} type="button" onClick={() => setForm((f) => ({ ...f, experience: level }))}
-                        className="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all"
-                        style={form.experience === level
-                          ? { background: "#552299", color: "#fff", boxShadow: "0 2px 8px rgba(85,34,153,0.3)" }
-                          : { background: "#f5f3f7", color: "#4a4452", border: "1px solid rgba(85,34,153,0.1)" }}>
-                        {level}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-[10px] font-bold uppercase tracking-[0.1em]" style={{ color: "#4a4452" }}>Skills</label>
-                  <div className="flex flex-wrap gap-2 items-center min-h-[46px] px-3 py-2 rounded-xl"
-                    style={{ border: "1.5px solid rgba(85,34,153,0.15)", background: "#faf9fc" }}
-                    onClick={(e) => e.currentTarget.querySelector("input")?.focus()}>
-                    {skills.map((skill) => (
-                      <span key={skill} className="inline-flex items-center gap-1 text-xs font-bold px-2.5 py-1 rounded-full"
-                        style={{ background: "#ecdcff", color: "#552299" }}>
-                        {skill}
-                        <button type="button" onClick={() => setSkills((s) => s.filter((x) => x !== skill))}
-                          className="leading-none hover:opacity-60 transition-opacity">
-                          <span className="material-symbols-outlined" style={{ fontSize: 12 }}>close</span>
-                        </button>
-                      </span>
-                    ))}
-                    <input type="text" value={skillInput} onChange={(e) => setSkillInput(e.target.value)}
-                      onKeyDown={handleSkillKey}
-                      placeholder={skills.length === 0 ? "Type a skill and press Enter..." : "Add more..."}
-                      className="flex-1 min-w-[120px] bg-transparent text-sm focus:outline-none" style={{ color: "#1b1b1e" }} />
-                  </div>
-                  <p className="text-[10px]" style={{ color: "#a09ab0" }}>Press Enter or comma to add a skill tag</p>
-                </div>
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-[10px] font-bold uppercase tracking-[0.1em]" style={{ color: "#4a4452" }}>Work Type</label>
-                  <div className="grid grid-cols-3 gap-2">
-                    {WORK_TYPES.map(({ id, icon }) => (
-                      <button key={id} type="button" onClick={() => setForm((f) => ({ ...f, workType: id }))}
-                        className="flex flex-col items-center gap-1.5 py-3.5 rounded-xl transition-all"
-                        style={form.workType === id
-                          ? { background: "#552299", color: "#fff", border: "2px solid #552299", boxShadow: "0 2px 12px rgba(85,34,153,0.3)" }
-                          : { background: "#faf9fc", color: "#4a4452", border: "2px solid rgba(85,34,153,0.1)" }}>
-                        <span className="material-symbols-outlined text-xl">{icon}</span>
-                        <span className="text-xs font-bold">{id}</span>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-[10px] font-bold uppercase tracking-[0.1em]" style={{ color: "#4a4452" }}>Role Icon</label>
-                  <div className="flex gap-2 flex-wrap">
-                    {ICONS.map((ico) => (
-                      <button key={ico} type="button" onClick={() => setForm((f) => ({ ...f, icon: ico }))}
-                        className="w-10 h-10 rounded-xl flex items-center justify-center transition-all"
-                        style={form.icon === ico
-                          ? { background: "#552299", boxShadow: "0 2px 8px rgba(85,34,153,0.3)" }
-                          : { background: "#f5f3f7", border: "1px solid rgba(85,34,153,0.1)" }}>
-                        <span className="material-symbols-outlined text-lg" style={{ color: form.icon === ico ? "#fff" : "#552299" }}>{ico}</span>
-                      </button>
-                    ))}
-                  </div>
-                </div>
+              {/* Step content with slide-left AnimatePresence */}
+              <div className="flex-1 overflow-hidden relative" style={{ minHeight: 0 }}>
+                <AnimatePresence mode="wait" initial={false}>
+
+                  {/* ── PAYMENT STEP ── */}
+                  {step === "payment" && (
+                    <motion.div key="payment"
+                      className="absolute inset-0 overflow-y-auto px-6 py-6 flex flex-col gap-5"
+                      initial={{ x: 0, opacity: 1 }} animate={{ x: 0, opacity: 1 }}
+                      exit={{ x: "-100%", opacity: 0 }}
+                      transition={{ type: "spring", stiffness: 300, damping: 30 }}>
+
+                      {/* Price card */}
+                      <div className="rounded-2xl p-5 flex flex-col gap-1.5"
+                        style={{ background: "linear-gradient(135deg,rgba(85,34,153,0.06),rgba(124,58,237,0.06))", border: "1.5px solid rgba(85,34,153,0.14)" }}>
+                        <p className="text-2xl font-black" style={{ fontFamily: "Manrope,sans-serif", color: "#552299" }}>Pay ₹999/-</p>
+                        <p className="text-sm font-semibold" style={{ color: "#1b1b1e" }}>to post a job on Renate AI</p>
+                        <p className="text-xs leading-relaxed mt-0.5" style={{ color: "#7c7483" }}>
+                          Renate charges per job to provide premium AI candidate matching, voice assessment, and verification features.
+                        </p>
+                      </div>
+
+                      {/* QR + UPI layout */}
+                      <div className="flex flex-col sm:flex-row gap-5 items-start">
+                        {/* QR code */}
+                        <div className="flex flex-col items-center gap-2 shrink-0">
+                          <div className="p-3 rounded-2xl" style={{ background: "#fff", border: "1.5px solid rgba(85,34,153,0.12)", boxShadow: "0 4px 16px rgba(85,34,153,0.08)" }}>
+                            <MockQRCode />
+                          </div>
+                          <p className="text-[10px] font-bold" style={{ color: "#a09ab0" }}>Scan with any UPI app</p>
+                        </div>
+
+                        {/* Divider */}
+                        <div className="hidden sm:flex flex-col items-center self-stretch gap-2">
+                          <div className="flex-1" style={{ width: 1, background: "rgba(85,34,153,0.1)" }} />
+                          <span className="text-[10px] font-black" style={{ color: "#a09ab0" }}>OR</span>
+                          <div className="flex-1" style={{ width: 1, background: "rgba(85,34,153,0.1)" }} />
+                        </div>
+                        <div className="sm:hidden w-full flex items-center gap-3">
+                          <div className="flex-1 h-px" style={{ background: "rgba(85,34,153,0.1)" }} />
+                          <span className="text-[10px] font-black" style={{ color: "#a09ab0" }}>OR</span>
+                          <div className="flex-1 h-px" style={{ background: "rgba(85,34,153,0.1)" }} />
+                        </div>
+
+                        {/* UPI apps */}
+                        <div className="flex-1 flex flex-col gap-2 w-full">
+                          <p className="text-[10px] font-black uppercase tracking-[0.1em]" style={{ color: "#4a4452" }}>Pay via UPI App</p>
+                          {UPI_APPS.map(({ name, bg, letter }) => (
+                            <button key={name} onClick={handleConfirmPayment}
+                              className="flex items-center gap-3 px-4 py-3 rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98] text-left w-full"
+                              style={{ background: "#faf9fc", border: "1.5px solid rgba(85,34,153,0.1)", boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
+                              <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 text-white text-xs font-black"
+                                style={{ background: bg }}>
+                                {letter}
+                              </div>
+                              <div className="flex-1">
+                                <p className="text-sm font-bold" style={{ color: "#1b1b1e" }}>{name}</p>
+                                <p className="text-[10px]" style={{ color: "#a09ab0" }}>Pay ₹999 instantly</p>
+                              </div>
+                              <span className="material-symbols-outlined" style={{ fontSize: 18, color: "#552299" }}>chevron_right</span>
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* UPI ID reference */}
+                      <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl" style={{ background: "#faf9fc", border: "1px solid rgba(85,34,153,0.1)" }}>
+                        <span className="material-symbols-outlined" style={{ fontSize: 16, color: "#7c3aed" }}>tag</span>
+                        <span className="text-xs" style={{ color: "#7c7483" }}>UPI ID: </span>
+                        <span className="text-xs font-bold" style={{ color: "#1b1b1e" }}>renate@razorpay</span>
+                      </div>
+                    </motion.div>
+                  )}
+
+                  {/* ── SUCCESS STEP ── */}
+                  {step === "success" && (
+                    <motion.div key="success"
+                      className="absolute inset-0 flex flex-col items-center justify-center gap-4 px-6"
+                      initial={{ opacity: 0, scale: 0.85 }} animate={{ opacity: 1, scale: 1 }}
+                      exit={{ x: "-100%", opacity: 0 }}
+                      transition={{ type: "spring", stiffness: 280, damping: 24 }}>
+                      <motion.div
+                        className="w-20 h-20 rounded-full flex items-center justify-center"
+                        style={{ background: "linear-gradient(135deg,#22c55e,#16a34a)", boxShadow: "0 8px 32px rgba(34,197,94,0.4)" }}
+                        initial={{ scale: 0 }} animate={{ scale: 1 }}
+                        transition={{ type: "spring", stiffness: 320, damping: 20, delay: 0.1 }}>
+                        <span className="material-symbols-outlined text-white" style={{ fontSize: 40 }}>check</span>
+                      </motion.div>
+                      <motion.div className="text-center" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
+                        <p className="font-extrabold text-lg" style={{ fontFamily: "Manrope,sans-serif", color: "#1b1b1e" }}>Payment Successful!</p>
+                        <p className="text-sm mt-1" style={{ color: "#7c7483" }}>₹999 paid · Opening job form…</p>
+                      </motion.div>
+                      {/* Progress bar */}
+                      <motion.div className="w-48 h-1.5 rounded-full overflow-hidden" style={{ background: "rgba(85,34,153,0.1)" }}>
+                        <motion.div className="h-full rounded-full" style={{ background: "linear-gradient(90deg,#552299,#7c3aed)" }}
+                          initial={{ width: "0%" }} animate={{ width: "100%" }} transition={{ duration: 1.6, ease: "easeInOut" }} />
+                      </motion.div>
+                    </motion.div>
+                  )}
+
+                  {/* ── FORM STEP ── */}
+                  {step === "form" && (
+                    <motion.div key="form"
+                      className="absolute inset-0 overflow-y-auto px-6 py-5 flex flex-col gap-5"
+                      initial={{ x: "100%", opacity: 0 }} animate={{ x: 0, opacity: 1 }}
+                      exit={{ x: "100%", opacity: 0 }}
+                      transition={{ type: "spring", stiffness: 300, damping: 30 }}>
+
+                      <div className="flex flex-col gap-1.5">
+                        <label className="text-[10px] font-bold uppercase tracking-[0.1em]" style={{ color: "#4a4452" }}>Job Title <span style={{ color: "#ba1a1a" }}>*</span></label>
+                        <input type="text" value={form.title}
+                          onChange={(e) => { setForm((f) => ({ ...f, title: e.target.value })); setErrors({}); }}
+                          placeholder="e.g. Senior React Developer"
+                          className="w-full px-4 py-2.5 rounded-xl text-sm transition-all"
+                          style={{ ...inputBase, border: errors.title ? "1.5px solid #ba1a1a" : inputBase.border }}
+                          onFocus={(e) => (e.target.style.border = "1.5px solid #552299")}
+                          onBlur={(e) => (e.target.style.border = errors.title ? "1.5px solid #ba1a1a" : "1.5px solid rgba(85,34,153,0.15)")} />
+                        {errors.title && <p className="text-xs" style={{ color: "#ba1a1a" }}>{errors.title}</p>}
+                      </div>
+                      <div className="flex flex-col gap-1.5">
+                        <label className="text-[10px] font-bold uppercase tracking-[0.1em]" style={{ color: "#4a4452" }}>Job Description</label>
+                        <textarea value={form.description} onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
+                          placeholder="Describe the role, responsibilities, and requirements..." rows={3}
+                          className="w-full px-4 py-2.5 rounded-xl text-sm resize-none transition-all" style={inputBase}
+                          onFocus={(e) => (e.target.style.border = "1.5px solid #552299")}
+                          onBlur={(e) => (e.target.style.border = "1.5px solid rgba(85,34,153,0.15)")} />
+                      </div>
+                      <div className="flex flex-col gap-1.5">
+                        <label className="text-[10px] font-bold uppercase tracking-[0.1em]" style={{ color: "#4a4452" }}>Experience Level</label>
+                        <div className="flex flex-wrap gap-2">
+                          {EXPERIENCE_LEVELS.map((level) => (
+                            <button key={level} type="button" onClick={() => setForm((f) => ({ ...f, experience: level }))}
+                              className="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all"
+                              style={form.experience === level
+                                ? { background: "#552299", color: "#fff", boxShadow: "0 2px 8px rgba(85,34,153,0.3)" }
+                                : { background: "#f5f3f7", color: "#4a4452", border: "1px solid rgba(85,34,153,0.1)" }}>
+                              {level}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="flex flex-col gap-1.5">
+                        <label className="text-[10px] font-bold uppercase tracking-[0.1em]" style={{ color: "#4a4452" }}>Skills</label>
+                        <div className="flex flex-wrap gap-2 items-center min-h-[46px] px-3 py-2 rounded-xl"
+                          style={{ border: "1.5px solid rgba(85,34,153,0.15)", background: "#faf9fc" }}
+                          onClick={(e) => e.currentTarget.querySelector("input")?.focus()}>
+                          {skills.map((skill) => (
+                            <span key={skill} className="inline-flex items-center gap-1 text-xs font-bold px-2.5 py-1 rounded-full"
+                              style={{ background: "#ecdcff", color: "#552299" }}>
+                              {skill}
+                              <button type="button" onClick={() => setSkills((s) => s.filter((x) => x !== skill))}
+                                className="leading-none hover:opacity-60 transition-opacity">
+                                <span className="material-symbols-outlined" style={{ fontSize: 12 }}>close</span>
+                              </button>
+                            </span>
+                          ))}
+                          <input type="text" value={skillInput} onChange={(e) => setSkillInput(e.target.value)}
+                            onKeyDown={handleSkillKey}
+                            placeholder={skills.length === 0 ? "Type a skill and press Enter..." : "Add more..."}
+                            className="flex-1 min-w-[120px] bg-transparent text-sm focus:outline-none" style={{ color: "#1b1b1e" }} />
+                        </div>
+                        <p className="text-[10px]" style={{ color: "#a09ab0" }}>Press Enter or comma to add a skill tag</p>
+                      </div>
+                      <div className="flex flex-col gap-1.5">
+                        <label className="text-[10px] font-bold uppercase tracking-[0.1em]" style={{ color: "#4a4452" }}>Work Type</label>
+                        <div className="grid grid-cols-3 gap-2">
+                          {WORK_TYPES.map(({ id, icon }) => (
+                            <button key={id} type="button" onClick={() => setForm((f) => ({ ...f, workType: id }))}
+                              className="flex flex-col items-center gap-1.5 py-3.5 rounded-xl transition-all"
+                              style={form.workType === id
+                                ? { background: "#552299", color: "#fff", border: "2px solid #552299", boxShadow: "0 2px 12px rgba(85,34,153,0.3)" }
+                                : { background: "#faf9fc", color: "#4a4452", border: "2px solid rgba(85,34,153,0.1)" }}>
+                              <span className="material-symbols-outlined text-xl">{icon}</span>
+                              <span className="text-xs font-bold">{id}</span>
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="flex flex-col gap-1.5">
+                        <label className="text-[10px] font-bold uppercase tracking-[0.1em]" style={{ color: "#4a4452" }}>Role Icon</label>
+                        <div className="flex gap-2 flex-wrap">
+                          {ICONS.map((ico) => (
+                            <button key={ico} type="button" onClick={() => setForm((f) => ({ ...f, icon: ico }))}
+                              className="w-10 h-10 rounded-xl flex items-center justify-center transition-all"
+                              style={form.icon === ico
+                                ? { background: "#552299", boxShadow: "0 2px 8px rgba(85,34,153,0.3)" }
+                                : { background: "#f5f3f7", border: "1px solid rgba(85,34,153,0.1)" }}>
+                              <span className="material-symbols-outlined text-lg" style={{ color: form.icon === ico ? "#fff" : "#552299" }}>{ico}</span>
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+
+                </AnimatePresence>
               </div>
 
-              <div className="px-6 py-4 flex items-center justify-end gap-3 shrink-0"
-                style={{ borderTop: "1px solid rgba(85,34,153,0.08)", background: "#faf9fc" }}>
-                <button onClick={handleClose} className="px-5 py-2.5 rounded-xl text-sm font-bold transition-colors hover:bg-gray-200"
-                  style={{ color: "#4a4452", background: "#efedf1" }}>Cancel</button>
-                <button onClick={handleSubmit}
-                  className="flex items-center gap-2 px-6 py-2.5 rounded-xl text-white text-sm font-bold transition-all hover:opacity-90 active:scale-95"
-                  style={{ background: "linear-gradient(135deg, #552299 0%, #7c3aed 100%)", boxShadow: "0 4px 14px rgba(85,34,153,0.3)" }}>
-                  <span className="material-symbols-outlined text-base">send</span>
-                  Post Job
-                </button>
-              </div>
+              {/* Footer */}
+              <AnimatePresence mode="wait">
+                {step === "payment" && (
+                  <motion.div key="footer-payment"
+                    className="px-6 py-4 flex items-center justify-between gap-3 shrink-0"
+                    style={{ borderTop: "1px solid rgba(85,34,153,0.08)", background: "#faf9fc" }}
+                    initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                    <button onClick={handleClose} className="px-5 py-2.5 rounded-xl text-sm font-bold transition-colors hover:bg-gray-200"
+                      style={{ color: "#4a4452", background: "#efedf1" }}>Cancel</button>
+                    <button onClick={handleConfirmPayment}
+                      className="flex items-center gap-2 px-6 py-2.5 rounded-xl text-white text-sm font-bold transition-all hover:opacity-90 active:scale-95"
+                      style={{ background: "linear-gradient(135deg,#552299 0%,#7c3aed 100%)", boxShadow: "0 4px 14px rgba(85,34,153,0.3)" }}>
+                      <span className="material-symbols-outlined text-base">qr_code_scanner</span>
+                      Confirm Payment
+                    </button>
+                  </motion.div>
+                )}
+                {step === "form" && (
+                  <motion.div key="footer-form"
+                    className="px-6 py-4 flex items-center justify-end gap-3 shrink-0"
+                    style={{ borderTop: "1px solid rgba(85,34,153,0.08)", background: "#faf9fc" }}
+                    initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                    <button onClick={handleClose} className="px-5 py-2.5 rounded-xl text-sm font-bold transition-colors hover:bg-gray-200"
+                      style={{ color: "#4a4452", background: "#efedf1" }}>Cancel</button>
+                    <button onClick={handleSubmit}
+                      className="flex items-center gap-2 px-6 py-2.5 rounded-xl text-white text-sm font-bold transition-all hover:opacity-90 active:scale-95"
+                      style={{ background: "linear-gradient(135deg,#552299 0%,#7c3aed 100%)", boxShadow: "0 4px 14px rgba(85,34,153,0.3)" }}>
+                      <span className="material-symbols-outlined text-base">send</span>
+                      Post Job
+                    </button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
             </motion.div>
           </div>
         </>
