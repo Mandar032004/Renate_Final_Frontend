@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { useNavigate } from "react-router-dom";
 import {
   motion,
@@ -909,9 +910,15 @@ function CommandBar({ onActivate }) {
 
   return (
     <motion.div
-      className="fixed bottom-10 left-1/2 -translate-x-1/2 z-[9999] flex items-center gap-3 px-4 sm:px-5 py-3 sm:py-3.5 rounded-2xl cursor-text"
+      className="flex items-center gap-3 px-4 sm:px-5 py-3 sm:py-3.5 rounded-2xl cursor-text"
       style={{
-        width: "min(550px, 90%)",
+        position: "fixed",
+        bottom: "2rem",
+        left: "50%",
+        transform: "translateX(-50%)",
+        zIndex: 9999,
+        width: "90%",
+        maxWidth: 600,
         background: "rgba(255,255,255,0.88)",
         backdropFilter: "blur(24px)",
         WebkitBackdropFilter: "blur(24px)",
@@ -1007,7 +1014,7 @@ export default function LandingPage() {
       `}</style>
 
       <PostJobModal />
-      <CommandBar onActivate={openHubWith} />
+      {createPortal(<CommandBar onActivate={openHubWith} />, document.body)}
       <AIChatbot
         open={hubOpen}
         setOpen={setHubOpen}
